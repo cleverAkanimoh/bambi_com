@@ -1,11 +1,12 @@
 import Image from 'next/image'
 import aboutImg from "../../../public/assets/images/about/1.jpg"
+import WhyChooseUs from '@/components/WhyChooseUs'
 
 
 const page = () => {
   return (
     <div>
-        <section className='w-[90%] mx-auto flex flex-col gap-6 md:flex-row md:items-center md:gap-4'>
+        <section className='bg-slate-100 w-[90%] mx-auto flex flex-col gap-6 md:flex-row md:items-center md:gap-4'>
         <Image src={aboutImg} alt='About Image' />
         <aside className='w-full flex flex-col gap-4'>
             <h1 className='text-2xl md:text-3xl'>About Us</h1>
@@ -14,6 +15,7 @@ const page = () => {
         </aside>
 
         </section>
+        <WhyChooseUs />
     </div>
   )
 }
