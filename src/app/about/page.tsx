@@ -5,8 +5,8 @@ import WhyChooseUs from '@/components/WhyChooseUs'
 
 const page = () => {
   return (
-    <div className='bg-slate-100 '>
-        <section className='w-[90%] mx-auto flex flex-col gap-6 md:flex-row md:items-center md:gap-4 pb-6'>
+    <div className='bg-slate-100'>
+        <section className='w-[90%] mx-auto flex flex-col gap-6 md:flex-row md:items-center md:gap-10 py-10'>
         <Image src={aboutImg} alt='About Image' />
         <aside className='w-full flex flex-col gap-4'>
             <h1 className='text-2xl md:text-3xl'>About Us</h1>
@@ -15,7 +15,7 @@ const page = () => {
         </aside>
 
         </section>
-        <div className='bg-white  pb-6'>
+        <div className='bg-white  pt-16 pb-8'>
         <WhyChooseUs />
         </div>
     </div>
