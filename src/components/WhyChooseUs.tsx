@@ -4,8 +4,8 @@ import { FaComments } from "react-icons/fa";
 
 const WhyChooseUs = () => {
   return (
-    <div className="w-[90%] mx-auto flex-col gap-4">
-        <div>
+    <div className="w-[90%] mx-auto flex-col gap-10 mt-8">
+        <div className="text-center">
 
         <h1 className="text-2xl">Why Choose Us</h1>
         <p className="text-sm mt-2">Accumsan vitae pede lacus ut ullamcorper sollicitudin quisque libero
