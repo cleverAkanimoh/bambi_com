@@ -1,4 +1,9 @@
 import {motion} from "framer-motion"
+import { IoIosMail } from "react-icons/io";
+import { FaPhone } from "react-icons/fa6";
+import { FaFax } from "react-icons/fa";
+
+
 
 const page = () => {
   return (
@@ -30,16 +35,16 @@ const page = () => {
         <p>Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram anteposuerit litterarum formas human.</p>
         <address className="contact-block">
                             <ul>
-                                <li data-aos="fade-up" data-aos-delay="200"><i className="fa fa-fax"></i> Your address goes
+                                <li data-aos="fade-up" className="flex items-center gap-2 w-full p-4 border-b border-b-[#d7d7d7]"  data-aos-delay="200"><FaFax className="text-xl text-[#222]"  />Your address goes
                                     here</li>
-                                <li data-aos="fade-up" data-aos-delay="400"><i className="fa fa-phone"></i> <a
+                                <li data-aos="fade-up" className="flex items-center gap-2 w-full  p-4 border-b border-b-[#d7d7d7]" data-aos-delay="400"><FaPhone className="text-xl text-[#222]" /> <a
                                         href="tel:123-123-456-789">123 123 456 789</a></li>
-                                <li data-aos="fade-up" data-aos-delay="600"><i className="fa fa-envelope-o"></i> <a
+                                <li data-aos="fade-up" className="flex items-center gap-2  p-4 w-full" data-aos-delay="600"><IoIosMail className="text-xltext-[#222]" /> <a
                                         href="mailto:demo@example.com">demo@example.com </a></li>
                             </ul>
                         </address>
 
-                        <div className="working-time" data-aos="fade-up" data-aos-delay="600">
+                        <div className="p-2" data-aos="fade-up" data-aos-delay="600">
                             <h6 className="title">Working Hours</h6>
                             <p>Monday – Saturday:08AM – 22PM</p>
                         </div>
