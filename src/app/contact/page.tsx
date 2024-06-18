@@ -37,9 +37,9 @@ const page = () => {
                             <ul>
                                 <li data-aos="fade-up" className="flex items-center gap-2 w-full p-4 border-b border-b-[#d7d7d7]"  data-aos-delay="200"><FaFax className="text-xl text-[#222]"  />Your address goes
                                     here</li>
-                                <li data-aos="fade-up" className="flex items-center gap-2 w-full  p-4 border-b border-b-[#d7d7d7]" data-aos-delay="400"><FaPhone className="text-xl text-[#222]" /> <a
+                                <li data-aos="fade-up" className="flex items-center gap-2 w-full  p-4 border-b border-b-[#d7d7d7]" data-aos-delay="400"><FaPhone className="text-xl text-[#222]" /> <a className="hover:!text-primary"
                                         href="tel:123-123-456-789">123 123 456 789</a></li>
-                                <li data-aos="fade-up" className="flex items-center gap-2  p-4 w-full" data-aos-delay="600"><IoIosMail className="text-xltext-[#222]" /> <a
+                                <li data-aos="fade-up" className="flex items-center gap-2  p-4 w-full" data-aos-delay="600"><IoIosMail className="text-xltext-[#222]" /> <a className="hover:!text-primary"
                                         href="mailto:demo@example.com">demo@example.com </a></li>
                             </ul>
                         </address>
