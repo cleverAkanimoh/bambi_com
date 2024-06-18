@@ -4,7 +4,7 @@ import { FaComments } from "react-icons/fa";
 
 const WhyChooseUs = () => {
   return (
-    <div className="w-[90%] mx-auto flex-col gap-10 mt-8">
+    <div className="w-[90%] mx-auto flex flex-col gap-10 mt-8">
         <div className="text-center">
 
         <h1 className="text-2xl">Why Choose Us</h1>
@@ -13,17 +13,17 @@ const WhyChooseUs = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div className="text-center mb-6">
-        <LiaGlobeSolid className="text-4xl text-secondary" />
+        <LiaGlobeSolid className="text-4xl text-center text-secondary" />
                         <h4 className="text-xl">Free Shipping</h4>
                         <p>Amadea Shop is a very slick and clean e-commerce template with endless possibilities.</p>
         </div>
         <div className="text-center mb-6">
-        <FaPlane className="text-4xl text-secondary" />
+        <FaPlane className="text-4xl text-center text-secondary" />
         <h4 className="text-xl">Fast Delivery</h4>
         <p>Amadea Shop is a very slick and clean e-commerce template with endless possibilities.</p>
         </div>
         <div className="text-center mb-6">
-        <FaComments className="text-4xl text-secondary" />
+        <FaComments className="text-4xl text-center text-secondary" />
                         <h4 className="text-xl">Free Shipping</h4>
                         <p>Amadea Shop is a very slick and clean e-commerce template with endless possibilities.</p>
         </div>
