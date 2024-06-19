@@ -34,7 +34,7 @@ export default function MainNav() {
       <div
         className={
           showNav && !laptopView
-            ? "w-full absolute top-28 bg-white"
+            ? "w-full left-0 pl-2 xs:pl-4 absolute top-28 bg-white"
             : "col-md-6 d-none d-md-block"
         }
       >

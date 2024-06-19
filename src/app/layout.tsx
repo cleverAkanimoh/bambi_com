@@ -43,24 +43,24 @@ export default function RootLayout({
 
         {/* <!-- Vendor JS --> */}
 
-        <Script src="../js/vendor/popper.min.js" />
-        <Script src="../js/vendor/bootstrap.min.js" />
-        <Script src="../js/vendor/jquery-3.6.0.min.js" />
-        <Script src="../js/vendor/jquery-migrate-3.3.2.min.js" />
-        <Script src="../js/vendor/modernizr-3.11.2.min.js" />
+        <Script src="/js/vendor/popper.min.js" />
+        <Script src="/js/vendor/bootstrap.min.js" />
+        <Script src="/js/vendor/jquery-3.6.0.min.js" />
+        <Script src="/js/vendor/jquery-migrate-3.3.2.min.js" />
+        <Script src="/js/vendor/modernizr-3.11.2.min.js" />
 
         {/* <!-- Plugins JS --> */}
 
-        <Script src="../js/plugins/aos.min.js" />
-        <Script src="../js/plugins/jquery.ajaxchimp.min.js" />
-        <Script src="../js/plugins/jquery-ui.min.js" />
-        <Script src="../js/plugins/nice-select.min.js" />
-        <Script src="../js/plugins/swiper-bundle.min.js" />
-        <Script src="../js/plugins/countdown.min.js" />
-        <Script src="../js/plugins/lightgallery-all.min.js" />
+        <Script src="/js/plugins/aos.min.js" />
+        <Script src="/js/plugins/jquery.ajaxchimp.min.js" />
+        <Script src="/js/plugins/jquery-ui.min.js" />
+        <Script src="/js/plugins/nice-select.min.js" />
+        <Script src="/js/plugins/swiper-bundle.min.js" />
+        <Script src="/js/plugins/countdown.min.js" />
+        <Script src="/js/plugins/lightgallery-all.min.js" />
 
         {/* <!--Main JS--> */}
-        <Script src="../js/main.js" />
+        <Script src="/js/main.js" />
       </body>
     </html>
   );
