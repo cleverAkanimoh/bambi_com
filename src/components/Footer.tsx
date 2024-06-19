@@ -16,7 +16,7 @@ const Footer = () => {
         <footer className="mt-10 bg-secondary pt-20 md:pt-24 text-white">
             <div className="w-[90%] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-10 pb-14 md:pb-20">
                 <div className="flex flex-col gap-4">
-                    <h1 className="text-lg font-semibold">About Us</h1>
+                    <h1 className="text-lg font-semibold text-white">About Us</h1>
                     <p  className="text-[14px]">We create games that inspire growth and development, from
                         communication skills and physical health to innovation and creativity, which all play
                         big roles in shaping our children for a positive future.</p>
