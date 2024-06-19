@@ -10,9 +10,9 @@ const page = () => {
                 <h1 className='text-3xl font-bold'>Login</h1>
                 <p className='text-[#555] mt-3'>Please Login using account details below</p>
             </div>
-                <input className="w-full p-4 outline-none ring-0 bg-white focus:bg-white border focus:border-primary" type="email" placeholder="Email" name="email" />
+                <input className="w-full text-[#555] p-4 outline-none ring-0 bg-white focus:bg-white border focus:border-primary" type="email" placeholder="Email" name="email" />
 
-                <input className="w-full p-4 outline-none ring-0 bg-white focus:bg-white border focus:border-primary" type="password" placeholder="Enter your password" name="email" />
+                <input className="w-full text-[#555] p-4 outline-none ring-0 bg-white focus:bg-white border focus:border-primary" type="password" placeholder="Enter your password" name="email" />
                 <div className='flex flex-col md:flex-row w-full items-center justify-between'>
                     <label htmlFor="rememberMe" className='flex items-center gap-2 text-[#555]'>
                         <input type="checkbox" className='!border h-4 w-4  !border-primary' name="rememberMe" id="rememberMe" />
