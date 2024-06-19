@@ -35,7 +35,7 @@ export default function MainNav() {
         className={
           showNav && !laptopView
             ? "w-full absolute top-28 bg-white"
-            : "col-lg-6 d-none d-lg-block"
+            : "col-md-6 d-none d-md-block"
         }
       >
         <div className="main-menu">
@@ -54,27 +54,16 @@ export default function MainNav() {
       {/* <!-- Header Action Start --> */}
       <div className="col-md-6 col-lg-3 col-xl-4 col-6">
         <div className="header-actions header-actions-width">
-          {/* <!-- Header Action Left Side Start --> */}
           <div className="header-action-left">
-            {/* <!-- Search bar Start --> */}
             <Search />
-            {/* <!-- Search bar Start --> */}
           </div>
-          {/* <!-- Header Action Left Side End --> */}
 
-          {/* <!-- Header Action Right Side Start --> */}
           <div className="header-action-right">
-            {/* <!-- Search Action Button Start --> */}
             <button className="header-action-btn header-action-btn-search d-xl-none d-lg-block d-none">
               <i className="pe-7s-search"></i>
             </button>
-            {/* <!-- Search Action Button End --> */}
 
-            {/* <!-- User Dropdown Start --> */}
             {/* <UserDropdown /> */}
-            {/* <!-- User Dropdown End --> */}
-
-            {/* <!-- Wishlist Action Button Start --> */}
             <Link
               href="/wishlist"
               className="header-action-btn header-action-btn-wishlist"
