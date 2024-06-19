@@ -63,7 +63,7 @@ const Page = () => {
 
     return (
         <>
-            <Breadcrumbs active="Register" />
+            {/* <Breadcrumbs active="Register" /> */}
             <ToastContainer
                 position="top-right"
                 autoClose={3000}

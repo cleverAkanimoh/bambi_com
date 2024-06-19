@@ -30,7 +30,7 @@ const Page = () => {
             setIsSubmitted(true);
             await signInWithEmailAndPassword(auth, email, password);
             toast.success("Login successful");
-            router.push("/dashboard");
+            router.push("/");
         } catch (error) {
             console.error(error);
             toast.error("Login failed");
@@ -43,7 +43,7 @@ const Page = () => {
 
     return (
         <>
-            <Breadcrumbs active="Login" />
+            {/* <Breadcrumbs active="Login" /> */}
             <ToastContainer
                 position="top-right"
                 autoClose={3000}
