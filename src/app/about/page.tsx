@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import aboutImg from "../../../public/assets/images/about/1.jpg"
 import WhyChooseUs from '@/components/WhyChooseUs'
+import OurTeam from '@/components/OurTeam'
 
 
 const page = () => {
@@ -18,6 +19,7 @@ const page = () => {
         <div className='bg-white  pt-16 pb-8'>
         <WhyChooseUs />
         </div>
+        <OurTeam />
     </div>
   )
 }
