@@ -15,7 +15,7 @@ const page = () => {
                 <input className="w-full p-4 outline-none ring-0 bg-white focus:bg-white border focus:border-primary" type="password" placeholder="Enter your password" name="email" />
                 <div className='flex flex-col md:flex-row w-full items-center justify-between'>
                     <label htmlFor="rememberMe" className='flex items-center gap-2 text-[#555]'>
-                        <input type="checkbox" className='border-2 h-3 w-3  border-primary' name="rememberMe" id="rememberMe" />
+                        <input type="checkbox" className='!border h-4 w-4  !border-primary' name="rememberMe" id="rememberMe" />
                         Remember me</label>
 
                     <Link href="#" className='text-[#555] hover:text-primary transition-all ease-in-out duration-200'>Forgot password?</Link>
