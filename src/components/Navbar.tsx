@@ -1,6 +1,8 @@
 import React from "react";
 import NavBanner from "./navbar/NavBanner";
 import MainNav from "./navbar/MainNav";
+import Search from "./Search";
+import Image from "next/image";
 
 export default function Navbar() {
   return (
@@ -25,13 +27,7 @@ export default function Navbar() {
           {/* <!-- Button Close End --> */}
 
           {/* <!-- Offcanvas Search Form Start --> */}
-          <form className="offcanvas-search-form" action="#">
-            <input
-              type="text"
-              placeholder="Search Product..."
-              className="offcanvas-search-input"
-            />
-          </form>
+          <Search />
           {/* <!-- Offcanvas Search Form End --> */}
         </div>
       </div>
@@ -57,8 +53,10 @@ export default function Navbar() {
               <div className="single-cart-product">
                 <div className="cart-product-thumb">
                   <a href="single-product.php">
-                    <img
-                      src="assets/images/products/small-product/1.jpg"
+                    <Image
+                      width={100}
+                      height={100}
+                      src="/assets/images/products/small-product/1.jpg"
                       alt="Cart Product"
                     />
                   </a>
@@ -95,8 +93,10 @@ export default function Navbar() {
               <div className="single-cart-product">
                 <div className="cart-product-thumb">
                   <a href="single-product.php">
-                    <img
-                      src="assets/images/products/small-product/2.jpg"
+                    <Image
+                      width={100}
+                      height={100}
+                      src="/assets/images/products/small-product/2.jpg"
                       alt="Cart Product"
                     />
                   </a>
@@ -133,8 +133,10 @@ export default function Navbar() {
               <div className="single-cart-product">
                 <div className="cart-product-thumb">
                   <a href="single-product.php">
-                    <img
-                      src="assets/images/products/small-product/1.jpg"
+                    <Image
+                      width={100}
+                      height={100}
+                      src="/assets/images/products/small-product/1.jpg"
                       alt="Cart Product"
                     />
                   </a>
