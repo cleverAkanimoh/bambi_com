@@ -18,10 +18,16 @@ export default function ProductCardWrapper({
   currentPage: number;
 }) {
   const filteredProducts = search
-    ? shopProducts.filter((product, index) => {})
+    ? shopProducts.filter((product, index) => {
+        product.heading.includes(search) ||
+          product.description?.includes(search) ||
+          product.sales_category?.includes(search);
+      })
     : shopProducts;
 
-  const sortedFilteredProduct = filteredProducts.sort();
+  const sortedFilteredProduct = sortBy
+    ? filteredProducts.sort()
+    : filteredProducts;
   return (
     <section className="space-y-4 my-8 p-4">
       <section className="row shop_wrapper grid_4">
