@@ -19,6 +19,7 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import Script from "next/script";
 import { Providers } from "../context/Providers";
+import { AuthProvider } from "@/context/auth-context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,10 +37,13 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body className={inter.className}>
         <Providers>
-          <Navbar />
-          {children}
-          <Footer />
+          <AuthProvider>
+            <Navbar />
+            {children}
+            <Footer />
+          </AuthProvider>
         </Providers>
+
         {/* <!-- Scripts --> */}
         {/* <!-- Global Vendor, plugins JS --> */}
 
