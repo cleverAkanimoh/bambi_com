@@ -17,7 +17,7 @@ const Page = () => {
 
     useEffect(() => {
         if (user) {
-            router.push("/dashboard");
+            router.push("/");
         } else {
             router.push("/auth/register");
         }
@@ -44,7 +44,7 @@ const Page = () => {
 
             toast.success("Registration successful");
             console.log(auth?.currentUser?.email);
-            e.currentTarget.reset();
+            // e.currentTarget.reset();
         } catch (error: unknown) {
             console.error(error);
             // Narrow down the type of 'error'

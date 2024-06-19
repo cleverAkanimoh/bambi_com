@@ -12,10 +12,10 @@ const Page = () => {
     const { user } = useAuth();
     const router = useRouter();
     const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-    
+
     useEffect(() => {
         if (user) {
-            router.push("/dashboard");
+            router.push("/");
         } else {
             router.push("/auth/login");
         }
