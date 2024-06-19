@@ -1,36 +1,12 @@
 "use client";
 
-import Link from "next/link";
-import Image, { StaticImageData } from "next/image";
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import Button from "../Button";
+
 import { useMediaQuery } from "react-responsive";
 import { Controller, Pagination } from "swiper/modules";
 import { ProductCard } from "../ProductCard";
-
-export const products = [
-  {
-    src: "/assets/images/products/medium-product/product.png",
-    heading: "Dinosaur Toys for Baby",
-    price: 50,
-  },
-  {
-    src: "/assets/images/products/medium-product/product.png",
-    heading: "Dinosaur Toys for Baby",
-    price: 50,
-  },
-  {
-    src: "/assets/images/products/medium-product/product.png",
-    heading: "Dinosaur Toys for Baby",
-    price: 50,
-  },
-  {
-    src: "/assets/images/products/medium-product/product.png",
-    heading: "Dinosaur Toys for Baby",
-    price: 50,
-  },
-];
+import { products } from "@/lib/products";
 
 export default function Products() {
   const IsBigMobile = useMediaQuery({ query: "(min-width: 500px)" });

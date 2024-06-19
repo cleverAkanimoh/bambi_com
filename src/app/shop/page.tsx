@@ -5,9 +5,9 @@ import ProductCardWrapper from "@/components/shop/ProductCardWrapper";
 import React from "react";
 
 export default function page({
-  searchParams: { view, sort_by },
+  searchParams: { sort_by },
 }: {
-  searchParams: { view: string; sort_by: string };
+  searchParams: { sort_by: string };
 }) {
   return (
     <main className="min-h-screen flex flex-col">
@@ -18,7 +18,7 @@ export default function page({
       </React.Suspense>
 
       <React.Suspense>
-        <ProductCardWrapper view={view ?? "grid"} />
+        <ProductCardWrapper sortBy={sort_by} />
       </React.Suspense>
 
       <ModalQuickView />

@@ -1,17 +1,16 @@
 import React from "react";
 // import { ProductCard } from "../ProductCard";
 import { ProductsType } from "@/types";
-import { products } from "../home/Products";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "../Button";
 
 export default function ProductCardWrapper({
   array,
-  view,
+  sortBy,
 }: {
   array?: ProductsType;
-  view: string;
+  sortBy: string;
 }) {
   return (
     <section className="row shop_wrapper grid_4 p-4">
