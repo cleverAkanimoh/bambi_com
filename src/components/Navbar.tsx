@@ -3,6 +3,7 @@ import NavBanner from "./navbar/NavBanner";
 import MainNav from "./navbar/MainNav";
 import Search from "./Search";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Navbar() {
   return (
@@ -176,18 +177,18 @@ export default function Navbar() {
 
             {/* <!-- Cart Product Button Start --> */}
             <div className="cart-product-btn mt-4">
-              <a
-                href="cart.php"
+              <Link
+                href="/cart"
                 className="btn btn-light btn-hover-primary w-100"
               >
                 <i className="fa fa-shopping-cart"></i> View cart
-              </a>
-              <a
-                href="checkout.php"
+              </Link>
+              <Link
+                href="/checkout"
                 className="btn btn-light btn-hover-primary w-100 mt-4"
               >
                 <i className="fa fa-share"></i> Checkout
-              </a>
+              </Link>
             </div>
             {/* <!-- Cart Product Button End --> */}
           </div>

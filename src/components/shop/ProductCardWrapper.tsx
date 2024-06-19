@@ -1,35 +1,48 @@
 import React from "react";
-// import { ProductCard } from "../ProductCard";
 import { ProductsType } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "../Button";
+import Pagination from "../Pagination";
 
 export default function ProductCardWrapper({
   array,
   sortBy,
+  search,
+  currentPage,
 }: {
   array?: ProductsType;
   sortBy: string;
+  search: string;
+  currentPage: number;
 }) {
   return (
-    <section className="row shop_wrapper grid_4 p-4">
-      {[1, 2, 3, 4, 5, 5, 7, 7].map((x, i) => (
-        <ShopProductCard
-          key={i}
-          src1="/assets/images/products/medium-product/2.jpg"
-          src2="/assets/images/products/medium-product/3.jpg"
-          new_price={12.5}
-          old_price={14.5}
-          heading={"Unique content product"}
-          description={`It is a long established fact that a reader will be distracted by the
+    <section className="space-y-4 my-8 p-4">
+      <section className="row shop_wrapper grid_4">
+        {[1, 2, 3, 4, 5, 5, 7, 7].map((x, i) => (
+          <ShopProductCard
+            key={i}
+            src1="/assets/images/products/medium-product/2.jpg"
+            src2="/assets/images/products/medium-product/3.jpg"
+            new_price={12.5}
+            old_price={14.5}
+            heading={"Unique content product"}
+            description={`It is a long established fact that a reader will be distracted by the
           readable content of a page when looking at its layout. The point of
           using Lorem Ipsum is that it has a more-or-less normal distribution of
           letters, as opposed to using Content here, content here, making it
           look like readable English.`}
-          href="/shop"
+            href="/shop"
+          />
+        ))}
+      </section>
+      <aside className="flex justify-end !mt-20">
+        <Pagination
+          totalPosts={400}
+          postPerPage={7}
+          currentPage={currentPage}
         />
-      ))}
+      </aside>
     </section>
   );
 }
