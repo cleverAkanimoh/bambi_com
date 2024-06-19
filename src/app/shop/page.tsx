@@ -1,9 +1,27 @@
-import React from 'react'
+import Breadcrumbs from "@/components/Breadcrumbs";
+import Header from "@/components/shop/Header";
+import ModalQuickView from "@/components/shop/ModalQuickView";
+import ProductCardWrapper from "@/components/shop/ProductCardWrapper";
+import React from "react";
 
-const page = () => {
+export default function page({
+  searchParams: { view, sort_by },
+}: {
+  searchParams: { view: string; sort_by: string };
+}) {
   return (
-    <div>Shop Page</div>
-  )
-}
+    <main className="min-h-screen flex flex-col">
+      <Breadcrumbs active="Shop" />
 
-export default page
+      <React.Suspense>
+        <Header />
+      </React.Suspense>
+
+      <React.Suspense>
+        <ProductCardWrapper view={view ?? "grid"} />
+      </React.Suspense>
+
+      <ModalQuickView />
+    </main>
+  );
+}
