@@ -17,7 +17,6 @@ export default function Products() {
                   data-bs-toggle="tab"
                   href="/#tab-product-all"
                 >
-                  {" "}
                   <br /> <br />
                   Best Sale
                 </a>
