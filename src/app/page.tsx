@@ -7,7 +7,7 @@ export default function Home() {
     <main className="">
       <Header />
       <Products />
-      <BannerSection />
+      {/* <BannerSection /> */}
     </main>
   );
 }
