@@ -7,6 +7,8 @@ import NavLink from "./NavLink";
 import { pagesArray } from "@/lib/navData";
 import Search from "../Search";
 import { useMediaQuery } from "react-responsive";
+
+import Logo from "../../../public/assets/images/logo/logo.png";
 // import UserDropdown from "./UserDropdown";
 
 export default function MainNav() {
@@ -19,13 +21,7 @@ export default function MainNav() {
 
       <div className="header-logo">
         <Link href="/">
-          <Image
-            src="/assets/images/logo/logo.png"
-            alt="Site Logo"
-            className="h-20"
-            width={100}
-            height={100}
-          />
+          <Image src={Logo} alt="Site Logo" />
         </Link>
       </div>
       {/* <!-- Header Logo End --> */}
@@ -34,11 +30,11 @@ export default function MainNav() {
       <div
         className={
           showNav && !laptopView
-            ? "w-full absolute top-28 bg-white"
-            : "col-lg-6 d-none d-lg-block"
+            ? "w-full left-0 pl-2 xs:pl-4 absolute top-28 bg-white"
+            : "col-md-6 d-none d-md-block"
         }
       >
-        <div className="main-menu">
+        <div className="main-menu xl:ml-6">
           <ul className="">
             <NavLink href="/">Home</NavLink>
             <NavLink href="/shop">Shop</NavLink>
@@ -54,27 +50,16 @@ export default function MainNav() {
       {/* <!-- Header Action Start --> */}
       <div className="col-md-6 col-lg-3 col-xl-4 col-6">
         <div className="header-actions header-actions-width">
-          {/* <!-- Header Action Left Side Start --> */}
           <div className="header-action-left">
-            {/* <!-- Search bar Start --> */}
             <Search />
-            {/* <!-- Search bar Start --> */}
           </div>
-          {/* <!-- Header Action Left Side End --> */}
 
-          {/* <!-- Header Action Right Side Start --> */}
           <div className="header-action-right">
-            {/* <!-- Search Action Button Start --> */}
             <button className="header-action-btn header-action-btn-search d-xl-none d-lg-block d-none">
               <i className="pe-7s-search"></i>
             </button>
-            {/* <!-- Search Action Button End --> */}
 
-            {/* <!-- User Dropdown Start --> */}
             {/* <UserDropdown /> */}
-            {/* <!-- User Dropdown End --> */}
-
-            {/* <!-- Wishlist Action Button Start --> */}
             <Link
               href="/wishlist"
               className="header-action-btn header-action-btn-wishlist"

@@ -10,12 +10,13 @@ export default function Search({
       action="#"
       className={
         variant === "on-canvas"
-          ? "search-bar d-xl-flex d-none position-relative"
+          ? "search-bar d-xl-flex d-none position-relative md:!min-w-32"
           : "offcanvas-search-form"
       }
     >
       <input
-        type="text"
+        type="search"
+        name="search"
         placeholder={
           variant === "on-canvas" ? "Search our store" : "Search Product..."
         }
@@ -24,10 +25,13 @@ export default function Search({
             ? "search-bar-input"
             : "offcanvas-search-input"
         }
+        required
       />
-      <button className="search-bar-button">
-        <i className="pe-7s-search"></i>
-      </button>
+      {variant === "on-canvas" && (
+        <button className="search-bar-button">
+          <i className="pe-7s-search"></i>
+        </button>
+      )}
     </form>
   );
 }

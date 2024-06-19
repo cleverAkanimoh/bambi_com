@@ -27,7 +27,7 @@ export default function Navbar() {
           {/* <!-- Button Close End --> */}
 
           {/* <!-- Offcanvas Search Form Start --> */}
-          <Search />
+          <Search variant="off-canvas" />
           {/* <!-- Offcanvas Search Form End --> */}
         </div>
       </div>
