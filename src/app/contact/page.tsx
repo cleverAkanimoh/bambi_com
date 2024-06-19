@@ -16,15 +16,15 @@ const page = () => {
 <section className='flex flex-col md:flex-row gap-8 justify-between w-[90%] mx-auto mt-14 '>
     <form action="" className='flex flex-col w-full gap-4'>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-        <input className="w-full p-4 outline-none ring-0 bg-slate-100 focus:bg-white border focus:border-primary" type="text" placeholder="Your Name *" name="name" />
-        <input className="w-full p-4 outline-none ring-0 bg-slate-100 focus:bg-white border focus:border-primary" type="email" placeholder="Email *"  name="email" />
+        <input className="w-full p-4 outline-none ring-0 bg-stone-100 focus:bg-white border focus:border-primary" type="text" placeholder="Your Name *" name="name" />
+        <input className="w-full p-4 outline-none ring-0 bg-stone-100 focus:bg-white border focus:border-primary" type="email" placeholder="Email *"  name="email" />
         </div>
-        <input className="w-full p-4 outline-none ring-0 bg-slate-100 focus:bg-white border focus:border-primary" type="text" placeholder="Subject *" name="name" />
-        <textarea className='block bg-slate-100 focus:bg-white w-full focus:outline-none border focus:border-primary p-4 ring-0 resize' value="" placeholder="Message" />
+        <input className="w-full p-4 outline-none ring-0 bg-stone-100 focus:bg-white border focus:border-primary" type="text" placeholder="Subject *" name="name" />
+        <textarea className='block bg-stone-100 focus:bg-white w-full focus:outline-none border focus:border-primary p-4 ring-0 resize' value="" placeholder="Message" />
         <button
                    
                     type="submit"
-                    className='text-white w-full md:w-1/3 hover:text-black text-center font-bold bg-secondary rounded-md p-4'
+                    className='text-white w-full md:w-[45%] lg:w-1/3 hover:text-black text-center font-bold bg-secondary rounded-md p-4'
                  
                    
                 >
