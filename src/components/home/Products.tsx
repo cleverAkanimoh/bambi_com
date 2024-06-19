@@ -5,6 +5,8 @@ import Image, { StaticImageData } from "next/image";
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Button from "../Button";
+import { useMediaQuery } from "react-responsive";
+import { Controller, Pagination } from "swiper/modules";
 
 export const products = [
   {
@@ -30,6 +32,9 @@ export const products = [
 ];
 
 export default function Products() {
+  const IsBigMobile = useMediaQuery({ query: "(min-width: 500px)" });
+  const IsTabletView = useMediaQuery({ query: "(min-width: 760px)" });
+  const IsLaptopView = useMediaQuery({ query: "(min-width: 900px)" });
   return (
     <section className="p-4 flex flex-col">
       <h1 className="text-xl font-medium">Featured</h1>
@@ -37,7 +42,13 @@ export default function Products() {
       {/* <!-- Products Tab Start --> */}
 
       <div className="" data-aos-delay="400">
-        <Swiper slidesPerView={2}>
+        <Swiper
+          modules={[Pagination, Controller]}
+          slidesPerView={
+            IsLaptopView ? 4 : IsTabletView ? 3 : IsBigMobile ? 2 : 1
+          }
+          className="size-full overflow-hidden"
+        >
           {products.map(({ src, heading, price }, index) => (
             <SwiperSlide key={index}>
               <ProductItemSlide
@@ -69,19 +80,23 @@ const ProductItemSlide = ({
     <div className="relative group">
       <Link href={href} className="overflow-hidden block">
         <Image
-          width={70}
-          height={70}
+          width={50}
+          height={50}
           priority
-          className="w-full group-hover:scale-110 transition-all duration-300 -z-10"
+          className="w-full group-hover:scale-110 group-hover:!bg-opacity-75 -z-10"
           src={src}
-          alt="Product"
+          alt={heading}
+          data-aos="fade-in"
         />
       </Link>
       <span className="absolute top-2 left-2 bg-black p-1 !text-sm min-w-14 grid place-items-center rounded-md text-white">
         -18%
       </span>
 
-      <div className="z-10 opacity-0  group-hover:!opacity-100 absolute right-2 top-2 space-y-2 transition-all duration-300">
+      <div
+        className="z-10 group-hover:fade-in opacity-0 group-hover:!opacity-100 absolute right-2 top-2 space-y-2 transition-all duration-300"
+        data-aos="fade-in"
+      >
         <Button>
           <i className="pe-7s-like"></i>
         </Button>
@@ -92,7 +107,7 @@ const ProductItemSlide = ({
           <i className="pe-7s-search"></i>
         </Button>
       </div>
-      <button className="btn btn-whited btn-hover-primary text-capitalize add-to-cart absolute bottom-4 left-1/2 -translate-x-1/2 w-8/12 !text-sm  opacity-0 group-hover:!opacity-100 transition-all duration-300">
+      <button className="btn btn-whited btn-hover-primary text-capitalize add-to-cart absolute bottom-4 left-1/2 -translate-x-1/2 w-8/12 !text-sm  opacity-0 group-hover:!opacity-100">
         Add To Cart
       </button>
     </div>
