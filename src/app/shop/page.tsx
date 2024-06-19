@@ -14,10 +14,6 @@ export default function page({
       <Breadcrumbs active="Shop" />
 
       <React.Suspense>
-        <Header />
-      </React.Suspense>
-
-      <React.Suspense>
         <ProductCardWrapper
           sortBy={sort_by ?? ""}
           currentPage={Number(currentPage) ?? 1}
