@@ -20,10 +20,8 @@ export default function MainNav() {
 
   React.useEffect(() => {
     window.onscroll = () =>
-      window.innerWidth > 120 ? setIsFixedNav(true) : setIsFixedNav(false);
-
-    console.log(isFixedNav);
-  }, [isFixedNav]);
+      window.scrollY > 120 ? setIsFixedNav(true) : setIsFixedNav(false);
+  }, []);
   return (
     <section
       className={clsx("flex items-center justify-between px-2 w-full", {
