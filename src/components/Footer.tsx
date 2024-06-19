@@ -105,7 +105,7 @@ const Footer = () => {
           </p>
         </form>
       </div>
-      <div className="bg-primary py-10 px-4 md:p-6 text-center flex items-center justify-center ">
+      <div className="bg-primary py-6 px-4 md:px-6 md:py-4 text-center flex items-center justify-center ">
         <p className="flex gap-1 items-center">
           &copy; {year} <span className="font-bold">Bambi</span> Made with{" "}
           <GoHeartFill className="text-red-600" /> by{" "}

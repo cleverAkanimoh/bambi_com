@@ -18,6 +18,7 @@ import "./css/style.css";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import Script from "next/script";
+import { AuthProvider } from "@/context/auth-context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,10 +35,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={inter.className}>
+      <AuthProvider>
         <Navbar />
         {children}
 
         <Footer />
+        </AuthProvider>
         {/* <!-- Scripts --> */}
         {/* <!-- Global Vendor, plugins JS --> */}
 
