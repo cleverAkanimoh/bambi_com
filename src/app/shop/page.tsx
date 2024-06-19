@@ -1,5 +1,4 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { products } from "@/components/home/Products";
 import Header from "@/components/shop/Header";
 import ModalQuickView from "@/components/shop/ModalQuickView";
 import ProductCardWrapper from "@/components/shop/ProductCardWrapper";

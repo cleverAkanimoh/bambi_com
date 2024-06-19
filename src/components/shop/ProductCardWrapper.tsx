@@ -16,27 +16,56 @@ export default function ProductCardWrapper({
   return (
     <section className="row shop_wrapper grid_4 p-4">
       {[1, 2, 3, 4, 5, 5, 7, 7].map((x, i) => (
-        <ShopProductCard key={i} />
+        <ShopProductCard
+          key={i}
+          src1="/assets/images/products/medium-product/2.jpg"
+          src2="/assets/images/products/medium-product/3.jpg"
+          new_price={12.5}
+          old_price={14.5}
+          heading={"Unique content product"}
+          description={`It is a long established fact that a reader will be distracted by the
+          readable content of a page when looking at its layout. The point of
+          using Lorem Ipsum is that it has a more-or-less normal distribution of
+          letters, as opposed to using Content here, content here, making it
+          look like readable English.`}
+          href="/shop"
+        />
       ))}
     </section>
   );
 }
 
-const ShopProductCard = () => (
+const ShopProductCard = ({
+  src1,
+  src2,
+  old_price,
+  new_price,
+  description,
+  heading,
+  href,
+}: {
+  src1: string;
+  src2?: string;
+  href: string;
+  old_price?: number;
+  new_price: number;
+  description: string;
+  heading: string;
+}) => (
   <div className="col-xl-3 col-lg-4 col-md-4 col-sm-6 product">
     <div className="product-inner">
       <div className="thumb">
-        <Link href="/" className="image">
+        <Link href={href} className="image">
           <Image
             className="first-image"
-            src="/assets/images/products/medium-product/2.jpg"
+            src={src1}
             alt="Product"
             width={100}
             height={100}
           />
           <Image
             className="second-image fit-image"
-            src="/assets/images/products/medium-product/3.jpg"
+            src={src2 ?? src1}
             alt="Product"
             width={100}
             height={100}
@@ -69,19 +98,13 @@ const ShopProductCard = () => (
       </div>
       <div className="content">
         <h5 className="title">
-          <Link href="/product">Unique content product</Link>
+          <Link href={href}>{heading}</Link>
         </h5>
         <span className="price">
-          <span className="new">$12.50</span>
-          <span className="old">$14.50</span>
+          <span className="new">${old_price}</span>
+          <span className="old">${new_price}</span>
         </span>
-        <p>
-          It is a long established fact that a reader will be distracted by the
-          readable content of a page when looking at its layout. The point of
-          using Lorem Ipsum is that it has a more-or-less normal distribution of
-          letters, as opposed to using Content here, content here, making it
-          look like readable English.
-        </p>
+        <p>{description}</p>
       </div>
     </div>
   </div>

@@ -28,9 +28,9 @@ export default function Header() {
 
   return (
     <header className="flex items-center justify-between py-4 px-3">
-      <div className="flex border rounded-md divide-x">
-        <ViewButton Icon={CiGrid31} view="grid" active={active} />
-        <ViewButton Icon={BiMenu} view="list" active={active} />
+      <div className="flex border rounded-md divide-x shop_toolbar_btn">
+        <ViewButton Icon={CiGrid31} view="grid" role="grid_4" />
+        <ViewButton Icon={BiMenu} view="list" role="grid_list" />
       </div>
       <aside className="flex flex-wrap gap-4">
         <span>Showing 1-12 of 39 results</span>
@@ -52,21 +52,17 @@ export default function Header() {
 const ViewButton = ({
   Icon,
   view = "grid",
-  active = "grid",
+  role,
 }: {
   Icon: React.ElementType;
   view: "grid" | "list";
-  active: string;
+  role: string;
 }) => {
-  const { push } = useRouter();
-
   return (
     <Button
-      className={clsx("", {
-        "pointer-events-none !bg-primary !text-white": active === view,
-      })}
+      className={clsx("", {})}
+      data-role={role}
       title={`Display ${view}`}
-      onClick={() => push(`?view=${view}`)}
     >
       <Icon className="size-5 md:size-7" />
     </Button>
