@@ -55,15 +55,13 @@ export default function Header() {
   );
 }
 
-const SlideItem = ({
-  src,
-  paragraph,
-  title,
-}: {
+export type ItemType = {
   src: string | StaticImageData;
   paragraph?: string;
   title: React.ReactNode;
-}) => (
+};
+
+const SlideItem = ({ src, paragraph, title }: ItemType) => (
   <div className="hero-slide-item swiper-slide">
     <div className="hero-slide-bg">
       <Image src={src} alt="Slider Image" priority />
