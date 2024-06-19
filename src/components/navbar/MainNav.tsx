@@ -9,6 +9,7 @@ import Search from "../Search";
 import { useMediaQuery } from "react-responsive";
 
 import Logo from "../../../public/assets/images/logo/logo.png";
+import clsx from "clsx";
 // import UserDropdown from "./UserDropdown";
 
 export default function MainNav() {
@@ -25,9 +26,9 @@ export default function MainNav() {
   }, [isFixedNav]);
   return (
     <section
-      className={`${
-        isFixedNav ? "fixed top-0 left-0 bg-white z-40" : ""
-      } flex items-center justify-between px-2 w-full`}
+      className={clsx("flex items-center justify-between px-2 w-full", {
+        "fixed top-0 left-0 bg-white z-40": isFixedNav,
+      })}
     >
       {/* <!-- Header Logo Start --> */}
 
