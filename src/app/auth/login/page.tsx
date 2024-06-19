@@ -30,7 +30,7 @@ const page = () => {
                 >
                     Login
                 </button>
-                <Link href="/register" className='self-start text-[#585858] hover:text-primary transition-all ease-in-out duration-200 hover:underline'>Create account</Link>
+                <Link href="/auth/register" className='self-start text-[#585858] hover:text-primary transition-all ease-in-out duration-200 hover:underline'>Create account</Link>
             </form>
 
         </div>
