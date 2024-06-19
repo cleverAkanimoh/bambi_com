@@ -18,6 +18,7 @@ import "./css/style.css";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import Script from "next/script";
+import { Providers } from "../context/Providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,10 +35,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={inter.className}>
-        <Navbar />
-        {children}
-
-        <Footer />
+        <Providers>
+          <Navbar />
+          {children}
+          <Footer />
+        </Providers>
         {/* <!-- Scripts --> */}
         {/* <!-- Global Vendor, plugins JS --> */}
 

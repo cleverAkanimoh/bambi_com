@@ -5,55 +5,102 @@ import Search from "../Search";
 import { pagesArray } from "@/lib/navData";
 import NavLink from "./NavLink";
 import Link from "next/link";
-import { BsClock, BsPhone } from "react-icons/bs";
+import {
+  BsClock,
+  BsLinkedin,
+  BsPhone,
+  BsTwitter,
+  BsVimeo,
+  BsYoutube,
+} from "react-icons/bs";
 import { BiMailSend } from "react-icons/bi";
+import { useGlobalContext } from "@/context/store";
+import clsx from "clsx";
+import { FaFacebook } from "react-icons/fa";
 
 export default function MenuSideNav() {
+  const { setIsMenuClicked, isMenuClicked } = useGlobalContext();
   return (
-    <section className="lg:hidden fixed h-screen w-screen bg-black/20 z-50">
-      <div className="h-screen bg-black" />
+    <section
+      className={clsx(
+        "lg:hidden fixed top-0 left-0 h-screen w-screen  flex transition-all duration-500",
+        {
+          "bg-black/35 z-[200]": isMenuClicked,
+          "opacity-0 -z-30": !isMenuClicked,
+        }
+      )}
+    >
+      <div
+        className="h-screen w-full"
+        onClick={() => setIsMenuClicked(false)}
+      />
 
-      <aside className="w-[250px] xs:w-[320px] h-screen p-2 xs:p-4">
-        <button>X</button>
-
-        <div>
-          <Search variant="off-canvas" />
-
-          <ul className="">
-            <NavLink href="/">Home</NavLink>
-            <NavLink href="/shop">Shop</NavLink>
-            <NavLink href="/faq">Faqs</NavLink>
-            <NavLink href="/faq" array={pagesArray}>
-              Pages
-            </NavLink>
-          </ul>
-
-          <div>
-            <MenuDropDown title="Language" placeholder="English" />
-            <MenuDropDown
-              title="Currency"
-              placeholder="USD"
-              array={["USD", "NGN"]}
-            />
-          </div>
-
-          <address>
-            <MenuAddress
-              Icon={BsPhone}
-              href="tel:+012 3456 789"
-              title="+012 3456 789"
-            />
-            <MenuAddress
-              Icon={BiMailSend}
-              href="mailto:info@example.com"
-              title="info@example.com"
-            />
-            <MenuAddress Icon={BsClock} title="Monday - Sunday 9.00 - 18.00" />
-          </address>
-
-          <div></div>
+      <div
+        className={clsx("relative flex", {
+          "translate-x-full opacity-0": !isMenuClicked,
+        })}
+      >
+        <div className="top-0 -left-12 bg-primary size-10 text-2xl text-white grid place-items-center active:scale-95 transition-all duration-300 shrink-0">
+          <button
+            onClick={() => setIsMenuClicked(false)}
+            className=" transition-all duration-500 hover:rotate-180 "
+          >
+            X
+          </button>
         </div>
-      </aside>
+        <aside
+          className={clsx(
+            "w-full max-w-[300px] xs:max-w-[320px] shrink-0 relative h-screen overflow-y-auto  p-2 xs:p-4 py-6 bg-white transition-all duration-300"
+          )}
+        >
+          <div className="space-y-10 px-2">
+            <Search variant="mobile-view" />
+
+            <ul className="space-y-6 px-0.5 font-semibold">
+              <NavLink href="/">Home</NavLink>
+              <NavLink href="/shop">Shop</NavLink>
+              <NavLink href="/faq">Faqs</NavLink>
+              <NavLink href="#" array={pagesArray} mobile>
+                Pages
+              </NavLink>
+            </ul>
+
+            <div className="space-y-1">
+              <MenuDropDown title="Language" placeholder="English" />
+              <MenuDropDown
+                title="Currency"
+                placeholder="USD"
+                //   array={["USD", "NGN"]}
+              />
+            </div>
+
+            <address className="font-semibold">
+              <MenuAddress
+                Icon={BsPhone}
+                href="tel:+012 3456 789"
+                title="+012 3456 789"
+              />
+              <MenuAddress
+                Icon={BiMailSend}
+                href="mailto:info@example.com"
+                title="info@example.com"
+              />
+              <MenuAddress
+                Icon={BsClock}
+                title="Monday - Sunday 9.00 - 18.00"
+              />
+            </address>
+
+            <div className="flex items-center gap-2.5">
+              <IconLink href="https://facebook.com/" Icon={FaFacebook} />
+              <IconLink href="https://x.com" Icon={BsTwitter} />
+              <IconLink href="https://linkedin.com/" Icon={BsLinkedin} />
+              <IconLink href="https://youtube.com/" Icon={BsYoutube} />
+              <IconLink href="https://vimeo.com/" Icon={BsVimeo} />
+            </div>
+          </div>
+        </aside>
+      </div>
     </section>
   );
 }
@@ -67,9 +114,15 @@ const MenuAddress = ({
   href?: string;
   title: string;
 }) => (
-  <p className="flex gap-2">
+  <p className="flex gap-2 ">
     <Icon className="size-5" />
-    {href ? <Link href={href}>{title}</Link> : <span>{title}</span>}
+    {href ? (
+      <Link href={href} className="hover:text-primary">
+        {title}
+      </Link>
+    ) : (
+      <span>{title}</span>
+    )}
   </p>
 );
 
@@ -99,4 +152,16 @@ const MenuDropDown = ({
       )}
     </div>
   </div>
+);
+
+const IconLink = ({
+  href,
+  Icon,
+}: {
+  href: string;
+  Icon: React.ElementType;
+}) => (
+  <a href={href} target="__blank" className="hover:text-primary">
+    <Icon className="size-6 xs:size-4" />
+  </a>
 );

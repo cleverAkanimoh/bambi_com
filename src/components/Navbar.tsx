@@ -2,8 +2,6 @@ import React from "react";
 import NavBanner from "./navbar/NavBanner";
 import MainNav from "./navbar/MainNav";
 import Search from "./Search";
-import Image from "next/image";
-import Link from "next/link";
 import CartOffCanvas from "./navbar/CartOffCanvas";
 import MenuSideNav from "./navbar/MenuSideNav";
 
