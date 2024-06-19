@@ -1,11 +1,18 @@
+"use client";
+
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import NavLink from "./NavLink";
 import { pagesArray } from "@/lib/navData";
 import Search from "../Search";
+import { useMediaQuery } from "react-responsive";
+// import UserDropdown from "./UserDropdown";
 
 export default function MainNav() {
+  const [showNav, setShowNav] = useState(false);
+
+  const laptopView = useMediaQuery({ query: "(min-width:765px)" });
   return (
     <section className="flex items-center justify-between px-2 xs:px-4">
       {/* <!-- Header Logo Start --> */}
@@ -24,9 +31,15 @@ export default function MainNav() {
       {/* <!-- Header Logo End --> */}
 
       {/* <!-- Header Menu Start --> */}
-      <div className="col-lg-6 d-none d-lg-block">
+      <div
+        className={
+          showNav && !laptopView
+            ? "w-full absolute top-28 bg-white"
+            : "col-lg-6 d-none d-lg-block"
+        }
+      >
         <div className="main-menu">
-          <ul>
+          <ul className="">
             <NavLink href="/">Home</NavLink>
             <NavLink href="/shop">Shop</NavLink>
             <NavLink href="/faq">Faqs</NavLink>
@@ -58,28 +71,7 @@ export default function MainNav() {
             {/* <!-- Search Action Button End --> */}
 
             {/* <!-- User Dropdown Start --> */}
-            <div className="dropdown-user d-none d-lg-block">
-              <button className="header-action-btn">
-                <i className="pe-7s-user"></i>
-              </button>
-              <ul className="dropdown-menu-user">
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Usd
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Pound
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Taka
-                  </a>
-                </li>
-              </ul>
-            </div>
+            {/* <UserDropdown /> */}
             {/* <!-- User Dropdown End --> */}
 
             {/* <!-- Wishlist Action Button Start --> */}
@@ -99,7 +91,10 @@ export default function MainNav() {
             {/* <!-- Cart Action Button End --> */}
 
             {/* <!-- Mobile Menu Hambarger Action Button Start --> */}
-            <button className="header-action-btn header-action-btn-menu d-lg-none d-md-block">
+            <button
+              className="header-action-btn header-action-btn-menu d-lg-none d-md-block"
+              onClick={() => setShowNav((prev) => !prev)}
+            >
               <i className="fa fa-bars"></i>
             </button>
             {/* <!-- Mobile Menu Hambarger Action Button End --> */}
