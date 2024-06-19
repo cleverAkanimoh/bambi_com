@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
 import React, { useState } from "react";
 import { CiShoppingCart } from "react-icons/ci";
-import Button from "./Button";
+import Button from "../Button";
 import { BiTrash } from "react-icons/bi";
 
 const testCartItems = [

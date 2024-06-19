@@ -4,7 +4,8 @@ import MainNav from "./navbar/MainNav";
 import Search from "./Search";
 import Image from "next/image";
 import Link from "next/link";
-import CartOffCanvas from "./CartOffCanvas";
+import CartOffCanvas from "./navbar/CartOffCanvas";
+import MenuSideNav from "./navbar/MenuSideNav";
 
 export default function Navbar() {
   return (
@@ -18,6 +19,8 @@ export default function Navbar() {
       {/* <!-- Header Bottom Start --> */}
       <MainNav />
       {/* <!-- Header Bottom End --> */}
+
+      <MenuSideNav />
 
       {/* <!-- Offcanvas Search Start --> */}
       <div className="offcanvas-search">
