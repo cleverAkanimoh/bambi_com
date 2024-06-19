@@ -18,15 +18,15 @@ export default function MainNav() {
   const laptopView = useMediaQuery({ query: "(min-width:765px)" });
 
   React.useEffect(() => {
-    const checkScroll = () => {
-      if (window.innerWidth > 100) setIsFixedNav(true);
-    };
-    window.onscroll = checkScroll;
+    window.onscroll = () =>
+      window.innerWidth > 120 ? setIsFixedNav(true) : setIsFixedNav(false);
+
+    console.log(isFixedNav);
   }, [isFixedNav]);
   return (
     <section
       className={`${
-        isFixedNav ? "fixed top-0 left-0 bg-white z-40" : "relative"
+        isFixedNav ? "fixed top-0 left-0 bg-white z-40" : ""
       } flex items-center justify-between px-2 w-full`}
     >
       {/* <!-- Header Logo Start --> */}
