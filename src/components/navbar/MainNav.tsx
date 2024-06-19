@@ -7,6 +7,8 @@ import NavLink from "./NavLink";
 import { pagesArray } from "@/lib/navData";
 import Search from "../Search";
 import { useMediaQuery } from "react-responsive";
+
+import Logo from "../../../public/assets/images/logo/logo.png";
 // import UserDropdown from "./UserDropdown";
 
 export default function MainNav() {
@@ -19,12 +21,7 @@ export default function MainNav() {
 
       <div className="header-logo">
         <Link href="/">
-          <Image
-            src="/assets/images/logo/logo.png"
-            alt="Site Logo"
-            width={50}
-            height={50}
-          />
+          <Image src={Logo} alt="Site Logo" />
         </Link>
       </div>
       {/* <!-- Header Logo End --> */}

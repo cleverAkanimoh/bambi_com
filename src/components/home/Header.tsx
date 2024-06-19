@@ -1,84 +1,45 @@
 import Link from "next/link";
 import React from "react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
+import SliderImage1 from "../../../public/assets/images/slider/slider3-1.png";
+import SliderImage2 from "../../../public/assets/images/slider/slider3-2.1.png";
+import SliderImage3 from "../../../public/assets/images/slider/slider3.jpg";
 
 export default function Header() {
   return (
-    <div className="section">
+    <header className="section">
       <div className="hero-slider swiper-container">
         <div className="swiper-wrapper">
-          <div className="hero-slide-item swiper-slide">
-            <div className="hero-slide-bg">
-              <Image
-                width={100}
-                height={100}
-                src="/assets/images/slider/slider3-1.png"
-                alt="Slider Image"
-              />
-            </div>
-            <div className="container">
-              <div className="hero-slide-content">
-                <h2 className="title m-0">
-                  {" "}
-                  Shop for the best <br />
-                  Games and Storybooks <br />
-                  for kids and family{" "}
-                </h2>
-                <Link
-                  href="shop.php"
-                  className="btn btn-primary btn-hover-light"
-                >
-                  Shop Now
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          <div className="hero-slide-item swiper-slide">
-            <div className="hero-slide-bg">
-              <Image
-                width={100}
-                height={100}
-                src="/assets/images/slider/slider3-2.1.png"
-                alt="Slider Image"
-              />
-            </div>
-            <div className="container">
-              <div className="hero-slide-content">
-                <h2 className="title m-0">
-                  Discover endless <br /> fun with Bambi <br /> screen-free
-                  games
-                </h2>
-                <p>Check out the best gift collection for your baby.</p>
-                <Link href="/shop" className="btn btn-primary btn-hover-light">
-                  Shop Now
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          <div className="hero-slide-item swiper-slide">
-            <div className="hero-slide-bg">
-              <Image
-                width={100}
-                height={100}
-                src="/assets/images/slider/slider3.jpg"
-                alt="Slider Image"
-              />
-            </div>
-            <div className="container">
-              <div className="hero-slide-content">
-                <h2 className="title m-0">
-                  Discover endless <br /> fun with Bambi <br /> screen-free
-                  games
-                </h2>
-                <p>Check out the best gift collection for your baby.</p>
-                <Link href="/shop" className="btn btn-primary btn-hover-light">
-                  Shop Now
-                </Link>
-              </div>
-            </div>
-          </div>
+          <SlideItem
+            src={SliderImage1}
+            title={
+              <>
+                Shop for the best <br />
+                Games and Storybooks <br />
+                for kids and family
+              </>
+            }
+          />
+          <SlideItem
+            src={SliderImage2}
+            title={
+              <>
+                Discover endless <br /> fun with Bambi <br /> screen-free games
+              </>
+            }
+            paragraph="Check out the best gift collection for your baby."
+          />
+          <SlideItem
+            src={SliderImage3}
+            title={
+              <>
+                Shop for the best <br />
+                Games and Storybooks <br />
+                for kids and family
+              </>
+            }
+            paragraph="Check out the best gift collection for your baby."
+          />
         </div>
 
         <div className="swiper-pagination d-md-none"></div>
@@ -90,18 +51,27 @@ export default function Header() {
           <i className="pe-7s-angle-right"></i>
         </div>
       </div>
-    </div>
+    </header>
   );
 }
 
-const SlideItem = ({ src, title }: { src: string; title: React.ReactNode }) => (
+const SlideItem = ({
+  src,
+  paragraph,
+  title,
+}: {
+  src: string | StaticImageData;
+  paragraph?: string;
+  title: React.ReactNode;
+}) => (
   <div className="hero-slide-item swiper-slide">
     <div className="hero-slide-bg">
-      <Image width={500} height={500} src={src} alt="Slider Image" priority />
+      <Image src={src} alt="Slider Image" priority />
     </div>
     <div className="container">
       <div className="hero-slide-content">
         <h2 className="title m-0">{title}</h2>
+        <p className="text-white">{paragraph}</p>
         <Link href="/shop" className="btn btn-primary btn-hover-light">
           Shop Now
         </Link>
