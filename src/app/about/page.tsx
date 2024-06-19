@@ -2,11 +2,13 @@ import Image from 'next/image'
 import aboutImg from "../../../public/assets/images/about/1.jpg"
 import WhyChooseUs from '@/components/WhyChooseUs'
 import OurTeam from '@/components/OurTeam'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 
 const page = () => {
   return (
     <div className='bg-slate-100'>
+      <Breadcrumbs active="About" />
         <section className='w-[90%] mx-auto flex flex-col gap-6 md:flex-row md:items-center md:gap-10 py-10'>
         <Image src={aboutImg} alt='About Image' />
         <aside className='w-full flex flex-col gap-4'>

@@ -1,5 +1,6 @@
 "use client"
 import Accordion from '@/components/Accordion';
+import Breadcrumbs from '@/components/Breadcrumbs';
 import React from 'react'
 
 const page = () => {
@@ -20,6 +21,8 @@ const page = () => {
 
 
     return (
+        <>
+        <Breadcrumbs active="Faq" />
         <div className='my-8'>
             <div className='w-[90%] mx-auto grid gap-10'>
                 <div className='grid gap-2'>
@@ -31,6 +34,7 @@ const page = () => {
                 </div>
             </div>
         </div>
+        </>
     )
 }
 

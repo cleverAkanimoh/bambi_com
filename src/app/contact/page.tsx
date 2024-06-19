@@ -2,12 +2,14 @@ import {motion} from "framer-motion"
 import { MdMailOutline } from "react-icons/md";
 import { MdOutlinePhone } from "react-icons/md";
 import { FaFax } from "react-icons/fa";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 
 
 const page = () => {
   return (
     <div className='w-full pb-10'>
+        <Breadcrumbs active="Contact" />
         
         <div className="w-full">
             <iframe className="w-full h-[20rem]"

@@ -15,6 +15,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/navigation";
 import { useAuth } from '@/context/auth-context';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 
 
@@ -26,7 +27,7 @@ const Layout = ({
   const pathName = usePathname();
   const { user } = useAuth();
   const router = useRouter();
-  
+
   useEffect(() => {
       if (!user) {
           router.push("/auth/login");
@@ -84,6 +85,8 @@ const Layout = ({
   ];
 
   return (
+    <>
+    <Breadcrumbs active="Dashboard" />
     <div className='my-6 p-6 md:p-10'>
       <ToastContainer
           position="top-right"
@@ -123,6 +126,7 @@ const Layout = ({
         </aside>
       </div>
     </div>
+    </>
   );
 };
 
