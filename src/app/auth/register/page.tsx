@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 const Page = () => {
     const { user } = useAuth();
@@ -61,7 +62,8 @@ const Page = () => {
     };
 
     return (
-        <div className='min-h-screen flex items-center justify-center py-10'>
+        <>
+            {/* <Breadcrumbs active="Register" /> */}
             <ToastContainer
                 position="top-right"
                 autoClose={3000}
@@ -73,6 +75,7 @@ const Page = () => {
                 theme="colored"
                 hideProgressBar={false}
             />
+        <div className='min-h-screen flex items-center justify-center py-10'>
             <form onSubmit={signIn} action="" className='bg-[#efefef] text-center w-[90%] mx-auto md:w-1/2 lg:w-2/5 flex flex-col gap-8 items-center px-6 py-12'>
                 <div>
                     <h1 className='text-3xl font-bold'>Create account</h1>
@@ -95,6 +98,7 @@ const Page = () => {
                 </button>
             </form>
         </div>
+        </>
     )
 }
 
