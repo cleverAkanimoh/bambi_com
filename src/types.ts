@@ -1,6 +1,11 @@
 export type Products = {
-  src: string;
+  src1: string;
+  src2?: string;
+  href: string;
+  old_price?: number;
+  new_price: number;
+  description?: string;
   heading: string;
-  price: number;
+  sales_category?: "popularity" | "latest" | "best_offers" | "rated";
 };
 export type ProductsType = Products[];

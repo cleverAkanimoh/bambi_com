@@ -144,10 +144,7 @@ export default function ModalQuickView() {
                 {/* <!-- Cart Button Start --> */}
                 <div className="cart-btn mb-4">
                   <div className="add-to_cart">
-                    <a
-                      className="btn btn-dark btn-hover-primary"
-                      href="cart.php"
-                    >
+                    <a className="btn btn-dark btn-hover-primary" href="/cart">
                       Add to cart
                     </a>
                   </div>
