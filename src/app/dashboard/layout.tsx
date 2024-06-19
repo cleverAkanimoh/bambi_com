@@ -1,8 +1,14 @@
 "use client"
-
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
+import { IoSpeedometerOutline } from "react-icons/io5";
+import { FaCartArrowDown } from "react-icons/fa";
+import { FaCloudDownloadAlt } from "react-icons/fa";
+import { FaRegCreditCard } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
+import { FaUser } from "react-icons/fa";
+import { TbLogout } from "react-icons/tb";
 
 const Layout = ({
   children,
@@ -14,27 +20,38 @@ const Layout = ({
   const navLinks = [
     {
       title: "Dashboard",
-      href: "/dashboard"
+      href: "/dashboard",
+      icon: <IoSpeedometerOutline />
     },
     {
       title: "Orders",
-      href: "/orders"
+      href: "/dashboard/orders",
+      icon: <FaCartArrowDown />
+    },
+    {
+      title: "Download",
+      href: "/dashboard/download",
+      icon: <FaCloudDownloadAlt />
     },
     {
       title: "Payment method",
-      href: "/payment-method"
+      href: "/dashboard/payment-method",
+      icon: <FaRegCreditCard />
     },
     {
       title: "Address",
-      href: "/address"
+      href: "/dashboard/address",
+      icon: <FaLocationDot />
     },
     {
       title: "Account details",
-      href: "/account-details"
+      href: "/dashboard/account-details",
+      icon: <FaUser />
     },
     {
       title: "Logout",
-      href: "/logout"
+      href: "/dashboard/logout",
+      icon: <TbLogout />
     },
   ];
 
@@ -48,12 +65,13 @@ const Layout = ({
                 className={`p-4 border-b flex items-center gap-2 ${pathName === link.href ? "bg-primary text-white" : ""}`}
                 key={link.title}
               >
+                <span>{link.icon}</span>
                 <Link className='uppercase font-semibold' href={link.href}>{link.title}</Link>
               </li>
             ))}
           </ul>
         </nav>
-        <aside className='p-6 border'>
+        <aside className='p-6 border size-full'>
           {children}
         </aside>
       </div>
