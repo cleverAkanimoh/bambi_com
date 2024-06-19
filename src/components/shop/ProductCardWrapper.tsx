@@ -64,6 +64,8 @@ export default function ProductCardWrapper({
               No product was found for{" "}
               <span className="text-primary">{search}</span>
             </h3>
+
+            <Link href="?">clear search</Link>
           </section>
         )}
         {filteredProducts.length > 0 && (
