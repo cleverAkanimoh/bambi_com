@@ -6,7 +6,7 @@ import Products from "@/components/home/Products";
 
 export default function Home() {
   return (
-    <main className="overflow-x-hidden">
+    <main className="overflow-hidden">
       <Header />
       <Products />
       {/* <BannerSection /> */}

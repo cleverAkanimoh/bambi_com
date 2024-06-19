@@ -36,7 +36,7 @@ export default function Products() {
   const IsTabletView = useMediaQuery({ query: "(min-width: 760px)" });
   const IsLaptopView = useMediaQuery({ query: "(min-width: 900px)" });
   return (
-    <section className="p-4 flex flex-col">
+    <section className="p-4 py-10 flex flex-col">
       <h1 className="text-xl font-medium">Featured</h1>
 
       {/* <!-- Products Tab Start --> */}

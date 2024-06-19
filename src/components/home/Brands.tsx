@@ -39,7 +39,7 @@ export default function Brands() {
 const Brand = ({ src }: ItemType) => (
   <div className="swiper-slide single-brand-logo">
     <Link href="#">
-      <Image className="size-32" src={src} alt="Brand Logo" />
+      <Image className="size-28" src={src} alt="Brand Logo" />
     </Link>
   </div>
 );
