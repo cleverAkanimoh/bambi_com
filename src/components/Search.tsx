@@ -7,7 +7,7 @@ import { useDebouncedCallback } from "use-debounce";
 export default function Search({
   variant = "on-canvas",
 }: {
-  variant?: "off-canvas" | "on-canvas";
+  variant?: "off-canvas" | "on-canvas" | "mobile-view";
 }) {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
@@ -26,6 +26,8 @@ export default function Search({
       className={
         variant === "on-canvas"
           ? "search-bar d-xl-flex d-none position-relative md:!min-w-32"
+          : variant === "mobile-view"
+          ? "bg-gray-200/80 w-full p-2 text-[0.96rem] text-gray-600 flex"
           : "offcanvas-search-form"
       }
     >
@@ -38,12 +40,14 @@ export default function Search({
         className={
           variant === "on-canvas"
             ? "search-bar-input"
+            : variant === "mobile-view"
+            ? " placeholder:text-gray-600 flex-1 block"
             : "offcanvas-search-input"
         }
         onChange={(e) => handleSearch(e.target.value)}
         required
       />
-      {variant === "on-canvas" && (
+      {variant !== "off-canvas" && (
         <button className="search-bar-button">
           <i className="pe-7s-search"></i>
         </button>
