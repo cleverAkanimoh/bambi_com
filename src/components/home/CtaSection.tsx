@@ -2,12 +2,12 @@ import React from "react";
 
 export default function CtaSection() {
   return (
-    <section>
+    <section className="my-10">
       <div className="" data-aos="fade-up" data-aos-delay="200">
         {/* <!-- Section Title Start --> */}
         <div className="section-title text-center">
           <h2 className="title">Promoting screen-free healthy development</h2>
-          <h5 className="sub-title mt-2">
+          <h5 className="sub-title mt-2 text-base max-w-sm mx-auto">
             Once upon a time, families played. Today, between screen time and
             homework, free play Otilo.
           </h5>
