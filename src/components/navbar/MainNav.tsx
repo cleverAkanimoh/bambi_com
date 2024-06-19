@@ -13,10 +13,22 @@ import Logo from "../../../public/assets/images/logo/logo.png";
 
 export default function MainNav() {
   const [showNav, setShowNav] = useState(false);
+  const [isFixedNav, setIsFixedNav] = useState(false);
 
   const laptopView = useMediaQuery({ query: "(min-width:765px)" });
+
+  React.useEffect(() => {
+    const checkScroll = () => {
+      if (window.innerWidth > 100) setIsFixedNav(true);
+    };
+    window.onscroll = checkScroll;
+  }, [isFixedNav]);
   return (
-    <section className="flex items-center justify-between px-2 xs:px-4">
+    <section
+      className={`${
+        isFixedNav ? "fixed top-0 left-0 bg-white z-40" : "relative"
+      } flex items-center justify-between px-2 w-full`}
+    >
       {/* <!-- Header Logo Start --> */}
 
       <div className="header-logo">
@@ -30,7 +42,7 @@ export default function MainNav() {
       <div
         className={
           showNav && !laptopView
-            ? "w-full left-0 pl-2 xs:pl-4 absolute top-28 bg-white"
+            ? "w-full left-0 pl-2 xs:pl-4 absolute top-24 bg-white"
             : "col-md-6 d-none d-md-block"
         }
       >
