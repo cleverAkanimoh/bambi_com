@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Button from "../Button";
 import Pagination from "../Pagination";
+import { shopProducts } from "@/lib/products";
 
 export default function ProductCardWrapper({
   array,
@@ -16,22 +17,23 @@ export default function ProductCardWrapper({
   search: string;
   currentPage: number;
 }) {
+  const filteredProducts = search
+    ? shopProducts.filter((product, index) => {})
+    : shopProducts;
+
+  const sortedFilteredProduct = filteredProducts.sort();
   return (
     <section className="space-y-4 my-8 p-4">
       <section className="row shop_wrapper grid_4">
-        {[1, 2, 3, 4, 5, 5, 7, 7].map((x, i) => (
+        {sortedFilteredProduct.map((x, i) => (
           <ShopProductCard
             key={i}
             src1="/assets/images/products/medium-product/2.jpg"
             src2="/assets/images/products/medium-product/3.jpg"
-            new_price={12.5}
-            old_price={14.5}
-            heading={"Unique content product"}
-            description={`It is a long established fact that a reader will be distracted by the
-          readable content of a page when looking at its layout. The point of
-          using Lorem Ipsum is that it has a more-or-less normal distribution of
-          letters, as opposed to using Content here, content here, making it
-          look like readable English.`}
+            new_price={x.new_price}
+            old_price={x.old_price}
+            heading={x.heading}
+            description={`It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English.`}
             href="/shop"
           />
         ))}
@@ -94,7 +96,7 @@ const ShopProductCard = ({
             <i className="pe-7s-refresh-2"></i>
           </Link>
           <Link
-            href="#"
+            href={`?`}
             className="action quickview"
             data-bs-toggle="modal"
             data-bs-target="#quick-view"
