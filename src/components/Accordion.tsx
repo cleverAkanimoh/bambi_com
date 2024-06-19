@@ -16,9 +16,9 @@ interface AccordionProps {
 }
 
 const AccordionItem: React.FC<AccordionItemProps> = ({ title, content, isOpen, onToggle }) => (
-  <div className={`border-b border-b-primary`}>
+  <div className={`border-b border-b-primary mb-5 rounded`}>
     <button
-      className={`w-full text-left py-4 px-4 focus:outline-none flex justify-between items-center ${isOpen && "bg-primary text-white"}`}
+      className={`w-full text-left py-4 px-4 focus:outline-none flex justify-between items-center ${isOpen ? "bg-primary text-white" : "bg-stone-100 text-black"}`}
       onClick={onToggle}
     >
       <span className='font-bold'>{title}</span>
