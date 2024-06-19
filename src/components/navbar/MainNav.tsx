@@ -22,7 +22,6 @@ export default function MainNav() {
           <Image
             src="/assets/images/logo/logo.png"
             alt="Site Logo"
-            className="h-20"
             width={100}
             height={100}
           />
