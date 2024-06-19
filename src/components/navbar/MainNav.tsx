@@ -37,7 +37,7 @@ export default function MainNav() {
             : "col-md-6 d-none d-md-block"
         }
       >
-        <div className="main-menu">
+        <div className="main-menu xl:ml-6">
           <ul className="">
             <NavLink href="/">Home</NavLink>
             <NavLink href="/shop">Shop</NavLink>
