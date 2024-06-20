@@ -15,7 +15,7 @@ export default function Brands() {
     <section>
       <div className="py-8">
         <div className="row">
-          <div className="col-12" data-aos="fade-up" data-aos-delay="600">
+          <div className="col-12">
             {/* <!-- Brand Logo Wrapper Start --> */}
             <div className="brand-logo-carousel arrow-outside-container">
               <div className="swiper-container">

@@ -1,9 +1,16 @@
+"use client";
+
 import React from "react";
+import { motion } from "framer-motion";
 
 export default function CtaSection() {
   return (
     <section className="my-10">
-      <div className="" data-aos="fade-up" data-aos-delay="200">
+      <motion.div
+        initial={{ y: 80, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
         {/* <!-- Section Title Start --> */}
         <div className="section-title text-center">
           <h2 className="title">Promoting screen-free healthy development</h2>
@@ -13,7 +20,7 @@ export default function CtaSection() {
           </h5>
         </div>
         {/* <!-- Section Title End --> */}
-      </div>
+      </motion.div>
 
       <div className="row mb-n6">
         <CtaCard
@@ -50,15 +57,11 @@ const CtaCard = ({
   paragraph: string;
   heading: string;
 }) => (
-  <div
-    className="col-12 col-sm-6 col-md-6 col-lg-4"
-    data-aos="fade-up"
-    data-aos-delay="200"
-  >
+  <motion.div className="col-12 col-sm-6 col-md-6 col-lg-4">
     <div className="single-choose-item text-center mb-6">
       <i className={icon}></i>
       <h4 className="cta-title">{heading}</h4>
       <p>{paragraph}</p>
     </div>
-  </div>
+  </motion.div>
 );
