@@ -99,7 +99,7 @@ const Layout = ({
           theme="colored"
           hideProgressBar={false}
       />
-      <div className='w-[95%] md:w-[90%] mx-auto flex flex-col gap-8 md:flex-row'>
+      <div className='w-full md:w-[90%] mx-auto flex flex-col gap-8 md:flex-row'>
         <nav className='w-full lg:w-[40%] border'>
           <ul>
             {navLinks.map(link => (
@@ -121,7 +121,7 @@ const Layout = ({
             ))}
           </ul>
         </nav>
-        <aside className='p-6 border size-full'>
+        <aside className='p-2 md:p-6 border size-full'>
               {children}
         </aside>
       </div>
