@@ -18,9 +18,9 @@ export default function SingleProductPage({
   metadata.description = singleProduct.description;
 
   return (
-    <main>
+    <main className="flex flex-col gap-3">
       <Breadcrumbs active={singleProduct.heading} />
-      <section className="section section-margin-top">
+      <section className="section-margin-top">
         <div className="container">
           <div className="row">
             <div className="col-lg-5 offset-lg-0 col-md-8 offset-md-2">
