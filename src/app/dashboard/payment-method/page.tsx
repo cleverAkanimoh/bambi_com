@@ -40,17 +40,17 @@ const Page = () => {
         }
     }, [user]);
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+    // if (loading) {
+    //     return <div>Loading...</div>;
+    // }
 
     return (
-        <div className='flex flex-col gap-6'>
-            <Breadcrumbs active="Payment Method" />
+        <div className=''>
+            {/* <Breadcrumbs active="Payment Method" /> */}
             <div className='grid grid-cols-1 gap-4 p-4'>
                 <h1 className='text-black text-3xl font-bold'>Payment Method</h1>
                 {paymentMethod ? (
-                    <div className='w-full bg-stone-200 text-[#555] font-semibold p-4'>
+                    <div className='w-full text-[#555] font-semibold p-4'>
                         <p>Card Holder: {paymentMethod.cardHolderName}</p>
                         <p>Card Number: {paymentMethod.cardNumber}</p>
                         <p>Expiry Date: {paymentMethod.expiryDate}</p>
