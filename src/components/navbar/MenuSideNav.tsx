@@ -25,8 +25,8 @@ export default function MenuSideNav() {
       className={clsx(
         "lg:hidden fixed top-0 left-0 h-screen w-screen  flex transition-all duration-500",
         {
-          "bg-black/35 z-[200]": isMenuClicked,
-          "opacity-0 -z-30": !isMenuClicked,
+          "bg-black/35 z-[200] visible": isMenuClicked,
+          "opacity-0 invisible -z-30": !isMenuClicked,
         }
       )}
     >
@@ -36,21 +36,21 @@ export default function MenuSideNav() {
       />
 
       <div
-        className={clsx("relative flex", {
-          "translate-x-full opacity-0": !isMenuClicked,
+        className={clsx("relative flex transition-all duration-500", {
+          "translate-x-0 opacity-100 visible": isMenuClicked,
+          "translate-x-full opacity-0 invisible": !isMenuClicked,
         })}
       >
-        <div className="top-0 -left-12 bg-primary size-10 text-2xl text-white grid place-items-center active:scale-95 transition-all duration-300 shrink-0">
-          <button
-            onClick={() => setIsMenuClicked(false)}
-            className=" transition-all duration-500 hover:rotate-180 "
-          >
-            X
+        <div className="shrink-0" onClick={() => setIsMenuClicked(false)}>
+          <button className="bg-primary size-10 text-white grid place-items-center active:scale-90 transition-all duration-500">
+            <span className="text-2xl hover:rotate-180 transition-all duration-500 block">
+              X
+            </span>
           </button>
         </div>
         <aside
           className={clsx(
-            "w-full max-w-[300px] xs:max-w-[320px] shrink-0 relative h-screen overflow-y-auto  p-2 xs:p-4 py-6 bg-white transition-all duration-300"
+            "w-11/12 max-w-[300px] xs:max-w-[320px] sm:max-w-[350px] shrink-0 relative h-screen overflow-y-auto  p-2 xs:p-4 py-6 bg-white"
           )}
         >
           <div className="space-y-10 px-2">
