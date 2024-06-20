@@ -4,7 +4,6 @@ import WhyChooseUs from '@/components/WhyChooseUs'
 import OurTeam from '@/components/OurTeam'
 import Breadcrumbs from '@/components/Breadcrumbs'
 
-
 const page = () => {
   return (
     <div className='bg-slate-100'>

@@ -2,6 +2,7 @@
 
 import clsx from "clsx";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 export default function NavLink({
@@ -18,6 +19,7 @@ export default function NavLink({
   children: React.ReactNode;
   mobile?: boolean;
 }) {
+  const pathname = usePathname();
   return (
     <li className={array ? "has-children" : ""}>
       {mobile ? (
@@ -25,20 +27,30 @@ export default function NavLink({
           {children} <i className="fa fa-angle-down"></i>
         </button>
       ) : (
-        <Link href={href} className="hover:text-primary">
+        <Link
+          href={href}
+          className={clsx("hover:text-primary", {
+            "text-primary font-medium": pathname === href,
+          })}
+        >
           {children} {array && <i className="fa fa-angle-down"></i>}
         </Link>
       )}
       {array && (
         <ul
           className={clsx("sub-menu", {
-            "h-0 peer-focus:h-full opacity-0 peer-focus:opacity-100 peer-focus:mt-2 overflow-hidden transition-all duration-300 text-sm peer-focus:px-2 space-y-2":
+            "h-0 peer-focus:h-full peer-focus:mt-2 overflow-hidden transition-all duration-500 text-sm px-3 space-y-3":
               mobile,
           })}
         >
           {array.map(({ title, href }, index) => (
             <li key={index}>
-              <Link href={href ?? title} className="hover:text-primary">
+              <Link
+                href={href ?? title}
+                className={clsx("hover:text-primary", {
+                  "font-light hover:pl-2": mobile,
+                })}
+              >
                 {title}
               </Link>
             </li>

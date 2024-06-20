@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { ProductsType } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -37,7 +37,9 @@ export default function ProductCardWrapper({
   const POST_PER_PAGE = 10;
   return (
     <>
-      <Header postPerPage={10} totalPages={totalPages} />
+      <Suspense>
+        <Header postPerPage={10} totalPages={totalPages} />
+      </Suspense>
       <section className="space-y-4 my-8 p-4">
         {filteredProducts.length ? (
           <section className="row shop_wrapper grid_4">
