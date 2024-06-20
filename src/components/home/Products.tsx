@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { useMediaQuery } from "react-responsive";
 import { Controller, Pagination } from "swiper/modules";
 import { ProductCard } from "../ProductCard";
-import { products, shopProducts } from "@/lib/products";
+import { shopProducts } from "@/lib/products";
 
 export default function Products() {
   const IsBigMobile = useMediaQuery({ query: "(min-width: 500px)" });
