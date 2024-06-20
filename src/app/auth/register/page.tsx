@@ -62,8 +62,8 @@ const Page = () => {
     };
 
     return (
-        <>
-            {/* <Breadcrumbs active="Register" /> */}
+        <div className='flex flex-col gap-6'> 
+            <Breadcrumbs active="Register" />
             <ToastContainer
                 position="top-right"
                 autoClose={3000}
@@ -98,7 +98,7 @@ const Page = () => {
                 </button>
             </form>
         </div>
-        </>
+        </div>
     )
 }
 

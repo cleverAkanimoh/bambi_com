@@ -28,11 +28,11 @@ const Layout = ({
   const { user } = useAuth();
   const router = useRouter();
 
-  useEffect(() => {
-      if (!user) {
-          router.push("/auth/login");
-      }
-  }, [user, router]);
+  // useEffect(() => {
+  //     if (!user) {
+  //         router.push("/auth/login");
+  //     }
+  // }, [user, router]);
   
   const signOutFromApp = async () => {
     try {
@@ -85,9 +85,9 @@ const Layout = ({
   ];
 
   return (
-    <>
+    <div className='flex flex-col gap-4'>
     <Breadcrumbs active="Dashboard" />
-    <div className='my-6 p-6 md:p-10'>
+    <div className='p-6 md:p-10 mb-4'>
       <ToastContainer
           position="top-right"
           autoClose={3000}
@@ -126,7 +126,7 @@ const Layout = ({
         </aside>
       </div>
     </div>
-    </>
+    </div>
   );
 };
 
