@@ -123,7 +123,7 @@ export default function CartOffCanvas() {
             <p>You have to login to see your cart item</p>
             <Link
               href="/auth/login"
-              className="bg-primary p-2 text-white hover:text-primary/40"
+              className="bg-primary p-2 text-white hover:opacity-60"
             >
               Take me to login
             </Link>
