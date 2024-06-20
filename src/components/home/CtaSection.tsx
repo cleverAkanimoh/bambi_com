@@ -2,14 +2,15 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { fadeUp } from "@/lib/framer";
 
 export default function CtaSection() {
   return (
     <section className="my-10">
       <motion.div
-        initial={{ y: 80, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8 }}
+        initial={fadeUp.initial}
+        whileInView={fadeUp.whileInView}
+        transition={fadeUp.transition}
       >
         {/* <!-- Section Title Start --> */}
         <div className="section-title text-center">
@@ -57,7 +58,12 @@ const CtaCard = ({
   paragraph: string;
   heading: string;
 }) => (
-  <motion.div className="col-12 col-sm-6 col-md-6 col-lg-4">
+  <motion.div
+    className="col-12 col-sm-6 col-md-6 col-lg-4"
+    initial={fadeUp.initial}
+    whileInView={fadeUp.whileInView}
+    transition={fadeUp.transition}
+  >
     <div className="single-choose-item text-center mb-6">
       <i className={icon}></i>
       <h4 className="cta-title">{heading}</h4>
