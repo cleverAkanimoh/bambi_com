@@ -58,22 +58,25 @@ const Page = () => {
 
             const userRef = doc(db, "users", user.uid);
 
-            // Update Firestore user data
-            await updateDoc(userRef, {
-                firstName: formData.firstName,
-                lastName: formData.lastName,
-                displayName: formData.displayName,
-                email: formData.email
-            });
+            // Update Firestore user data if provided
+            if (formData.firstName || formData.lastName || formData.displayName || formData.email) {
+                const updatedData: any = {};
+                if (formData.firstName) updatedData.firstName = formData.firstName;
+                if (formData.lastName) updatedData.lastName = formData.lastName;
+                if (formData.displayName) updatedData.displayName = formData.displayName;
+                if (formData.email && user.email !== formData.email) updatedData.email = formData.email;
+                await updateDoc(userRef, updatedData);
+            }
 
             // Reauthenticate user if email is being updated
-            if (user.email && user.email !== formData.email) {
+            if (user.email && formData.email && user.email !== formData.email) {
+                if (!formData.password) throw new Error("Password is required to update email");
                 const credential = EmailAuthProvider.credential(user.email, formData.password);
                 await reauthenticateWithCredential(user, credential);
                 await updateEmail(user, formData.email);
             }
 
-            // Update password if it has been changed
+            // Update password if it has been changed and confirmed
             if (formData.newPassword && formData.newPassword === formData.confirmPassword) {
                 await updatePassword(user, formData.newPassword);
             }
@@ -91,7 +94,7 @@ const Page = () => {
     };
 
     return (
-        <div className=''>
+        <div className='p-4'>
                   <ToastContainer
                 position="top-right"
                 autoClose={3000}
