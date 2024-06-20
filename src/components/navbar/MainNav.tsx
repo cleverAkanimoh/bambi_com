@@ -10,6 +10,7 @@ import Search from "../Search";
 import Logo from "../../../public/assets/images/logo/logo.png";
 import clsx from "clsx";
 import { useGlobalContext } from "@/context/store";
+import { UserCircleIcon } from "@heroicons/react/24/outline";
 // import UserDropdown from "./UserDropdown";
 
 export default function MainNav() {
@@ -28,11 +29,9 @@ export default function MainNav() {
     >
       {/* <!-- Header Logo Start --> */}
 
-      <div className="header-logo">
-        <Link href="/">
-          <Image src={Logo} alt="Site Logo" />
-        </Link>
-      </div>
+      <Link href="/">
+        <Image src={Logo} alt="Bambi" />
+      </Link>
       {/* <!-- Header Logo End --> */}
 
       {/* <!-- Header Menu Start --> */}
@@ -63,6 +62,14 @@ export default function MainNav() {
             </button>
 
             {/* <UserDropdown /> */}
+
+            <Link
+              href="/dashboard"
+              className="text-gray-500 hover:text-primary"
+            >
+              <UserCircleIcon className="w-7" />
+            </Link>
+
             <Link
               href="/wishlist"
               className="header-action-btn header-action-btn-wishlist"

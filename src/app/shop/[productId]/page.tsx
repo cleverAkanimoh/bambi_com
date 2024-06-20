@@ -12,7 +12,7 @@ export default function SingleProductPage({
 }: {
   params: { productId: string };
 }) {
-  const singleProduct = shopProducts[Number(productId)];
+  const singleProduct = shopProducts[Number(productId) - 1];
 
   if (!singleProduct) return notFound();
 

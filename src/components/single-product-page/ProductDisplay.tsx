@@ -163,57 +163,29 @@ export default function ProductDisplay({
           {/* <!-- Price Box End --> */}
 
           {/* <!-- SKU Start --> */}
-          <div className="sku mb-3">
-            <span>SKU: 12345</span>
-          </div>
+          {singleProduct.sku && (
+            <div className="sku mb-3">
+              <span>SKU: {singleProduct.sku}</span>
+            </div>
+          )}
           {/* <!-- SKU End --> */}
 
           {/* <!-- Product Inventory Start --> */}
-          <div className="product-inventroy mb-3">
-            <span className="inventroy-title">
-              {" "}
-              <strong>Availability:</strong>
-            </span>
-            <span className="inventory-varient">12 Left in Stock</span>
-          </div>
+          {singleProduct.availability && (
+            <div className="product-inventroy mb-3">
+              <span className="inventroy-title">
+                <strong>Availability: </strong>
+              </span>
+              <span className="inventory-varient">
+                {singleProduct.availability} Left in Stock
+              </span>
+            </div>
+          )}
           {/* <!-- Product Inventory End --> */}
 
           {/* <!-- Description Start --> */}
           <p className="desc-content mb-5">{singleProduct.description}</p>
           {/* <!-- Description End --> */}
-
-          {/* <!-- Product Coler Variation Start --> */}
-          {/* <div className="product-color-variation mb-5">
-                  <span>
-                    {" "}
-                    <strong>Color: </strong>
-                  </span>
-                  <button type="button" className="btn bg-danger"></button>
-                  <button type="button" className="btn bg-primary"></button>
-                  <button type="button" className="btn bg-dark"></button>
-                  <button type="button" className="btn bg-success"></button>
-                </div> */}
-          {/* <!-- Product Coler Variation End --> */}
-
-          {/* <!-- Product Size Start --> */}
-          {/* <div className="product-size mb-5">
-                  <span>
-                    <strong>Size :</strong>
-                  </span>
-                  <a href="#" className="size-ratio active">
-                    m
-                  </a>
-                  <a href="#" className="size-ratio">
-                    l
-                  </a>
-                  <a href="#" className="size-ratio">
-                    xl
-                  </a>
-                  <a href="#" className="size-ratio">
-                    xxl
-                  </a>
-                </div> */}
-          {/* <!-- Product Size End --> */}
 
           {/* <!-- Quantity Start --> */}
           <div className="quantity d-flex align-items-center mb-5">
@@ -226,8 +198,8 @@ export default function ProductDisplay({
                 defaultValue="1"
                 type="text"
               />
-              <div className="dec qtybutton"></div>
-              <div className="inc qtybutton"></div>
+              <div className="dec qtybutton">+</div>
+              <div className="inc qtybutton">-</div>
             </div>
           </div>
           {/* <!-- Quantity End --> */}
@@ -235,7 +207,11 @@ export default function ProductDisplay({
           {/* <!-- Cart Button Start --> */}
           <div className="cart-btn mb-4">
             <div className="add-to_cart">
-              <Link className="btn btn-dark btn-hover-primary" href="/cart">
+              <Link
+                className="btn btn-dark btn-hover-primary"
+                href="#"
+                scroll={false}
+              >
                 Add to cart
               </Link>
             </div>
