@@ -13,7 +13,7 @@ import "./css/plugins/animate.min.css";
 import "./css/plugins/nice-select.min.css";
 import "./css/style.css";
 
-// import "./css/plugins/lightgallery.min.css";
+import "./css/plugins/lightgallery.min.css";
 
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
@@ -24,7 +24,10 @@ import { AuthProvider } from "@/context/auth-context";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Bambi",
+  title: {
+    template: "%s | Bambi",
+    default: "Welcome to Bambi",
+  },
   description: "Bambi - Find your next adventure",
 };
 
