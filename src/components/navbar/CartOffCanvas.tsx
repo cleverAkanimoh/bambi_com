@@ -2,46 +2,22 @@
 
 import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CiShoppingCart } from "react-icons/ci";
 import Button from "../Button";
 import { BiTrash } from "react-icons/bi";
 import { auth } from "@/config/firebase-config";
+import { clearAllItemsFromCart, removeSingleCartItem } from "@/lib/cart";
+import { CartType } from "@/types";
 
-const testCartItems = [
-  {
-    src: "/assets/images/products/small-product/1.jpg",
-    href: "/shop",
-    title: "Pampers",
-    price: 19,
-    quantity: 3,
-  },
-  {
-    src: "/assets/images/products/small-product/1.jpg",
-    href: "/shop",
-    title: "Toy gun",
-    price: 99,
-    quantity: 1,
-  },
-  {
-    src: "/assets/images/products/small-product/1.jpg",
-    href: "/shop",
-    title: "Army pack",
-    price: 20,
-    quantity: 4,
-  },
-  {
-    src: "/assets/images/products/small-product/1.jpg",
-    href: "/shop",
-    title: "Bambi toy",
-    price: 50,
-    quantity: 2,
-  },
-];
-
-type CartType = typeof testCartItems;
 export default function CartOffCanvas() {
-  const [cartItem, setCartItem] = useState<CartType | null>(testCartItems);
+  const [cartItem, setCartItem] = useState<CartType[] | null>(null);
+
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem("cartItems") || "[]");
+    setCartItem(items);
+  }, []);
+
   const cartTotal = cartItem?.reduce(
     (prev, curr) => prev + curr.price * curr.quantity,
     0
@@ -68,7 +44,10 @@ export default function CartOffCanvas() {
                   <Link href="/shop" className="hover:underline text-primary">
                     Continue shopping
                   </Link>
-                  <Button title="Clear cart" onClick={() => setCartItem(null)}>
+                  <Button
+                    title="Clear cart"
+                    onClick={() => clearAllItemsFromCart()}
+                  >
                     <BiTrash />
                   </Button>
                 </div>
@@ -80,6 +59,7 @@ export default function CartOffCanvas() {
                     title={item.title}
                     price={item.price}
                     quantity={item.quantity}
+                    id={item.id}
                   />
                 ))}
 
@@ -141,12 +121,14 @@ const CartTile = ({
   title,
   price,
   quantity,
+  id,
 }: {
   src: string | StaticImageData;
   href: string;
   title: string;
   price: number;
   quantity: number;
+  id: string | number;
 }) => (
   <div className="cart-product-wrapper mb-4 pb-4 border-bottom">
     <div className="single-cart-product">
@@ -169,11 +151,12 @@ const CartTile = ({
         </div>
       </div>
     </div>
-    <div className="cart-product-remove">
-      <a href="#">
-        <i className="pe-7s-close"></i>
-      </a>
-    </div>
+    <button
+      className="cart-product-remove text-sm"
+      onClick={() => removeSingleCartItem(id)}
+    >
+      <i className="pe-7s-close"></i>
+    </button>
     {/* <!-- Product Remove End --> */}
   </div>
 );

@@ -3,7 +3,7 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { addToCart } from "@/lib/cart";
 import { CartType } from "@/types";
 
@@ -19,13 +19,13 @@ export function AddToCartButton({
 }) {
   const [pending, setPending] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  useEffect(() => {});
 
+  const handleAddToCart = () => {
     setPending(true);
 
     try {
-      await addToCart(cart);
+      addToCart(cart);
       toast.success(`${cart.title ?? "Item"} has been added to cart`, {
         position: "top-center",
       });
@@ -40,11 +40,9 @@ export function AddToCartButton({
   return (
     <>
       {auth.currentUser ? (
-        <form onSubmit={handleSubmit}>
-          <button className={styles} disabled={pending}>
-            {pending ? "Adding..." : "Add to cart"}
-          </button>
-        </form>
+        <button className={styles} onClick={() => handleAddToCart}>
+          {pending ? "Adding..." : "Add to cart"}
+        </button>
       ) : (
         <button
           className={styles}

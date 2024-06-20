@@ -1,11 +1,12 @@
-// "use client";
+"use client";
 
 import { CartType } from "@/types";
 
-export const addToCart = async (cart: CartType) => {
-  const cartItem: CartType[] = JSON.parse(
-    localStorage.getItem("cartItems") || "[]"
-  );
+export const getCartItem = () =>
+  JSON.parse(localStorage.getItem("cartItems") || "[]");
+
+export const addToCart = (cart: CartType) => {
+  const cartItem: CartType[] = getCartItem();
 
   if (cartItem.find((item) => item.id === cart.id))
     throw new Error(`${cart.title} is already in cart`);
@@ -24,3 +25,5 @@ export const removeSingleCartItem = (id: string | number) => {
 
   localStorage.setItem("cartItems", JSON.stringify(newCartItem));
 };
+
+export const clearAllItemsFromCart = () => localStorage.removeItem("cartItems");
