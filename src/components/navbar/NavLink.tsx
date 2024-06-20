@@ -25,14 +25,14 @@ export default function NavLink({
           {children} <i className="fa fa-angle-down"></i>
         </button>
       ) : (
-        <Link href={href}>
+        <Link href={href} className="hover:text-primary">
           {children} {array && <i className="fa fa-angle-down"></i>}
         </Link>
       )}
       {array && (
         <ul
           className={clsx("sub-menu", {
-            "h-0 peer-focus:h-full peer-focus:mt-2 overflow-hidden transition-all duration-300 text-sm peer-focus:px-2 space-y-2":
+            "h-0 peer-focus:h-full opacity-0 peer-focus:opacity-100 peer-focus:mt-2 overflow-hidden transition-all duration-300 text-sm peer-focus:px-2 space-y-2":
               mobile,
           })}
         >
