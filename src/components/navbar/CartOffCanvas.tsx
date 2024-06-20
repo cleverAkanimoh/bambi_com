@@ -11,7 +11,7 @@ import { clearAllItemsFromCart, removeSingleCartItem } from "@/lib/cart";
 import { CartType } from "@/types";
 
 export default function CartOffCanvas() {
-  const [cartItem, setCartItem] = useState<CartType[] | null>(null);
+  const [cartItem, setCartItem] = useState<CartType[] | null>([]);
 
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem("cartItems") || "[]");

@@ -10,16 +10,20 @@ import Search from "../Search";
 import Logo from "../../../public/assets/images/logo/logo.png";
 import clsx from "clsx";
 import { useGlobalContext } from "@/context/store";
-import { UserCircleIcon } from "@heroicons/react/24/outline";
-// import UserDropdown from "./UserDropdown";
+import { CartType } from "@/types";
 
 export default function MainNav() {
   const { setIsMenuClicked } = useGlobalContext();
   const [isFixedNav, setIsFixedNav] = useState(false);
+  const [cartLength, setCartLength] = useState(0);
 
   React.useEffect(() => {
     window.onscroll = () =>
       window.scrollY > 120 ? setIsFixedNav(true) : setIsFixedNav(false);
+    const cartItem: CartType[] = JSON.parse(
+      localStorage.getItem("cartItem") || "[]"
+    );
+    setCartLength(cartItem.length);
   }, []);
   return (
     <section
@@ -81,7 +85,9 @@ export default function MainNav() {
             {/* <!-- Cart Action Button Start --> */}
             <button className="header-action-btn header-action-btn-cart">
               <i className="pe-7s-cart"></i>
-              <span className="header-action-num">3</span>
+              {cartLength > 0 && (
+                <span className="header-action-num">{cartLength}</span>
+              )}
             </button>
             {/* <!-- Cart Action Button End --> */}
 
