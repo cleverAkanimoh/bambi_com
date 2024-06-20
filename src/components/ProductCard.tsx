@@ -1,6 +1,7 @@
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import Button from "./Button";
+import { AddToCartButton } from "./CartButtons";
 
 const ShopProductCard = ({
   src1,
@@ -123,9 +124,16 @@ export const ProductCard = ({
           <i className="pe-7s-search"></i>
         </Button> */}
       </div>
-      <button className="btn btn-whited btn-hover-primary text-capitalize add-to-cart absolute bottom-4 left-1/2 -translate-x-1/2 w-8/12 !text-sm  opacity-0 group-hover:!opacity-100">
-        Add To Cart
-      </button>
+      <AddToCartButton
+        className="btn btn-whited btn-hover-primary text-capitalize add-to-cart absolute bottom-4 left-1/2 -translate-x-1/2 w-8/12 !text-sm  opacity-0 group-hover:!opacity-100"
+        cart={{
+          src: "",
+          href: "",
+          title: "",
+          price: 0,
+          quantity: 0,
+        }}
+      />
     </div>
     <div className="flex flex-col items-center">
       <Link href={href} className="hover:text-primary">

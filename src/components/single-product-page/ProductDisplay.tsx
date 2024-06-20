@@ -1,7 +1,10 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Products } from "@/types";
+import { AddToCartButton } from "../CartButtons";
 
 export default function ProductDisplay({
   singleProduct,
@@ -198,8 +201,8 @@ export default function ProductDisplay({
                 defaultValue="1"
                 type="text"
               />
-              <div className="dec qtybutton">+</div>
-              <div className="inc qtybutton">-</div>
+              <div className="dec qtybutton"></div>
+              <div className="inc qtybutton"></div>
             </div>
           </div>
           {/* <!-- Quantity End --> */}
@@ -207,23 +210,25 @@ export default function ProductDisplay({
           {/* <!-- Cart Button Start --> */}
           <div className="cart-btn mb-4">
             <div className="add-to_cart">
-              <Link
-                className="btn btn-dark btn-hover-primary"
-                href="#"
-                scroll={false}
-              >
-                Add to cart
-              </Link>
+              <AddToCartButton
+                cart={{
+                  src: "",
+                  href: "",
+                  title: "",
+                  price: 0,
+                  quantity: 0,
+                }}
+              />
             </div>
           </div>
           {/* <!-- Cart Button End --> */}
 
           {/* <!-- Action Button Start --> */}
           <div className="actions border-bottom mb-4 pb-4">
-            <a href="/compare" title="Compare" className="action compare">
+            {/* <a href="" title="Compare" className="action compare">
               <i className="pe-7s-refresh-2"></i>
               Compare
-            </a>
+            </a> */}
             <a href="/wishlist" title="Wishlist" className="action wishlist">
               <i className="pe-7s-like"></i>
               Wishlist

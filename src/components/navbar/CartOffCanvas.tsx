@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { CiShoppingCart } from "react-icons/ci";
 import Button from "../Button";
 import { BiTrash } from "react-icons/bi";
+import { auth } from "@/config/firebase-config";
 
 const testCartItems = [
   {
@@ -57,57 +58,74 @@ export default function CartOffCanvas() {
         </div>
         {/* <!-- Button Close End --> */}
 
-        {cartItem ? (
-          <div className="offcanvas-cart-content">
-            <div className="w-full flex items-center justify-between mb-3 -mt-8">
-              <Link href="/shop" className="hover:underline text-primary">
-                Continue shopping
-              </Link>
-              <Button title="Clear cart" onClick={() => setCartItem(null)}>
-                <BiTrash />
-              </Button>
-            </div>
-            {cartItem.map((item, index) => (
-              <CartTile
-                key={index}
-                src={item.src}
-                href={item.href}
-                title={item.title}
-                price={item.price}
-                quantity={item.quantity}
-              />
-            ))}
+        {/* check if user is logged in */}
 
-            {/* <!-- Cart Product Total Start --> */}
-            <div className="cart-product-total mb-4 pb-4 border-bottom">
-              <span className="value">Total</span>
-              <span className="price">${cartTotal}</span>
-            </div>
-            {/* <!-- Cart Product Total End --> */}
+        {auth.currentUser ? (
+          <>
+            {cartItem ? (
+              <div className="offcanvas-cart-content">
+                <div className="w-full flex items-center justify-between mb-3 -mt-8">
+                  <Link href="/shop" className="hover:underline text-primary">
+                    Continue shopping
+                  </Link>
+                  <Button title="Clear cart" onClick={() => setCartItem(null)}>
+                    <BiTrash />
+                  </Button>
+                </div>
+                {cartItem.map((item, index) => (
+                  <CartTile
+                    key={index}
+                    src={item.src}
+                    href={item.href}
+                    title={item.title}
+                    price={item.price}
+                    quantity={item.quantity}
+                  />
+                ))}
 
-            {/* <!-- Cart Product Button Start --> */}
-            <div className="cart-product-btn mt-4">
-              <Link
-                href="/cart"
-                className="btn btn-light btn-hover-primary w-100"
-              >
-                <i className="fa fa-shopping-cart"></i> View cart
-              </Link>
-              <Link
-                href="/checkout"
-                className="btn btn-light btn-hover-primary w-100 mt-4"
-              >
-                <i className="fa fa-share"></i> Checkout
-              </Link>
-            </div>
-            {/* <!-- Cart Product Button End --> */}
-          </div>
+                {/* <!-- Cart Product Total Start --> */}
+                <div className="cart-product-total mb-4 pb-4 border-bottom">
+                  <span className="value">Total</span>
+                  <span className="price">${cartTotal}</span>
+                </div>
+                {/* <!-- Cart Product Total End --> */}
+
+                {/* <!-- Cart Product Button Start --> */}
+                <div className="cart-product-btn mt-4">
+                  <Link
+                    href="/cart"
+                    className="btn btn-light btn-hover-primary w-100"
+                  >
+                    <i className="fa fa-shopping-cart"></i> View cart
+                  </Link>
+                  <Link
+                    href="/checkout"
+                    className="btn btn-light btn-hover-primary w-100 mt-4"
+                  >
+                    <i className="fa fa-share"></i> Checkout
+                  </Link>
+                </div>
+                {/* <!-- Cart Product Button End --> */}
+              </div>
+            ) : (
+              <section className="h-full flex flex-col gap-5 items-center justify-center">
+                <CiShoppingCart size={130} className="opacity-60" />
+                <h3>Nothing in cart</h3>
+                <Link href="/shop" className="hover:text-primary">
+                  Go to shop
+                </Link>
+              </section>
+            )}
+          </>
         ) : (
           <section className="h-full flex flex-col gap-5 items-center justify-center">
-            <CiShoppingCart size={130} className="opacity-60" />
-            <h3>Nothing in cart</h3>
-            <Link href="/shop" className="hover:text-primary">
-              Go to shop
+            <h4>No user Found</h4>
+            <p>You have to login to see your cart item</p>
+            <Link
+              href="/auth/login"
+              className="bg-primary p-2 text-white hover:text-primary/40"
+            >
+              Take me to login
             </Link>
           </section>
         )}

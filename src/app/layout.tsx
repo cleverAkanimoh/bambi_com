@@ -20,6 +20,7 @@ import Navbar from "@/components/Navbar";
 import Script from "next/script";
 import { Providers } from "../context/Providers";
 import { AuthProvider } from "@/context/auth-context";
+import { ToastContainer } from "react-toastify";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -46,6 +47,7 @@ export default function RootLayout({
             <Footer />
           </AuthProvider>
         </Providers>
+        <ToastContainer />
 
         {/* <!-- Scripts --> */}
         {/* <!-- Global Vendor, plugins JS --> */}

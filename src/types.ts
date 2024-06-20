@@ -12,3 +12,11 @@ export type Products = {
   ratings?: number;
 };
 export type ProductsType = Products[];
+
+export type CartType = {
+  src: string;
+  href: string;
+  title: string;
+  price: number;
+  quantity: number;
+};

@@ -65,9 +65,9 @@ export default function MainNav() {
 
             <Link
               href="/dashboard"
-              className="text-gray-500 hover:text-primary"
+              className="text-gray-500 hover:text-primary text-3xl header-action-btn"
             >
-              <UserCircleIcon className="w-7" />
+              <i className="pe-7s-user"></i>
             </Link>
 
             <Link
