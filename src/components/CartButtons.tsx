@@ -1,8 +1,6 @@
-"use client";
-
 import { toast } from "react-toastify";
 
-import React, { useState } from "react";
+import React from "react";
 import { addToCart } from "@/lib/cart";
 import { CartType } from "@/types";
 
@@ -16,20 +14,14 @@ export function AddToCartButton({
   cart: CartType;
   className?: string;
 }) {
-  const [pending, setPending] = useState(false);
-
   const handleAddToCart = () => {
-    setPending(true);
-
     try {
       addToCart(cart);
       toast.success(`${cart.title ?? "Item"} has been added to cart`, {
         position: "top-center",
       });
-      setPending(false);
     } catch (error) {
       toast.error(`${error}`, { position: "top-center" });
-      setPending(false);
     }
   };
 
@@ -38,7 +30,7 @@ export function AddToCartButton({
     <>
       {auth.currentUser ? (
         <button className={styles} onClick={() => handleAddToCart()}>
-          {pending ? "Adding..." : "Add to cart"}
+          {"Add to cart"}
         </button>
       ) : (
         <button
