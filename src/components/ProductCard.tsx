@@ -102,7 +102,6 @@ export const ProductCard = ({
           className="w-full group-hover:scale-110 group-hover:!bg-opacity-75 -z-10"
           src={src}
           alt={heading}
-          data-aos="fade-in"
         />
       </Link>
       <span className="absolute top-2 left-2 bg-black p-1 !text-sm min-w-14 grid place-items-center rounded-md text-white">

@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.css";
 
 import { useMediaQuery } from "react-responsive";
 import { Controller, Pagination } from "swiper/modules";
@@ -24,6 +25,7 @@ export default function Products() {
           slidesPerView={
             IsLaptopView ? 4 : IsTabletView ? 3 : IsBigMobile ? 2 : 1
           }
+          spaceBetween={10}
           className="size-full overflow-hidden"
         >
           {shopProducts.map(({ src1, heading, new_price }, index) => (
