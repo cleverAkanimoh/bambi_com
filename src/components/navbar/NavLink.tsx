@@ -1,5 +1,6 @@
 "use client";
 
+import { useGlobalContext } from "@/context/store";
 import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -19,18 +20,20 @@ export default function NavLink({
   children: React.ReactNode;
   mobile?: boolean;
 }) {
+  const { setIsMenuClicked } = useGlobalContext();
   const pathname = usePathname();
   return (
-    <li className={array ? "has-children" : ""}>
-      {mobile ? (
-        <button className="peer inline">
+    <li className={array ? "has-children group" : ""}>
+      {mobile && array ? (
+        <button className="peer">
           {children} <i className="fa fa-angle-down"></i>
         </button>
       ) : (
         <Link
           href={href}
+          onClick={() => setIsMenuClicked(false)}
           className={clsx("hover:text-primary", {
-            "text-primary font-medium": pathname === href,
+            "text-primary  font-medium": pathname === href,
           })}
         >
           {children} {array && <i className="fa fa-angle-down"></i>}
@@ -39,7 +42,7 @@ export default function NavLink({
       {array && (
         <ul
           className={clsx("sub-menu", {
-            "h-0 peer-focus:h-full peer-focus:mt-2 overflow-hidden transition-all duration-500 text-sm px-3 space-y-3":
+            "h-0 peer-focus:h-full group-hover:h-full peer-focus:mt-2 group-hover:mt-2 overflow-hidden transition-all duration-500 text-sm px-3 space-y-3":
               mobile,
           })}
         >
@@ -49,7 +52,9 @@ export default function NavLink({
                 href={href ?? title}
                 className={clsx("hover:text-primary", {
                   "font-light hover:pl-2": mobile,
+                  "text-primary  font-medium": pathname === href,
                 })}
+                onClick={() => setIsMenuClicked(false)}
               >
                 {title}
               </Link>

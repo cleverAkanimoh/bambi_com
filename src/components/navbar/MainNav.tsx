@@ -42,7 +42,7 @@ export default function MainNav() {
             <NavLink href="/">Home</NavLink>
             <NavLink href="/shop">Shop</NavLink>
             <NavLink href="/faq">Faqs</NavLink>
-            <NavLink href="/faq" array={pagesArray}>
+            <NavLink href="#" array={pagesArray}>
               Pages
             </NavLink>
           </ul>

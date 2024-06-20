@@ -40,17 +40,17 @@ export default function MenuSideNav() {
           "translate-x-full opacity-0": !isMenuClicked,
         })}
       >
-        <div className="top-0 -left-12 bg-primary size-10 text-2xl text-white grid place-items-center active:scale-95 transition-all duration-300 shrink-0">
-          <button
-            onClick={() => setIsMenuClicked(false)}
-            className=" transition-all duration-500 hover:rotate-180 "
-          >
+        <div
+          className="top-0 -left-12 bg-primary size-10 text-2xl text-white grid place-items-center active:scale-95 transition-all duration-300 shrink-0"
+          onClick={() => setIsMenuClicked(false)}
+        >
+          <button className=" transition-all duration-500 hover:rotate-180 ">
             X
           </button>
         </div>
         <aside
           className={clsx(
-            "w-full max-w-[300px] xs:max-w-[320px] shrink-0 relative h-screen overflow-y-auto  p-2 xs:p-4 py-6 bg-white transition-all duration-300"
+            "w-full max-w-[300px] xs:max-w-[320px] sm:max-w-[350px] shrink-0 relative h-screen overflow-y-auto  p-2 xs:p-4 py-6 bg-white transition-all duration-300"
           )}
         >
           <div className="space-y-10 px-2">
