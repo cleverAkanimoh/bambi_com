@@ -3,10 +3,9 @@
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import React from "react";
+import React, { useState } from "react";
 import { addToCart } from "@/lib/cart";
 import { CartType } from "@/types";
-import { useFormStatus } from "react-dom";
 
 import { auth } from "@/config/firebase-config";
 import clsx from "clsx";
@@ -18,17 +17,23 @@ export function AddToCartButton({
   cart: CartType;
   className?: string;
 }) {
-  const { pending } = useFormStatus();
+  const [pending, setPending] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    setPending(true);
 
     try {
       await addToCart(cart);
       toast.success(`${cart.title ?? "Item"} has been added to cart`, {
         position: "top-center",
       });
-    } catch (error) {}
+      setPending(false);
+    } catch (error) {
+      toast.error(`${error}`);
+      setPending(false);
+    }
   };
 
   const styles = clsx("active:scale-90", className);

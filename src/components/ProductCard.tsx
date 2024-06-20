@@ -12,6 +12,7 @@ const ShopProductCard = ({
   heading,
   href,
   category,
+  id,
 }: {
   src1: string;
   src2?: string;
@@ -21,6 +22,7 @@ const ShopProductCard = ({
   description?: string;
   heading: string;
   category?: string;
+  id: string | number;
 }) => (
   <div className="col-xl-3 col-lg-4 col-md-4 col-sm-6 product">
     <div className="product-inner">
@@ -61,9 +63,16 @@ const ShopProductCard = ({
           </Link>
         </div>
         <div className="add-cart-btn">
-          <button className="btn btn-whited btn-hover-primary text-capitalize add-to-cart">
-            Add To Cart
-          </button>
+          <AddToCartButton
+            cart={{
+              src: src1,
+              href,
+              title: heading,
+              price: new_price,
+              quantity: 1,
+              id,
+            }}
+          />
         </div>
       </div>
       <div className="content">
@@ -87,11 +96,15 @@ export const ProductCard = ({
   href,
   heading,
   price,
+  quantity = 1,
+  id,
 }: {
-  src: string | StaticImageData;
+  src: string;
   href: string;
   heading: string;
   price: number;
+  quantity?: number;
+  id: string | number;
 }) => (
   <div>
     <div className="relative group">
@@ -127,11 +140,12 @@ export const ProductCard = ({
       <AddToCartButton
         className="btn btn-whited btn-hover-primary text-capitalize add-to-cart absolute bottom-4 left-1/2 -translate-x-1/2 w-8/12 !text-sm  opacity-0 group-hover:!opacity-100"
         cart={{
-          src: "",
-          href: "",
-          title: "",
-          price: 0,
-          quantity: 0,
+          src,
+          href,
+          title: heading,
+          price,
+          quantity,
+          id,
         }}
       />
     </div>
