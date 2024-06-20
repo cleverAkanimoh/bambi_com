@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import Search from "../Search";
 import { pagesArray } from "@/lib/navData";
 import NavLink from "./NavLink";
@@ -54,7 +54,9 @@ export default function MenuSideNav() {
           )}
         >
           <div className="space-y-10 px-2">
-            <Search variant="mobile-view" />
+            <Suspense>
+              <Search variant="mobile-view" />
+            </Suspense>
 
             <ul className="space-y-6 px-0.5 font-semibold">
               <NavLink href="/">Home</NavLink>
