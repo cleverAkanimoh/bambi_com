@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import "react-toastify/dist/ReactToastify.css";
 
 // Vendor CSS (Icon Font)
 import "./css/vendor/fontawesome.min.css";
@@ -58,7 +59,7 @@ export default function RootLayout({
         <Script src="/js/vendor/bootstrap.min.js" />
         <Script src="/js/vendor/jquery-3.6.0.min.js" />
         <Script src="/js/vendor/jquery-migrate-3.3.2.min.js" />
-        <Script src="/js/vendor/modernizr-3.11.2.min.js" />
+        <Script src="/js/vendor/modernizr-3.11.2.min.js" type="module" />
 
         {/* <!-- Plugins JS --> */}
 

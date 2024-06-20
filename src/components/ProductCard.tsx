@@ -1,7 +1,11 @@
+"use client";
+
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import Button from "./Button";
 import { AddToCartButton } from "./CartButtons";
+import { motion } from "framer-motion";
+import { fadeUp } from "@/lib/framer";
 
 const ShopProductCard = ({
   src1,
@@ -24,7 +28,12 @@ const ShopProductCard = ({
   category?: string;
   id: string | number;
 }) => (
-  <div className="col-xl-3 col-lg-4 col-md-4 col-sm-6 product">
+  <motion.div
+    initial={fadeUp.initial}
+    whileInView={fadeUp.whileInView}
+    transition={fadeUp.transition}
+    className="col-xl-3 col-lg-4 col-md-4 col-sm-6 product"
+  >
     <div className="product-inner">
       <div className="thumb">
         <Link href={href} className="image">
@@ -86,7 +95,7 @@ const ShopProductCard = ({
         <p>{description}</p>
       </div>
     </div>
-  </div>
+  </motion.div>
 );
 
 export default ShopProductCard;
@@ -106,7 +115,11 @@ export const ProductCard = ({
   quantity?: number;
   id: string | number;
 }) => (
-  <div>
+  <motion.div
+    initial={fadeUp.initial}
+    whileInView={fadeUp.whileInView}
+    transition={fadeUp.transition}
+  >
     <div className="relative group">
       <Link href={href} className="overflow-hidden block">
         <Image
@@ -157,5 +170,5 @@ export const ProductCard = ({
         <span className="new">${price}</span>
       </span>
     </div>
-  </div>
+  </motion.div>
 );

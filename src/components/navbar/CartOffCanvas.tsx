@@ -11,7 +11,7 @@ import { clearAllItemsFromCart, removeSingleCartItem } from "@/lib/cart";
 import { CartType } from "@/types";
 
 export default function CartOffCanvas() {
-  const [cartItem, setCartItem] = useState<CartType[] | null>([]);
+  const [cartItem, setCartItem] = useState<CartType[]>([]);
 
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem("cartItems") || "[]");
@@ -38,7 +38,7 @@ export default function CartOffCanvas() {
 
         {auth.currentUser ? (
           <>
-            {cartItem ? (
+            {cartItem.length > 0 ? (
               <div className="offcanvas-cart-content">
                 <div className="w-full flex items-center justify-between mb-3 -mt-8">
                   <Link href="/shop" className="hover:underline text-primary">

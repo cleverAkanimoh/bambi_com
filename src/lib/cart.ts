@@ -1,15 +1,14 @@
-"use client";
-
 import { CartType } from "@/types";
 
-export const getCartItem = () =>
-  JSON.parse(localStorage.getItem("cartItems") || "[]");
-
 export const addToCart = (cart: CartType) => {
-  const cartItem: CartType[] = getCartItem();
+  const cartItem: CartType[] = JSON.parse(
+    localStorage.getItem("cartItems") || "[]"
+  );
 
   if (cartItem.find((item) => item.id === cart.id))
     throw new Error(`${cart.title} is already in cart`);
+
+  console.log(cartItem);
 
   cartItem.push(cart);
 
