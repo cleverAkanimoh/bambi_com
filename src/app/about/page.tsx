@@ -6,7 +6,7 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 
 const page = () => {
   return (
-    <div className='bg-slate-100'>
+       <div className='bg-slate-100 flex flex-col gap-6'>
       <Breadcrumbs active="About" />
         <section className='w-[90%] mx-auto flex flex-col gap-6 md:flex-row md:items-center md:gap-10 py-10'>
         <Image src={aboutImg} alt='About Image' />
@@ -17,7 +17,7 @@ const page = () => {
         </aside>
 
         </section>
-        <div className='bg-white  pt-16 pb-8'>
+        <div className='bg-white pt-12 pb-8'>
         <WhyChooseUs />
         </div>
         <OurTeam />

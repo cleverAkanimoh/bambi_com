@@ -42,8 +42,9 @@ const Page = () => {
 
 
     return (
-        <>
-            {/* <Breadcrumbs active="Login" /> */}
+        <div className='flex flex-col gap-6'>
+  
+            <Breadcrumbs active="Login" />
             <ToastContainer
                 position="top-right"
                 autoClose={3000}
@@ -55,7 +56,7 @@ const Page = () => {
                 theme="colored"
                 hideProgressBar={false}
             />
-        <div className='min-h-screen flex items-center justify-center py-10'>
+        <div className='min-h-screen flex items-center justify-center p-6 md:p-10 mb-4'>
             <form onSubmit={login} action="" className='bg-[#efefef] text-center w-[90%] mx-auto md:w-1/2 lg:w-2/5 flex flex-col gap-8 items-center px-6 py-12'>
                 <div>
 
@@ -85,7 +86,7 @@ const Page = () => {
             </form>
 
         </div>
-        </>
+        </div>
     )
 }
 

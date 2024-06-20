@@ -28,11 +28,11 @@ const Layout = ({
   const { user } = useAuth();
   const router = useRouter();
 
-  useEffect(() => {
-      if (!user) {
-          router.push("/auth/login");
-      }
-  }, [user, router]);
+  // useEffect(() => {
+  //     if (!user) {
+  //         router.push("/auth/login");
+  //     }
+  // }, [user, router]);
   
   const signOutFromApp = async () => {
     try {
@@ -85,9 +85,9 @@ const Layout = ({
   ];
 
   return (
-    <>
+    <div className='flex flex-col gap-4'>
     <Breadcrumbs active="Dashboard" />
-    <div className='my-6 p-6 md:p-10'>
+    <div className='p-6 md:p-10 mb-4'>
       <ToastContainer
           position="top-right"
           autoClose={3000}
@@ -99,7 +99,7 @@ const Layout = ({
           theme="colored"
           hideProgressBar={false}
       />
-      <div className='w-[95%] md:w-[90%] mx-auto flex flex-col gap-8 md:flex-row'>
+      <div className='w-full md:w-[90%] mx-auto flex flex-col gap-8 md:flex-row'>
         <nav className='w-full lg:w-[40%] border'>
           <ul>
             {navLinks.map(link => (
@@ -121,12 +121,12 @@ const Layout = ({
             ))}
           </ul>
         </nav>
-        <aside className='p-6 border size-full'>
+        <aside className='p-2 md:p-6 border size-full'>
               {children}
         </aside>
       </div>
     </div>
-    </>
+    </div>
   );
 };
 
