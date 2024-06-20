@@ -12,7 +12,7 @@ export default function SingleProductPage({
 }: {
   params: { productId: string };
 }) {
-  const singleProduct = shopProducts[Number(productId)];
+  const singleProduct = shopProducts[Number(productId) - 1];
 
   if (!singleProduct) return notFound();
 
@@ -21,7 +21,7 @@ export default function SingleProductPage({
 
   return (
     <main className="flex flex-col">
-      <Breadcrumbs active={singleProduct.heading} />
+      <Breadcrumbs active="Single Product Page" />
       <section className="section-margin-top">
         <div className="container">
           {/* dynamic */}

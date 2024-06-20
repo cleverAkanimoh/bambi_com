@@ -41,7 +41,7 @@ export default function Header({
           <option selected value="">
             Sort by Default
           </option>
-          <option value="popularity">Sort by Popularity</option>
+          <option value="popular">Sort by popular</option>
           <option value="rated">Sort by Rated</option>
           <option value="latest">Sort by Latest</option>
           <option value="price">Sort by Price</option>

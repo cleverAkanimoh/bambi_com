@@ -31,7 +31,7 @@ export const shopProducts: ProductsType = [
     old_price: 12,
     new_price: 10,
     heading: "Pampers",
-    sales_category: "popularity",
+    sales_category: "popular",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
   },
@@ -86,7 +86,7 @@ export const shopProducts: ProductsType = [
     old_price: 75,
     new_price: 47,
     heading: "Army gear for kids",
-    sales_category: "popularity",
+    sales_category: "popular",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
   },
@@ -152,7 +152,7 @@ export const shopProducts: ProductsType = [
     old_price: 12,
     new_price: 10,
     heading: "Pampers",
-    sales_category: "popularity",
+    sales_category: "popular",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
   },
@@ -163,7 +163,7 @@ export const shopProducts: ProductsType = [
     old_price: 12,
     new_price: 10,
     heading: "Pampers",
-    sales_category: "popularity",
+    sales_category: "popular",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
   },
@@ -174,7 +174,7 @@ export const shopProducts: ProductsType = [
     old_price: 12,
     new_price: 10,
     heading: "Pampers",
-    sales_category: "popularity",
+    sales_category: "popular",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
   },
@@ -185,7 +185,7 @@ export const shopProducts: ProductsType = [
     old_price: 12,
     new_price: 10,
     heading: "Pampers",
-    sales_category: "popularity",
+    sales_category: "popular",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
   },
@@ -196,7 +196,7 @@ export const shopProducts: ProductsType = [
     old_price: 12,
     new_price: 10,
     heading: "Pampers",
-    sales_category: "popularity",
+    sales_category: "popular",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
   },
@@ -207,7 +207,7 @@ export const shopProducts: ProductsType = [
     old_price: 12,
     new_price: 10,
     heading: "Pampers",
-    sales_category: "popularity",
+    sales_category: "popular",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
   },
@@ -218,7 +218,7 @@ export const shopProducts: ProductsType = [
     old_price: 12,
     new_price: 10,
     heading: "Pampers",
-    sales_category: "popularity",
+    sales_category: "popular",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
   },
@@ -229,7 +229,7 @@ export const shopProducts: ProductsType = [
     old_price: 12,
     new_price: 10,
     heading: "Pampers",
-    sales_category: "popularity",
+    sales_category: "popular",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
   },
@@ -240,7 +240,7 @@ export const shopProducts: ProductsType = [
     old_price: 12,
     new_price: 10,
     heading: "Pampers",
-    sales_category: "popularity",
+    sales_category: "popular",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
   },
