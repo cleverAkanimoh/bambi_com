@@ -2,6 +2,85 @@ import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import Button from "./Button";
 
+const ShopProductCard = ({
+  src1,
+  src2,
+  old_price,
+  new_price,
+  description,
+  heading,
+  href,
+  category,
+}: {
+  src1: string;
+  src2?: string;
+  href: string;
+  old_price?: number;
+  new_price: number;
+  description?: string;
+  heading: string;
+  category?: string;
+}) => (
+  <div className="col-xl-3 col-lg-4 col-md-4 col-sm-6 product">
+    <div className="product-inner">
+      <div className="thumb">
+        <Link href={href} className="image">
+          <Image
+            className="first-image"
+            src={src1}
+            alt="Product"
+            width={100}
+            height={100}
+          />
+          <Image
+            className="second-image fit-image"
+            src={src2 ?? src1}
+            alt="Product"
+            width={100}
+            height={100}
+          />
+        </Link>
+        <span className="badges">
+          <span className="sale">{category ?? "-18%"}</span>
+        </span>
+        <div className="actions">
+          <Button className="action wishlist">
+            <i className="pe-7s-like"></i>
+          </Button>
+          <Link href="/compare" className="action compare">
+            <i className="pe-7s-refresh-2"></i>
+          </Link>
+          <Link
+            href={`?`}
+            className="action quickview"
+            data-bs-toggle="modal"
+            data-bs-target="#quick-view"
+          >
+            <i className="pe-7s-search"></i>
+          </Link>
+        </div>
+        <div className="add-cart-btn">
+          <button className="btn btn-whited btn-hover-primary text-capitalize add-to-cart">
+            Add To Cart
+          </button>
+        </div>
+      </div>
+      <div className="content">
+        <h5 className="title">
+          <Link href={href}>{heading}</Link>
+        </h5>
+        <span className="price">
+          <span className="new">${new_price}</span>
+          {old_price && <span className="old">${old_price}</span>}
+        </span>
+        <p>{description}</p>
+      </div>
+    </div>
+  </div>
+);
+
+export default ShopProductCard;
+
 export const ProductCard = ({
   src,
   href,
@@ -31,8 +110,9 @@ export const ProductCard = ({
       </span>
 
       <div
-        className="z-10 group-hover:fade-in opacity-0 group-hover:!opacity-100 absolute right-2 top-2 space-y-2 transition-all duration-300"
+        className="z-10 group-hover:fade-in opacity-0 group-hover:!opacity-100 absolute right-2 top-2 space-y-2"
         data-aos="fade-in"
+        aos-delay="200"
       >
         <Button>
           <i className="pe-7s-like"></i>
@@ -40,9 +120,9 @@ export const ProductCard = ({
         <Button>
           <i className="pe-7s-refresh-2"></i>
         </Button>
-        <Button>
+        {/* <Button>
           <i className="pe-7s-search"></i>
-        </Button>
+        </Button> */}
       </div>
       <button className="btn btn-whited btn-hover-primary text-capitalize add-to-cart absolute bottom-4 left-1/2 -translate-x-1/2 w-8/12 !text-sm  opacity-0 group-hover:!opacity-100">
         Add To Cart

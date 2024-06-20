@@ -1,8 +1,8 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
-import Header from "@/components/shop/Header";
 import ModalQuickView from "@/components/shop/ModalQuickView";
 import ProductCardWrapper from "@/components/shop/ProductCardWrapper";
 import React from "react";
+import Loading from "../loading";
 
 export default function page({
   searchParams: { sort_by, search, currentPage },
@@ -13,7 +13,7 @@ export default function page({
     <main className="min-h-screen flex flex-col">
       <Breadcrumbs active="Shop" />
 
-      <React.Suspense>
+      <React.Suspense fallback={<Loading />}>
         <ProductCardWrapper
           sortBy={sort_by ?? ""}
           currentPage={Number(currentPage) ?? 1}

@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { useMediaQuery } from "react-responsive";
 import { Controller, Pagination } from "swiper/modules";
 import { ProductCard } from "../ProductCard";
-import { products } from "@/lib/products";
+import { products, shopProducts } from "@/lib/products";
 
 export default function Products() {
   const IsBigMobile = useMediaQuery({ query: "(min-width: 500px)" });
@@ -26,13 +26,13 @@ export default function Products() {
           }
           className="size-full overflow-hidden"
         >
-          {products.map(({ src, heading, price }, index) => (
+          {shopProducts.map(({ src1, heading, new_price }, index) => (
             <SwiperSlide key={index}>
               <ProductCard
-                src={src}
-                href={"/"}
+                src={src1}
+                href={`/shop/${index + 1}`}
                 heading={heading}
-                price={price}
+                price={new_price}
               />
             </SwiperSlide>
           ))}
