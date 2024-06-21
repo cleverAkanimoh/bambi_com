@@ -18,11 +18,12 @@ export default function CartOffCanvas() {
 
   const { user } = useAuth();
 
-  useEffect( () => {
+  useEffect(() => {
     const fetchInRealtimeAndRenderPostsFromDB = async () => {
       const cart = await getUserCartItems(user);
 
       console.log(cart);
+      // setCartItems(cart);
     };
 
     fetchInRealtimeAndRenderPostsFromDB();
