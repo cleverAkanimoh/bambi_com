@@ -13,35 +13,33 @@ import {
 
 export const collectionName = "cartItems";
 
-const cartItemRef = collection(db, collectionName);
+export const cartItemRef = collection(db, collectionName);
+
 export const getUserCartItems = async (user: User | null) => {
   if (user) {
-    let cartItems: CartType[] = [];
+    const cartItems = await getDocs(cartItemRef);
+    console.log(cartItems.docs);
 
-    const items = await getDocs(cartItemRef);
-    cartItems.forEach((docs) => {
-      const cart = cartItems.push(docs);
-      console.log(cart);
-    });
+    const correctUser = cartItems.docs.filter(
+      (docs) => docs.data().userId === user.uid
+    );
 
-    return cartItems;
+    if (correctUser) {
+      return cartItems.docs;
+    }
+    throw new Error("No user found");
   }
 };
 
 export const addToCart = async (cart: CartType) => {
   const userId = auth?.currentUser?.uid ?? "";
   const cartItemId = cart.id.toString() ?? "";
-  // const cartItem = await getUserCartItems(auth.currentUser);
 
-  const cartItems = await getDocs(cartItemRef);
-  console.log(cartItems.docs);
+  const cartItems = await getUserCartItems(auth.currentUser);
 
-  const correctUser = cartItems.docs.filter(
-    (docs) => docs.data().userId === userId
-  );
-
-  if (correctUser) {
-    cartItems.docs.forEach((docs) => {
+  if (cartItems) {
+    cartItems.forEach((docs) => {
+      // check if item already exist
       if (docs.data().id === cartItemId) {
         throw new Error(`${cart.title} is already in cart`);
       }
@@ -49,12 +47,7 @@ export const addToCart = async (cart: CartType) => {
     });
   }
 
-  // console.log(itemAlreadyExist);
-
-  // if (itemAlreadyExist) throw new Error(`${cart.title} is already in cart`);
-
   try {
-    const cartItemRef = collection(db, collectionName);
     const doc = await addDoc(cartItemRef, {
       id: cartItemId,
       src: cart.src,
@@ -75,10 +68,10 @@ export const addToCart = async (cart: CartType) => {
 };
 
 export const removeSingleCartItem = async (id: string | number) => {
-  const userId = auth?.currentUser?.uid ?? "";
-  const cartItemId = id.toString() ?? "";
+  // const userId = auth?.currentUser?.uid ?? "";
+  // const cartItemId = id.toString() ?? "";
 
-  const cartItemRef = doc(db, collectionName, userId, cartItemId, "cartInfo");
+  const cartItemRef = doc(db, collectionName);
 
   try {
     await deleteDoc(cartItemRef);

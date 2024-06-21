@@ -9,9 +9,25 @@ import { db } from "@/config/firebase-config";
 
 import { DeleteAllCartItemsButton, DeleteCartItemById } from "../CartButtons";
 import { CartType } from "@/types";
-import { collection, doc, onSnapshot } from "firebase/firestore";
+import { onSnapshot } from "firebase/firestore";
 import { useAuth } from "@/context/auth-context";
-import { getUserCartItems } from "@/lib/cart";
+import { cartItemRef, getUserCartItems } from "@/lib/cart";
+
+const fetchInRealtimeAndRenderPostsFromDB = () => {
+  let data: any[] = [];
+  onSnapshot(cartItemRef, (snapshot) => {
+    console.log(snapshot.docs);
+
+    if (snapshot) {
+      snapshot.forEach((cartDoc) => {
+        console.log(cartDoc);
+
+        data.push({ ...cartDoc.data(), uid: cartDoc.id });
+      });
+    }
+  });
+  return data;
+};
 
 export default function CartOffCanvas() {
   const [cartItems, setCartItems] = useState<CartType[]>([]);
@@ -19,20 +35,14 @@ export default function CartOffCanvas() {
   const { user } = useAuth();
 
   useEffect(() => {
-    const fetchInRealtimeAndRenderPostsFromDB = async () => {
-      const cart = await getUserCartItems(user);
-
-      console.log(cart);
-      // setCartItems(cart);
-    };
-
-    fetchInRealtimeAndRenderPostsFromDB();
+    setCartItems(fetchInRealtimeAndRenderPostsFromDB());
   }, [user]);
 
   const cartTotal = cartItems?.reduce(
     (prev, curr) => prev + curr?.price * curr?.quantity,
     0
   );
+  console.log(cartItems);
 
   return (
     <section className="cart-offcanvas-wrapper">
