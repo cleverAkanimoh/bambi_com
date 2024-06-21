@@ -15,27 +15,27 @@ export const collectionName = "cartItems";
 
 export const cartItemRef = collection(db, collectionName);
 
-export const getUserCartItems = async (user: User | null) => {
-  if (user) {
-    const cartItems = await getDocs(cartItemRef);
-    console.log(cartItems.docs);
+export const getUserCartItems = async () => {
+  const snapshot = await getDocs(cartItemRef);
 
-    const correctUser = cartItems.docs.filter(
-      (docs) => docs.data().userId === user.uid
-    );
+  const data: any[] = [];
 
-    if (correctUser) {
-      return cartItems.docs;
-    }
-    throw new Error("No user found");
+  if (snapshot) {
+    snapshot.forEach((cartDoc) => {
+      console.log(cartDoc);
+
+      data.push({ ...cartDoc.data(), uid: cartDoc.id });
+    });
   }
+
+  return data;
 };
 
 export const addToCart = async (cart: CartType) => {
   const userId = auth?.currentUser?.uid ?? "";
   const cartItemId = cart.id.toString() ?? "";
 
-  const cartItems = await getUserCartItems(auth.currentUser);
+  const cartItems = await getUserCartItems();
 
   if (cartItems) {
     cartItems.forEach((docs) => {
@@ -81,9 +81,8 @@ export const removeSingleCartItem = async (id: string | number) => {
 };
 
 export const clearAllItemsFromCart = async () => {
-  const userId = auth?.currentUser?.uid ?? "";
   try {
-    await deleteDoc(doc(db, collectionName, userId));
+    await deleteDoc(doc(db, collectionName));
   } catch (error) {
     throw new Error("An error occurred, Cart item was not deleted");
   }

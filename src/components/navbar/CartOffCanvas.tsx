@@ -5,29 +5,11 @@ import Image, { StaticImageData } from "next/image";
 import React, { useEffect, useState } from "react";
 import { CiShoppingCart } from "react-icons/ci";
 
-import { db } from "@/config/firebase-config";
-
 import { DeleteAllCartItemsButton, DeleteCartItemById } from "../CartButtons";
 import { CartType } from "@/types";
-import { getDocs, onSnapshot } from "firebase/firestore";
+import { getDocs } from "firebase/firestore";
 import { useAuth } from "@/context/auth-context";
 import { cartItemRef, getUserCartItems } from "@/lib/cart";
-
-const fetchInRealtimeAndRenderPostsFromDB = async () => {
-  const snapshot = await getDocs(cartItemRef);
-
-  const data: any[] = [];
-
-  if (snapshot) {
-    snapshot.forEach((cartDoc) => {
-      console.log(cartDoc);
-
-      data.push({ ...cartDoc.data(), uid: cartDoc.id });
-    });
-  }
-
-  return data;
-};
 
 export default function CartOffCanvas() {
   const [cartItems, setCartItems] = useState<CartType[]>([]);
@@ -36,13 +18,14 @@ export default function CartOffCanvas() {
 
   useEffect(() => {
     const fetchCartItems = async () => {
-      const data = await fetchInRealtimeAndRenderPostsFromDB();
+      const data = await getUserCartItems();
       setCartItems(data);
     };
-    fetchCartItems();
+
+    if (user) fetchCartItems();
 
     // return () => fetchCartItems();
-  }, [cartItems]);
+  }, []);
 
   const cartTotal = cartItems?.reduce(
     (prev, curr) => prev + curr?.price * curr?.quantity,
@@ -82,7 +65,7 @@ export default function CartOffCanvas() {
                     title={item.title}
                     price={item.price}
                     quantity={item.quantity}
-                    id={item.id}
+                    id={item.uid ?? ""}
                   />
                 ))}
 
