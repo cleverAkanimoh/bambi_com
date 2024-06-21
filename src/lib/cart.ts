@@ -30,18 +30,24 @@ export const getUserCartItems = async (user: User | null) => {
 
 export const addToCart = async (cart: CartType) => {
   const userId = auth?.currentUser?.uid ?? "";
-  const cartItemId = cart.id.toString() || "";
+  const cartItemId = cart.id.toString() ?? "";
   // const cartItem = await getUserCartItems(auth.currentUser);
 
   const cartItems = await getDocs(cartItemRef);
   console.log(cartItems.docs);
 
-  cartItems.docs.forEach((docs) => {
-    if (docs.data().id === cartItemId) {
-      throw new Error(`${cart.title} is already in cart`);
-    }
-    console.log(docs.id);
-  });
+  const correctUser = cartItems.docs.filter(
+    (docs) => docs.data().userId === userId
+  );
+
+  if (correctUser) {
+    cartItems.docs.forEach((docs) => {
+      if (docs.data().id === cartItemId) {
+        throw new Error(`${cart.title} is already in cart`);
+      }
+      console.log(docs.id);
+    });
+  }
 
   // console.log(itemAlreadyExist);
 
