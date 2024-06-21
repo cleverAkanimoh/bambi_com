@@ -6,6 +6,7 @@ import { auth } from "@/config/firebase-config";
 
 interface AuthContextType {
   user: User | null;
+  loading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -16,20 +17,23 @@ interface AuthProviderProps {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const session = onAuthStateChanged(auth, (user) => {
       setUser(user);
+      setLoading(false);
+      console.log(user)
     });
 
     return () => session();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user }}>
+    <AuthContext.Provider value={{ user, loading }}>
       {children}
     </AuthContext.Provider>
-  )
+  );
 };
 
 export const useAuth = (): AuthContextType => {

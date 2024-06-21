@@ -16,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/navigation";
 import { useAuth } from '@/context/auth-context';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import Loading from '../loading';
 
 
 
@@ -25,15 +26,17 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   const pathName = usePathname();
-  const { user } = useAuth();
+ 
+  const { user, loading } = useAuth();
   const router = useRouter();
 
-  // useEffect(() => {
-  //     if (!user) {
-  //         router.push("/auth/login");
-  //     }
-  // }, [user, router]);
-  
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/auth/login");
+    }
+  }, [loading, user, router]);
+
+  if (loading) {return <Loading />}
   const signOutFromApp = async () => {
     try {
         await signOut(auth);
@@ -87,7 +90,7 @@ const Layout = ({
   return (
     <div className='flex flex-col gap-4'>
     <Breadcrumbs active="Dashboard" />
-    <div className='p-6 md:p-10 mb-4'>
+    <div className='p-4 md:p-10 mb-4'>
       <ToastContainer
           position="top-right"
           autoClose={3000}
@@ -99,7 +102,7 @@ const Layout = ({
           theme="colored"
           hideProgressBar={false}
       />
-      <div className='w-full md:w-[90%] mx-auto flex flex-col gap-8 md:flex-row'>
+      <div className='w-full md:w-[90%] mx-auto flex flex-col gap-8 lg:flex-row'>
         <nav className='w-full lg:w-[40%] border'>
           <ul>
             {navLinks.map(link => (
