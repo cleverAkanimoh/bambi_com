@@ -21,8 +21,8 @@ export default function CartOffCanvas() {
       const data = await getUserCartItems();
       setCartItems(data);
     };
-
-    if (user) fetchCartItems();
+    // if (!user) return;
+    fetchCartItems();
 
     // return () => fetchCartItems();
   }, []);

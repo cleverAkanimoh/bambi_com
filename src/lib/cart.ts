@@ -1,10 +1,7 @@
 import { auth, db } from "@/config/firebase-config";
 import { CartType } from "@/types";
-import { User } from "firebase/auth";
 import {
-  setDoc,
   doc,
-  getDoc,
   deleteDoc,
   collection,
   addDoc,
@@ -22,9 +19,10 @@ export const getUserCartItems = async () => {
 
   if (snapshot) {
     snapshot.forEach((cartDoc) => {
-      console.log(cartDoc);
+      const details = cartDoc.data();
 
-      data.push({ ...cartDoc.data(), uid: cartDoc.id });
+      if (details.userId === auth.currentUser?.uid)
+        data.push({ ...details, uid: cartDoc.id });
     });
   }
 
