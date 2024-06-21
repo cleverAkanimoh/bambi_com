@@ -7,6 +7,7 @@ import MenuSideNav from "./navbar/MenuSideNav";
 
 export default function Navbar() {
   return (
+
     <nav className="header">
       {/* <!-- Header Section Start --> */}
 
@@ -30,7 +31,9 @@ export default function Navbar() {
           {/* <!-- Button Close End --> */}
 
           {/* <!-- Offcanvas Search Form Start --> */}
+          <React.Suspense>
           <Search variant="off-canvas" />
+          </React.Suspense>
           {/* <!-- Offcanvas Search Form End --> */}
         </div>
       </div>
@@ -42,5 +45,6 @@ export default function Navbar() {
 
       {/* <!-- Header Section End --> */}
     </nav>
+    
   );
 }
