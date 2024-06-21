@@ -31,7 +31,6 @@ export const getUserCartItems = async (user: User | null) => {
 export const addToCart = async (cart: CartType) => {
   const userId = auth?.currentUser?.uid ?? "";
   const cartItemId = cart.id.toString() || "";
-  // const cartItem = await getUserCartItems(auth.currentUser);
 
   const cartItemRef = collection(db, collectionName, userId, cartItemId);
 
@@ -65,7 +64,7 @@ export const removeSingleCartItem = async (id: string | number) => {
   const userId = auth?.currentUser?.uid ?? "";
   const cartItemId = id.toString() ?? "";
 
-  const cartItemRef = doc(db, collectionName, userId, cartItemId, "cartInfo");
+  const cartItemRef = doc(db, collectionName, userId, cartItemId);
 
   try {
     await deleteDoc(cartItemRef);
