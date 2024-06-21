@@ -84,6 +84,7 @@ const Page = () => {
             toast.success("Profile updated successfully");
         } catch (error: unknown) {
             if (error instanceof Error) {
+                console.log(error.message)
                 toast.error(error.message);
             } else {
                 toast.error("An error occurred");

@@ -16,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/navigation";
 import { useAuth } from '@/context/auth-context';
 import Breadcrumbs from '@/components/Breadcrumbs';
+import Loading from '../loading';
 
 
 
@@ -35,10 +36,7 @@ const Layout = ({
     }
   }, [loading, user, router]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
+  if (loading) {return <Loading />}
   const signOutFromApp = async () => {
     try {
         await signOut(auth);
@@ -104,7 +102,7 @@ const Layout = ({
           theme="colored"
           hideProgressBar={false}
       />
-      <div className='w-full md:w-[90%] mx-auto flex flex-col gap-8 md:flex-row'>
+      <div className='w-full md:w-[90%] mx-auto flex flex-col gap-8 lg:flex-row'>
         <nav className='w-full lg:w-[40%] border'>
           <ul>
             {navLinks.map(link => (

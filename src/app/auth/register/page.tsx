@@ -76,9 +76,9 @@ const Page = () => {
                 hideProgressBar={false}
             />
         <div className='min-h-screen flex items-center justify-center p-4 md:p-10 mb-4'>
-            <form onSubmit={signIn} action="" className='bg-[#efefef] text-center w-full mx-auto md:w-1/2 lg:w-2/5 flex flex-col gap-8 items-center px-2 py-10 md:px-6 md:py-12'>
+            <form onSubmit={signIn} action="" className='bg-[#efefef] text-center w-full mx-auto md:w-3/4 lg:w-2/5 flex flex-col gap-8 items-center px-4 py-10 md:px-6 md:py-12'>
                 <div>
-                    <legend className='text-3xl font-bold'>Create account</legend>
+                    <legend className='text-3xl font-bold text-black'>Create account</legend>
                     <p className='text-[#555] mt-3'>Please register using account details below</p>
                 </div>
                 <input className="w-full text-[#555] p-3 outline-none ring-0 bg-white focus:bg-white border focus:border-primary" type="text" placeholder="First Name" name="firstName" />
