@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "@/config/firebase-config";
 
@@ -23,7 +29,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const session = onAuthStateChanged(auth, (user) => {
       setUser(user);
       setLoading(false);
-      console.log(user)
     });
 
     return () => session();

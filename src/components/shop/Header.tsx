@@ -37,10 +37,12 @@ export default function Header({
             `Showing 1-${postPerPage} of ${totalPages} results`}
         </span>
 
-        <select className="" onChange={(e) => handleSelect(e.target.value)}>
-          <option selected value="">
-            Sort by Default
-          </option>
+        <select
+          className=""
+          onChange={(e) => handleSelect(e.target.value)}
+          defaultValue=""
+        >
+          <option value="">Sort by Default</option>
           <option value="popular">Sort by popular</option>
           <option value="rated">Sort by Rated</option>
           <option value="latest">Sort by Latest</option>

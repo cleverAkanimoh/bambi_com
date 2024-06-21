@@ -47,6 +47,7 @@ export default function ProductCardWrapper({
             {sortedFilteredProduct.map((x, i) => (
               <ShopProductCard
                 key={i}
+                id={i + 1}
                 src1="/assets/images/products/medium-product/2.jpg"
                 src2="/assets/images/products/medium-product/3.jpg"
                 new_price={x.new_price}

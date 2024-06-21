@@ -31,6 +31,7 @@ export default function Products() {
           {shopProducts.map(({ src1, heading, new_price }, index) => (
             <SwiperSlide key={index}>
               <ProductCard
+                id={index + 1}
                 src={src1}
                 href={`/shop/${index + 1}`}
                 heading={heading}

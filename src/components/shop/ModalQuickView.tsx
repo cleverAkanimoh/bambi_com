@@ -1,7 +1,21 @@
+"use client";
+
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { AddToCartButton } from "../CartButtons";
+import { Products } from "@/types";
 
 export default function ModalQuickView() {
+  const [product, setProduct] = useState<Products | null>(null);
+  const [quantity, setQuantity] = useState(1);
+
+  if (isNaN(quantity)) {
+    setQuantity(1);
+  }
+  if (quantity < 1) {
+    setQuantity(1);
+  }
+
   return (
     <div
       className="modalquickview modal fade"
@@ -13,7 +27,13 @@ export default function ModalQuickView() {
     >
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
-          <button className="btn close" data-bs-dismiss="modal">
+          <button
+            className="btn close"
+            data-bs-dismiss="modal"
+            onClick={() => {
+              localStorage.removeItem("productInfo");
+            }}
+          >
             ×
           </button>
           <div className="row">
@@ -28,7 +48,7 @@ export default function ModalQuickView() {
                         width={100}
                         height={100}
                         className="w-100"
-                        src="/assets/images/products/large-product/1.jpg"
+                        src={product?.src1 ?? ""}
                         alt="Product"
                       />
                     </a>
@@ -92,36 +112,30 @@ export default function ModalQuickView() {
               <div className="product-summery position-relative">
                 {/* <!-- Product Head Start --> */}
                 <div className="product-head mb-3">
-                  <h2 className="product-title">Sample product title</h2>
+                  <h2 className="product-title">{product?.heading}</h2>
                 </div>
                 {/* <!-- Product Head End --> */}
 
                 {/* <!-- Rating Start --> */}
-                <span className="ratings justify-content-start mb-2">
+                {/* <span className="ratings justify-content-start mb-2">
                   <span className="rating-wrap">
                     <span className="star w-full"></span>
                   </span>
                   <span className="rating-num">(4)</span>
-                </span>
+                </span> */}
                 {/* <!-- Rating End --> */}
 
                 {/* <!-- Price Box Start --> */}
                 <div className="price-box mb-2">
-                  <span className="regular-price">$80.00</span>
+                  <span className="regular-price">${product?.new_price}</span>
                   <span className="old-price">
-                    <del>$90.00</del>
+                    <del>${product?.old_price}</del>
                   </span>
                 </div>
                 {/* <!-- Price Box End --> */}
 
                 {/* <!-- Description Start --> */}
-                <p className="desc-content mb-5">
-                  I must explain to you how all this mistaken idea of denouncing
-                  pleasure and praising pain was born and I will give you a
-                  complete account of the system, and expound the actual
-                  teachings of the great explorer of the truth, the
-                  master-builder of human happiness.
-                </p>
+                <p className="desc-content mb-5">{product?.description}</p>
                 {/* <!-- Description End --> */}
 
                 {/* <!-- Quantity Start --> */}
@@ -129,24 +143,33 @@ export default function ModalQuickView() {
                   <span className="me-2">
                     <strong>Qty: </strong>
                   </span>
-                  <div className="cart-plus-minus">
+                  <div className="flex gap-1">
+                    <button>-</button>
                     <input
-                      className="cart-plus-minus-box"
-                      value="1"
+                      className=""
+                      value={quantity}
+                      onChange={(e) => setQuantity(Number(e.target.value))}
                       type="text"
                     />
-                    <div className="dec qtybutton"></div>
-                    <div className="inc qtybutton"></div>
+                    <button>+</button>
                   </div>
                 </div>
+                {quantity}
                 {/* <!-- Quantity End --> */}
 
                 {/* <!-- Cart Button Start --> */}
                 <div className="cart-btn mb-4">
                   <div className="add-to_cart">
-                    <a className="btn btn-dark btn-hover-primary" href="/cart">
-                      Add to cart
-                    </a>
+                    <AddToCartButton
+                      cart={{
+                        id: product?.id ?? "",
+                        src: product?.src1 ?? "",
+                        href: product?.href ?? "",
+                        title: product?.heading ?? "",
+                        price: product?.new_price ?? 0,
+                        quantity: 1,
+                      }}
+                    />
                   </div>
                 </div>
                 {/* <!-- Cart Button End --> */}
@@ -154,14 +177,7 @@ export default function ModalQuickView() {
                 {/* <!-- Action Button Start --> */}
                 <div className="actions border-bottom mb-4 pb-4">
                   <a
-                    href="compare.php"
-                    title="Compare"
-                    className="action compare"
-                  >
-                    <i className="pe-7s-refresh-2"></i> Compare
-                  </a>
-                  <a
-                    href="wishlist.php"
+                    href="/wishlist"
                     title="Wishlist"
                     className="action wishlist"
                   >
