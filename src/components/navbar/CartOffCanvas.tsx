@@ -4,31 +4,51 @@ import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
 import React, { useEffect, useState } from "react";
 import { CiShoppingCart } from "react-icons/ci";
-import Button from "../Button";
-import { BiTrash } from "react-icons/bi";
-import { auth } from "@/config/firebase-config";
 
-import { clearAllItemsFromCart, removeSingleCartItem } from "@/lib/cart";
+import { db } from "@/config/firebase-config";
+
+import { DeleteAllCartItemsButton, DeleteCartItemById } from "../CartButtons";
 import { CartType } from "@/types";
+import { collection, doc, onSnapshot } from "firebase/firestore";
+import { useAuth } from "@/context/auth-context";
 
 export default function CartOffCanvas() {
-  const [cartItem, setCartItem] = useState<CartType[]>([]);
+  const [cartItems, setCartItems] = useState<CartType[]>([]);
+
+  const { user } = useAuth();
 
   useEffect(() => {
-    const items = JSON.parse(localStorage.getItem("cartItems") || "[]");
-    setCartItem(items);
-  }, []);
+    async () => {
+      if (user) {
+        const userId = user.uid;
+        console.log(userId);
 
-  const cartTotal = cartItem?.reduce(
-    (prev, curr) => prev + curr.price * curr.quantity,
+        const cartItemRef = collection(db, "cartItems", userId);
+        console.log(cartItemRef);
+
+        const unSubscribe = onSnapshot(cartItemRef, (snapshot) => {
+          const cartId = snapshot.docs.map((doc) => {
+            return { ...doc.data() };
+          });
+          // setCartItems(itemsInCart);
+          console.log("log:", cartId);
+        });
+        return () => unSubscribe();
+      }
+    };
+  }, [user]);
+
+  const cartTotal = cartItems?.reduce(
+    (prev, curr) => prev + curr?.price * curr?.quantity,
     0
   );
+
   return (
-    <div className="cart-offcanvas-wrapper">
+    <section className="cart-offcanvas-wrapper">
       <div className="offcanvas-overlay"></div>
 
       {/* <!-- Cart Offcanvas Inner Start --> */}
-      <div className="cart-offcanvas-inner">
+      <aside className="cart-offcanvas-inner">
         {/* <!-- Button Close Start --> */}
         <div className="offcanvas-btn-close">
           <i className="pe-7s-close"></i>
@@ -37,22 +57,17 @@ export default function CartOffCanvas() {
 
         {/* check if user is logged in */}
 
-        {auth.currentUser ? (
+        {user ? (
           <>
-            {cartItem.length > 0 ? (
+            {cartItems.length > 0 ? (
               <div className="offcanvas-cart-content">
                 <div className="w-full flex items-center justify-between mb-3 -mt-8">
                   <Link href="/shop" className="hover:underline text-primary">
                     Continue shopping
                   </Link>
-                  <Button
-                    title="Clear cart"
-                    onClick={() => clearAllItemsFromCart()}
-                  >
-                    <BiTrash />
-                  </Button>
+                  <DeleteAllCartItemsButton />
                 </div>
-                {cartItem.map((item, index) => (
+                {cartItems.map((item, index) => (
                   <CartTile
                     key={index}
                     src={item.src}
@@ -110,9 +125,9 @@ export default function CartOffCanvas() {
             </Link>
           </section>
         )}
-      </div>
+      </aside>
       {/* <!-- Cart Offcanvas Inner End --> */}
-    </div>
+    </section>
   );
 }
 
@@ -152,12 +167,7 @@ const CartTile = ({
         </div>
       </div>
     </div>
-    <button
-      className="cart-product-remove text-sm"
-      onClick={() => removeSingleCartItem(id)}
-    >
-      <i className="pe-7s-close"></i>
-    </button>
+    <DeleteCartItemById id={id} item={title} />
     {/* <!-- Product Remove End --> */}
   </div>
 );
