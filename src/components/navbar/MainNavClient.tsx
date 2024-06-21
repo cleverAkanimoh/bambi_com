@@ -1,7 +1,7 @@
 "use client";
+import React from "react";
 
 import Link from "next/link";
-import React, { useState } from "react";
 import Image from "next/image";
 import NavLink from "./NavLink";
 import { pagesArray } from "@/lib/navData";
@@ -12,21 +12,19 @@ import clsx from "clsx";
 import { useGlobalContext } from "@/context/store";
 import { CartType } from "@/types";
 
-export default function MainNav() {
+export default function MainNavClient({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const { setIsMenuClicked } = useGlobalContext();
-  const [isFixedNav, setIsFixedNav] = useState(false);
-  const [cartLength, setCartLength] = useState(0);
+  const [isFixedNav, setIsFixedNav] = React.useState(false);
 
   React.useEffect(() => {
     window.onscroll = () =>
       window.scrollY > 120 ? setIsFixedNav(true) : setIsFixedNav(false);
-    const cartItem: CartType[] = JSON.parse(
-      localStorage.getItem("cartItem") || "[]"
-    );
-    setCartLength(cartItem.length);
   }, []);
   return (
-  
     <section
       className={clsx("flex items-center justify-between px-2 w-full", {
         "fixed top-0 left-0 bg-white z-40": isFixedNav,
@@ -58,8 +56,8 @@ export default function MainNav() {
       <div className="col-md-6 col-lg-3 col-xl-4 col-6">
         <div className="header-actions header-actions-width">
           <div className="header-action-left">
-          <React.Suspense>
-            <Search />
+            <React.Suspense>
+              <Search />
             </React.Suspense>
           </div>
 
@@ -85,14 +83,7 @@ export default function MainNav() {
             </Link>
             {/* <!-- Wishlist Action Button End --> */}
 
-            {/* <!-- Cart Action Button Start --> */}
-            <button className="header-action-btn header-action-btn-cart">
-              <i className="pe-7s-cart"></i>
-              {cartLength > 0 && (
-                <span className="header-action-num">{cartLength}</span>
-              )}
-            </button>
-            {/* <!-- Cart Action Button End --> */}
+            {children}
 
             {/* <!-- Mobile Menu Hambarger Action Button Start --> */}
             <button
@@ -108,6 +99,5 @@ export default function MainNav() {
       </div>
       {/* <!-- Header Action End --> */}
     </section>
-
   );
 }

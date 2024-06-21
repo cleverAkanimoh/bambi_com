@@ -1,4 +1,5 @@
 export type Products = {
+  id: string | number;
   src1: string;
   src2?: string;
   href: string;
@@ -12,3 +13,12 @@ export type Products = {
   ratings?: number;
 };
 export type ProductsType = Products[];
+
+export type CartType = {
+  id: string | number;
+  src: string;
+  href: string;
+  title: string;
+  price: number;
+  quantity: number;
+};

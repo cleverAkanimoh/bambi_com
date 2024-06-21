@@ -5,9 +5,8 @@ import Search from "./Search";
 import CartOffCanvas from "./navbar/CartOffCanvas";
 import MenuSideNav from "./navbar/MenuSideNav";
 
-export default function Navbar() {
+export default async function Navbar() {
   return (
-
     <nav className="header">
       {/* <!-- Header Section Start --> */}
 
@@ -32,7 +31,7 @@ export default function Navbar() {
 
           {/* <!-- Offcanvas Search Form Start --> */}
           <React.Suspense>
-          <Search variant="off-canvas" />
+            <Search variant="off-canvas" />
           </React.Suspense>
           {/* <!-- Offcanvas Search Form End --> */}
         </div>
@@ -45,6 +44,5 @@ export default function Navbar() {
 
       {/* <!-- Header Section End --> */}
     </nav>
-    
   );
 }
