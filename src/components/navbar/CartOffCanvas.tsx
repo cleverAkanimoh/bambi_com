@@ -7,6 +7,7 @@ import { CiShoppingCart } from "react-icons/ci";
 import Button from "../Button";
 import { BiTrash } from "react-icons/bi";
 import { auth } from "@/config/firebase-config";
+
 import { clearAllItemsFromCart, removeSingleCartItem } from "@/lib/cart";
 import { CartType } from "@/types";
 
