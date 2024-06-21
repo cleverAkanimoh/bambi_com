@@ -10,7 +10,7 @@ import Search from "../Search";
 import Logo from "../../../public/assets/images/logo/logo.png";
 import clsx from "clsx";
 import { useGlobalContext } from "@/context/store";
-import { CartType } from "@/types";
+import { getUserCartItems } from "@/lib/cart";
 
 export default function MainNav() {
   const { setIsMenuClicked } = useGlobalContext();
@@ -20,13 +20,13 @@ export default function MainNav() {
   React.useEffect(() => {
     window.onscroll = () =>
       window.scrollY > 120 ? setIsFixedNav(true) : setIsFixedNav(false);
-    const cartItem: CartType[] = JSON.parse(
-      localStorage.getItem("cartItem") || "[]"
-    );
-    setCartLength(cartItem.length);
+    const getCartItemsLength = async () => {
+      const cartItems = await getUserCartItems();
+      setCartLength(cartItems.length);
+    };
+    getCartItemsLength();
   }, []);
   return (
-  
     <section
       className={clsx("flex items-center justify-between px-2 w-full", {
         "fixed top-0 left-0 bg-white z-40": isFixedNav,
@@ -58,8 +58,8 @@ export default function MainNav() {
       <div className="col-md-6 col-lg-3 col-xl-4 col-6">
         <div className="header-actions header-actions-width">
           <div className="header-action-left">
-          <React.Suspense>
-            <Search />
+            <React.Suspense>
+              <Search />
             </React.Suspense>
           </div>
 
@@ -108,6 +108,5 @@ export default function MainNav() {
       </div>
       {/* <!-- Header Action End --> */}
     </section>
-
   );
 }
