@@ -20,6 +20,7 @@ export default function MainNav() {
   React.useEffect(() => {
     window.onscroll = () =>
       window.scrollY > 120 ? setIsFixedNav(true) : setIsFixedNav(false);
+
     const getCartItemsLength = async () => {
       const cartItems = await getUserCartItems();
       setCartLength(cartItems.length);
