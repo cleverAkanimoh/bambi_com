@@ -1,55 +1,70 @@
 import { auth, db } from "@/config/firebase-config";
 import { CartType } from "@/types";
+import { User } from "firebase/auth";
 import {
   setDoc,
   doc,
   getDoc,
   deleteDoc,
-  onSnapshot,
   collection,
+  addDoc,
+  getDocs,
 } from "firebase/firestore";
 
-export const getUserCartItems = async () => {
-  // let cartItems = [];
-  // const userId = auth?.currentUser?.uid ?? "";
-  // const cartItemRef = collection(db, "cartItems", userId);
-  // const allCartItemCollections = onSnapshot(cartItemRef, (snapshot) => {
-  //   const itemsInCart = snapshot.forEach((doc) => {
-  //     return { id: doc.id, ...doc.data() };
-  //   });
-  //   console.log("log:", snapshot);
-  // });
+export const collectionName = "cartItems";
+
+export const getUserCartItems = async (user: User | null) => {
+  const cartItemRef = collection(db, collectionName);
+  if (user) {
+    let cartItems: CartType[] = [];
+
+    const items = await getDocs(cartItemRef);
+    cartItems.forEach((docs) => {
+      const cart = cartItems.push(docs);
+      console.log(cart);
+    });
+
+    return cartItems;
+  }
 };
 
 export const addToCart = async (cart: CartType) => {
   const userId = auth?.currentUser?.uid ?? "";
   const cartItemId = cart.id.toString() ?? "";
+  const cartItem = await getUserCartItems(auth.currentUser);
 
-  const cartItemRef = doc(db, "cartItems", userId, cartItemId, "cartInfo");
+  // const itemAlreadyExist = cartItem?.filter((x) => x.id !== cartItemId);
 
-  const itemAlreadyExist = await getDoc(cartItemRef);
+  // console.log(itemAlreadyExist);
 
-  if (itemAlreadyExist.exists())
-    throw new Error(`${cart.title} is already in cart`);
+  // if (itemAlreadyExist) throw new Error(`${cart.title} is already in cart`);
 
-  await setDoc(cartItemRef, {
-    id: cartItemId,
-    src: cart.src,
-    href: cart.href,
-    title: cart.title,
-    price: cart.price,
-    quantity: cart.quantity,
-    userId,
-  });
+  try {
+    const cartItemRef = collection(db, collectionName);
+    const doc = await addDoc(cartItemRef, {
+      id: cartItemId,
+      src: cart.src,
+      href: cart.href,
+      title: cart.title,
+      price: cart.price,
+      quantity: cart.quantity,
+      userId,
+    });
 
-  // return newCartItem;
+    console.log("Added new item to cart: ", doc.id);
+
+    // revalidatePath("");
+  } catch (error) {
+    const errorText = "Please check your network connection";
+    throw error;
+  }
 };
 
 export const removeSingleCartItem = async (id: string | number) => {
   const userId = auth?.currentUser?.uid ?? "";
   const cartItemId = id.toString() ?? "";
 
-  const cartItemRef = doc(db, "cartItems", userId, cartItemId, "cartInfo");
+  const cartItemRef = doc(db, collectionName, userId, cartItemId, "cartInfo");
 
   try {
     await deleteDoc(cartItemRef);
@@ -61,7 +76,7 @@ export const removeSingleCartItem = async (id: string | number) => {
 export const clearAllItemsFromCart = async () => {
   const userId = auth?.currentUser?.uid ?? "";
   try {
-    await deleteDoc(doc(db, "cartItems", userId));
+    await deleteDoc(doc(db, collectionName, userId));
   } catch (error) {
     throw new Error("An error occurred, Cart item was not deleted");
   }

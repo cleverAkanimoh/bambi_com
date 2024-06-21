@@ -9,11 +9,11 @@ import {
 } from "@/lib/cart";
 import { CartType } from "@/types";
 
-import { auth } from "@/config/firebase-config";
 import clsx from "clsx";
 
 import Button from "./Button";
 import { BiRefresh, BiTrash } from "react-icons/bi";
+import { useAuth } from "@/context/auth-context";
 
 export function AddToCartButton({
   cart,
@@ -23,6 +23,9 @@ export function AddToCartButton({
   className?: string;
 }) {
   const [loading, setLoading] = useState(false);
+
+  const { user } = useAuth();
+
   const handleAddToCart = async () => {
     setLoading(true);
     try {
@@ -44,7 +47,7 @@ export function AddToCartButton({
   );
   return (
     <>
-      {auth.currentUser ? (
+      {user ? (
         <button
           className={styles}
           onClick={() => handleAddToCart()}
