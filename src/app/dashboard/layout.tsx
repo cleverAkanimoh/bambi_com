@@ -25,15 +25,20 @@ const Layout = ({
   children: React.ReactNode;
 }>) => {
   const pathName = usePathname();
-  const { user } = useAuth();
+ 
+  const { user, loading } = useAuth();
   const router = useRouter();
 
-  // useEffect(() => {
-  //     if (!user) {
-  //         router.push("/auth/login");
-  //     }
-  // }, [user, router]);
-  
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/auth/login");
+    }
+  }, [loading, user, router]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   const signOutFromApp = async () => {
     try {
         await signOut(auth);
@@ -87,7 +92,7 @@ const Layout = ({
   return (
     <div className='flex flex-col gap-4'>
     <Breadcrumbs active="Dashboard" />
-    <div className='p-6 md:p-10 mb-4'>
+    <div className='p-4 md:p-10 mb-4'>
       <ToastContainer
           position="top-right"
           autoClose={3000}

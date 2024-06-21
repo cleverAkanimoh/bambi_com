@@ -94,7 +94,7 @@ const Page = () => {
     };
 
     return (
-        <div className='p-4'>
+        <div className='p-2'>
                   <ToastContainer
                 position="top-right"
                 autoClose={3000}
@@ -108,12 +108,12 @@ const Page = () => {
             />
             <div className='min-h-screen flex items-center justify-center'>
                 <form onSubmit={handleSubmit} className='text-[#555] grid grid-cols-1 gap-4'>
-                    <h1 className='text-3xl font-bold text-black'>Account details</h1>
+                    <legend className='text-3xl font-bold text-black'>Account details</legend>
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-4 items-center'>
                         <div>
                             <label className="mb-2 font-semibold" htmlFor="firstName">First Name</label>
                             <input
-                                className="w-full p-4 outline-none ring-0 bg-white focus:bg-white border focus:border-primary"
+                                className="w-full p-3 outline-none ring-0 bg-white focus:bg-white border focus:border-primary"
                                 type="text"
                                 placeholder="First name"
                                 id='firstName'
@@ -125,7 +125,7 @@ const Page = () => {
                         <div>
                             <label className="mb-2 font-semibold" htmlFor="lastName">Last Name</label>
                             <input
-                                className="w-full p-4 outline-none ring-0 bg-white focus:bg-white border focus:border-primary"
+                                className="w-full p-3 outline-none ring-0 bg-white focus:bg-white border focus:border-primary"
                                 type="text"
                                 placeholder="Last name"
                                 id='lastName'
@@ -138,7 +138,7 @@ const Page = () => {
                     <div>
                         <label className="mb-2 font-semibold" htmlFor="displayName">Display Name</label>
                         <input
-                            className="w-full p-4 outline-none ring-0 bg-white focus:bg-white border focus:border-primary"
+                            className="w-full p-3 outline-none ring-0 bg-white focus:bg-white border focus:border-primary"
                             type="text"
                             placeholder="Display Name"
                             id='displayName'
@@ -150,7 +150,7 @@ const Page = () => {
                     <div>
                         <label className="mb-2 font-semibold" htmlFor="email">Email Address</label>
                         <input
-                            className="w-full p-4 outline-none ring-0 bg-white focus:bg-white border focus:border-primary"
+                            className="w-full p-3 outline-none ring-0 bg-white focus:bg-white border focus:border-primary"
                             type="email"
                             placeholder="Email Address"
                             id='email'
@@ -164,7 +164,7 @@ const Page = () => {
                         <div>
                             <label className="mb-2 font-semibold" htmlFor="password">Current Password</label>
                             <input
-                                className="w-full p-4 outline-none ring-0 bg-white focus:bg-white border focus:border-primary"
+                                className="w-full p-3 outline-none ring-0 bg-white focus:bg-white border focus:border-primary"
                                 type="password"
                                 placeholder="Current Password"
                                 id='password'
@@ -177,7 +177,7 @@ const Page = () => {
                             <div>
                                 <label className="mb-2 font-semibold" htmlFor="newPassword">New Password</label>
                                 <input
-                                    className="w-full p-4 outline-none ring-0 bg-white focus:bg-white border focus:border-primary"
+                                    className="w-full p-3 outline-none ring-0 bg-white focus:bg-white border focus:border-primary"
                                     type="password"
                                     placeholder="New Password"
                                     id="newPassword"
@@ -189,7 +189,7 @@ const Page = () => {
                             <div>
                                 <label className="mb-2 font-semibold" htmlFor="confirmPassword">Confirm Password</label>
                                 <input
-                                    className="w-full p-4 outline-none ring-0 bg-white focus:bg-white border focus:border-primary"
+                                    className="w-full p-3 outline-none ring-0 bg-white focus:bg-white border focus:border-primary"
                                     type="password"
                                     id='confirmPassword'
                                     placeholder="Confirm Password"
@@ -202,7 +202,7 @@ const Page = () => {
                     </div>
                     <button
                         type="submit"
-                        className={`self-start text-white w-full md:w-[40%] lg:w-[30%] text-center font-bold bg-black p-4 hover:bg-primary hover:text-white transition-all ease-in-out duration-200 ${isSubmitted ? "opacity-70" : "opacity-100"}`}
+                        className={`self-start text-white w-full md:w-[40%] lg:w-[30%] text-center font-bold bg-black p-3 hover:bg-primary hover:text-white transition-all ease-in-out duration-200 ${isSubmitted ? "opacity-70" : "opacity-100"}`}
                         disabled={isSubmitted}
                     >
                         {isSubmitted ? "Saving..." : "Save Changes"}
