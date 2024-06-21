@@ -212,11 +212,12 @@ export default function ProductDisplay({
             <div className="add-to_cart">
               <AddToCartButton
                 cart={{
-                  src: "",
-                  href: "",
-                  title: "",
-                  price: 0,
-                  quantity: 0,
+                  id: singleProduct.id,
+                  src: singleProduct.src1,
+                  href: singleProduct.href,
+                  title: singleProduct.heading,
+                  price: singleProduct.new_price,
+                  quantity: 1,
                 }}
               />
             </div>

@@ -13,8 +13,8 @@ import {
 
 export const collectionName = "cartItems";
 
+const cartItemRef = collection(db, collectionName);
 export const getUserCartItems = async (user: User | null) => {
-  const cartItemRef = collection(db, collectionName);
   if (user) {
     let cartItems: CartType[] = [];
 
@@ -31,9 +31,17 @@ export const getUserCartItems = async (user: User | null) => {
 export const addToCart = async (cart: CartType) => {
   const userId = auth?.currentUser?.uid ?? "";
   const cartItemId = cart.id.toString() ?? "";
-  const cartItem = await getUserCartItems(auth.currentUser);
+  // const cartItem = await getUserCartItems(auth.currentUser);
 
-  // const itemAlreadyExist = cartItem?.filter((x) => x.id !== cartItemId);
+  const cartItems = await getDocs(cartItemRef);
+  console.log(cartItems.docs);
+
+  cartItems.docs.forEach((docs) => {
+    if (docs.data().id === cartItemId) {
+      throw new Error(`${cart.title} is already in cart`);
+    }
+    console.log(docs.id);
+  });
 
   // console.log(itemAlreadyExist);
 
