@@ -30,7 +30,7 @@ export const getUserCartItems = async (user: User | null) => {
 
 export const addToCart = async (cart: CartType) => {
   const userId = auth?.currentUser?.uid ?? "";
-  const cartItemId = cart.id.toString() ?? "";
+  const cartItemId = cart.id.toString() || "";
   // const cartItem = await getUserCartItems(auth.currentUser);
 
   const cartItems = await getDocs(cartItemRef);

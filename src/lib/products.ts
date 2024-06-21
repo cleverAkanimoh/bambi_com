@@ -34,6 +34,7 @@ export const shopProducts: ProductsType = [
     sales_category: "popular",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+    id: "1",
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -45,6 +46,7 @@ export const shopProducts: ProductsType = [
     sales_category: "latest",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+    id: "2",
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -56,6 +58,7 @@ export const shopProducts: ProductsType = [
     sales_category: "best_offers",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+    id: "3",
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -67,6 +70,7 @@ export const shopProducts: ProductsType = [
     sales_category: "latest",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+    id: "4",
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -78,6 +82,7 @@ export const shopProducts: ProductsType = [
     sales_category: "latest",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+    id: "5",
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -89,6 +94,7 @@ export const shopProducts: ProductsType = [
     sales_category: "popular",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+    id: "6",
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -100,6 +106,7 @@ export const shopProducts: ProductsType = [
     sales_category: "rated",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+    id: "7",
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -111,6 +118,20 @@ export const shopProducts: ProductsType = [
     sales_category: "rated",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+    id: "8",
+  },
+
+  {
+    src1: "/assets/images/products/medium-product/2.jpg",
+    src2: "/assets/images/products/medium-product/3.jpg",
+    href: "/shop",
+    old_price: 12,
+    new_price: 10,
+    heading: "Pampers",
+    sales_category: "latest",
+    description:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+    id: "9",
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -122,6 +143,115 @@ export const shopProducts: ProductsType = [
     sales_category: "latest",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+    id: "10",
+  },
+  {
+    src1: "/assets/images/products/medium-product/2.jpg",
+    src2: "/assets/images/products/medium-product/3.jpg",
+    href: "/shop",
+    old_price: 12,
+    new_price: 10,
+    heading: "Pampers",
+    sales_category: "popular",
+    description:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+    id: "11",
+  },
+  {
+    src1: "/assets/images/products/medium-product/2.jpg",
+    src2: "/assets/images/products/medium-product/3.jpg",
+    href: "/shop",
+    old_price: 12,
+    new_price: 10,
+    heading: "Pampers",
+    sales_category: "popular",
+    description:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+    id: "12",
+  },
+  {
+    src1: "/assets/images/products/medium-product/2.jpg",
+    src2: "/assets/images/products/medium-product/3.jpg",
+    href: "/shop",
+    old_price: 12,
+    new_price: 10,
+    heading: "Pampers",
+    sales_category: "popular",
+    description:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+    id: "13",
+  },
+  {
+    src1: "/assets/images/products/medium-product/2.jpg",
+    src2: "/assets/images/products/medium-product/3.jpg",
+    href: "/shop",
+    old_price: 12,
+    new_price: 10,
+    heading: "Pampers",
+    sales_category: "popular",
+    description:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+    id: "14",
+  },
+  {
+    src1: "/assets/images/products/medium-product/2.jpg",
+    src2: "/assets/images/products/medium-product/3.jpg",
+    href: "/shop",
+    old_price: 12,
+    new_price: 10,
+    heading: "Pampers",
+    sales_category: "popular",
+    description:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+    id: "15",
+  },
+  {
+    src1: "/assets/images/products/medium-product/2.jpg",
+    src2: "/assets/images/products/medium-product/3.jpg",
+    href: "/shop",
+    old_price: 12,
+    new_price: 10,
+    heading: "Pampers",
+    sales_category: "popular",
+    description:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+    id: "16",
+  },
+  {
+    src1: "/assets/images/products/medium-product/2.jpg",
+    src2: "/assets/images/products/medium-product/3.jpg",
+    href: "/shop",
+    old_price: 12,
+    new_price: 10,
+    heading: "Pampers",
+    sales_category: "popular",
+    description:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+    id: "17",
+  },
+  {
+    src1: "/assets/images/products/medium-product/2.jpg",
+    src2: "/assets/images/products/medium-product/3.jpg",
+    href: "/shop",
+    old_price: 12,
+    new_price: 10,
+    heading: "Pampers",
+    sales_category: "popular",
+    description:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+    id: "18",
+  },
+  {
+    src1: "/assets/images/products/medium-product/2.jpg",
+    src2: "/assets/images/products/medium-product/3.jpg",
+    href: "/shop",
+    old_price: 12,
+    new_price: 10,
+    heading: "Pampers",
+    sales_category: "popular",
+    description:
+      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+    id: "19",
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -133,115 +263,6 @@ export const shopProducts: ProductsType = [
     sales_category: "latest",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-  },
-  {
-    src1: "/assets/images/products/medium-product/2.jpg",
-    src2: "/assets/images/products/medium-product/3.jpg",
-    href: "/shop",
-    old_price: 12,
-    new_price: 10,
-    heading: "Pampers",
-    sales_category: "latest",
-    description:
-      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-  },
-  {
-    src1: "/assets/images/products/medium-product/2.jpg",
-    src2: "/assets/images/products/medium-product/3.jpg",
-    href: "/shop",
-    old_price: 12,
-    new_price: 10,
-    heading: "Pampers",
-    sales_category: "popular",
-    description:
-      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-  },
-  {
-    src1: "/assets/images/products/medium-product/2.jpg",
-    src2: "/assets/images/products/medium-product/3.jpg",
-    href: "/shop",
-    old_price: 12,
-    new_price: 10,
-    heading: "Pampers",
-    sales_category: "popular",
-    description:
-      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-  },
-  {
-    src1: "/assets/images/products/medium-product/2.jpg",
-    src2: "/assets/images/products/medium-product/3.jpg",
-    href: "/shop",
-    old_price: 12,
-    new_price: 10,
-    heading: "Pampers",
-    sales_category: "popular",
-    description:
-      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-  },
-  {
-    src1: "/assets/images/products/medium-product/2.jpg",
-    src2: "/assets/images/products/medium-product/3.jpg",
-    href: "/shop",
-    old_price: 12,
-    new_price: 10,
-    heading: "Pampers",
-    sales_category: "popular",
-    description:
-      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-  },
-  {
-    src1: "/assets/images/products/medium-product/2.jpg",
-    src2: "/assets/images/products/medium-product/3.jpg",
-    href: "/shop",
-    old_price: 12,
-    new_price: 10,
-    heading: "Pampers",
-    sales_category: "popular",
-    description:
-      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-  },
-  {
-    src1: "/assets/images/products/medium-product/2.jpg",
-    src2: "/assets/images/products/medium-product/3.jpg",
-    href: "/shop",
-    old_price: 12,
-    new_price: 10,
-    heading: "Pampers",
-    sales_category: "popular",
-    description:
-      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-  },
-  {
-    src1: "/assets/images/products/medium-product/2.jpg",
-    src2: "/assets/images/products/medium-product/3.jpg",
-    href: "/shop",
-    old_price: 12,
-    new_price: 10,
-    heading: "Pampers",
-    sales_category: "popular",
-    description:
-      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-  },
-  {
-    src1: "/assets/images/products/medium-product/2.jpg",
-    src2: "/assets/images/products/medium-product/3.jpg",
-    href: "/shop",
-    old_price: 12,
-    new_price: 10,
-    heading: "Pampers",
-    sales_category: "popular",
-    description:
-      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-  },
-  {
-    src1: "/assets/images/products/medium-product/2.jpg",
-    src2: "/assets/images/products/medium-product/3.jpg",
-    href: "/shop",
-    old_price: 12,
-    new_price: 10,
-    heading: "Pampers",
-    sales_category: "popular",
-    description:
-      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
+    id: "20",
   },
 ];
