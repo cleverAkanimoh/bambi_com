@@ -13,15 +13,15 @@ import {
 
 export const collectionName = "cartItems";
 
-const cartItemRef = collection(db, collectionName);
+// export const cartItemRef = collection(db, collectionName);
+
 export const getUserCartItems = async (user: User | null) => {
   if (user) {
-    let cartItems: CartType[] = [];
+    const cartItemRef = collection(db, collectionName);
+    const cartItems = await getDocs(cartItemRef);
 
-    const items = await getDocs(cartItemRef);
-    cartItems.forEach((docs) => {
-      const cart = cartItems.push(docs);
-      console.log(cart);
+    cartItems.docs.forEach((doc) => {
+      console.log(doc.data());
     });
 
     return cartItems;
@@ -33,22 +33,15 @@ export const addToCart = async (cart: CartType) => {
   const cartItemId = cart.id.toString() || "";
   // const cartItem = await getUserCartItems(auth.currentUser);
 
-  const cartItems = await getDocs(cartItemRef);
-  console.log(cartItems.docs);
+  const cartItemRef = collection(db, collectionName, userId, cartItemId);
 
-  cartItems.docs.forEach((docs) => {
-    if (docs.data().id === cartItemId) {
-      throw new Error(`${cart.title} is already in cart`);
-    }
-    console.log(docs.id);
-  });
+  const itemAlreadyExist = await getDocs(cartItemRef);
 
-  // console.log(itemAlreadyExist);
+  if (itemAlreadyExist) throw new Error(`${cart.title} is already in cart`);
 
-  // if (itemAlreadyExist) throw new Error(`${cart.title} is already in cart`);
+  console.log(itemAlreadyExist);
 
   try {
-    const cartItemRef = collection(db, collectionName);
     const doc = await addDoc(cartItemRef, {
       id: cartItemId,
       src: cart.src,
