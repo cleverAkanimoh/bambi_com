@@ -26,18 +26,18 @@ const Page = () => {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
 
-    try {
-      setIsSubmitted(true);
-      await signInWithEmailAndPassword(auth, email, password);
-      toast.success("Login successful");
-      router.push("/");
-    } catch (error) {
-      console.error(error);
-      toast.error("Login failed");
-    } finally {
-      setIsSubmitted(false);
-    }
-  };
+        try {
+            setIsSubmitted(true);
+            await signInWithEmailAndPassword(auth, email, password);
+            toast.success("Login successful");
+            router.push("/");
+        } catch (error) {
+            console.error(error);
+            toast.error("Login failed");
+        } finally {
+            setIsSubmitted(false);
+        }
+    };
 
   return (
     <div className="flex flex-col gap-6">
