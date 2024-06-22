@@ -19,7 +19,7 @@ const publicKey = "pk_test_ef5e04574fd9f51d757806866fce40f5ebfd6b26";
 
 export default function CheckoutPage() {
   const { user } = useAuth();
-  const [paymentMethod, setPaymentMethod] = useState("bank");
+  const [paymentMethod, setPaymentMethod] = useState("");
   const [cartItems, setCartItems] = useState<CartType[]>([]);
 
   const [userInfo, setUserInfo] = useState({
@@ -90,9 +90,10 @@ export default function CheckoutPage() {
     await updateDoc(doc(db, "users", user.uid), {
       name,
       email,
-      country,city,
+      country,
+      city,
       address,
-      message
+      message,
     });
   };
 
