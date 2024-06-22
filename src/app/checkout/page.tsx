@@ -10,6 +10,8 @@ import React, { useEffect, useState } from "react";
 import { PaystackButton } from "react-paystack";
 import { toast } from "react-toastify";
 import NotFound from "../not-found";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
+import { db } from "@/config/firebase-config";
 
 const orderStyle = clsx("p-2 flex justify-between");
 
@@ -75,7 +77,7 @@ export default function CheckoutPage() {
     onClose: () => toast.info("User cancelled payment action"),
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email") as string;
@@ -84,6 +86,14 @@ export default function CheckoutPage() {
     const city = formData.get("city") as string;
     const address = formData.get("address") as string;
     const message = formData.get("message") as string;
+
+    await updateDoc(doc(db, "users", user.uid), {
+      name,
+      email,
+      country,city,
+      address,
+      message
+    });
   };
 
   return (
