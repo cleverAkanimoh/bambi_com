@@ -12,11 +12,11 @@ import { toast } from "react-toastify";
 
 const orderStyle = clsx("p-2 flex justify-between");
 
+const publicKey = "pk_test_ef5e04574fd9f51d757806866fce40f5ebfd6b26";
+
 export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState("bank");
   const [cartItems, setCartItems] = useState<CartType[]>([]);
-
-  const publicKey = "pk_your_public_key_here";
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -29,6 +29,8 @@ export default function CheckoutPage() {
   }, [cartItems]);
 
   const { user } = useAuth();
+
+  console.log(user?.email);
 
   const cartTotal = cartItems?.reduce(
     (prev, curr) => prev + curr?.price * curr?.quantity,
@@ -50,6 +52,7 @@ export default function CheckoutPage() {
   };
 
   const handlePaymentMethod = (x: string) => {
+    document?.getElementById("update-billing")?.click();
     setPaymentMethod(x);
   };
 
@@ -60,21 +63,26 @@ export default function CheckoutPage() {
       name: userInfo.name,
       phone: userInfo.phone,
     },
+    className: clsx("my-3 w-full border py-2 hover:underline", {
+      hidden: paymentMethod !== "paystack",
+    }),
     publicKey,
     text: "Pay Now",
     onSuccess: () =>
       toast.success("Thanks for doing business with us! Come back soon!!"),
-    onClose: () => toast.dark("Wait! Don't leave :("),
+    onClose: () => toast.info("User cancelled payment action"),
   };
+
+  const handleSubmit = () => {};
 
   return (
     <main className="flex flex-col gap-4">
       <Breadcrumbs active="Checkout" />
-      <section className="w-full h-20 bg-gray-400" />
+      <section className="w-11/12 h-16 bg-gray-300 mx-auto" />
       <section className="p-2 md:w-10/12 w-full flex max-md:flex-col max-md:items-center justify-center gap-4 mx-auto">
         <section className="w-full max-md:max-w-md">
           <h3 className="mb-3">Billing Details</h3>
-          <form action="#">
+          <form onSubmit={() => handleSubmit()}>
             <Input
               label="Full name"
               name="name"
@@ -113,12 +121,16 @@ export default function CheckoutPage() {
               placeholder="Additional note about your order, e.g special note for delivery."
               className="w-full min-h-40 max-h-60 border-2 rounded-md p-2"
             />
+
+            <button className="sr-oly" id="update-billing">
+              submit
+            </button>
           </form>
         </section>
 
         <section className="w-full max-md:max-w-md h-fit p-4 border rounded-md divide-y font-light">
-          <p className="mb-4 text-2xl">Your Order</p>
           <aside className="divide-y">
+            <p className="mb-4 text-2xl">Your Order</p>
             <div className={clsx(orderStyle, "text-base")}>
               <strong>Product</strong>
               <span>Total</span>
@@ -192,15 +204,9 @@ export default function CheckoutPage() {
                     value={paymentMethod}
                     onChange={() => {
                       handlePaymentMethod("paystack");
-                      document?.getElementById("paystack-pay")?.click();
                     }}
                   />
-                  <PaystackButton
-                    className={clsx("my-3 w-full hover:underline", {
-                      hidden: paymentMethod !== "paystack",
-                    })}
-                    {...componentProps}
-                  />
+                  <PaystackButton {...componentProps} />
                 </div>
                 {/* <PaymentMethod value="bank" title="Direct Bank Transfer" /> */}
               </div>
@@ -258,18 +264,13 @@ const PaymentMethod = ({ label, id, value, children, ...rest }: InputProps) => {
   return (
     <div
       className={clsx(
-        "space-x-2 p-4 first:mt-6 rounded text-base font-medium hover:bg-primary hover:border-primary border transition-colors duration-300",
+        "space-x-2 p-4 first:mt-6 rounded text-base font-medium hover:bg-primary/60 hover:border-primary hover:text-white border transition-colors duration-300",
         {
           "bg-primary text-white": id === value,
         }
       )}
     >
-      <input
-        type="radio"
-        name="payment"
-        defaultChecked={id === value}
-        {...rest}
-      />
+      <input type="radio" name="payment" {...rest} />
       <label htmlFor={id}>{label}</label>
     </div>
   );
