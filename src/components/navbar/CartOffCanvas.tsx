@@ -5,28 +5,26 @@ import Image, { StaticImageData } from "next/image";
 import React, { useEffect, useState } from "react";
 import { CiShoppingCart } from "react-icons/ci";
 
-import { db } from "@/config/firebase-config";
-
 import { DeleteAllCartItemsButton, DeleteCartItemById } from "../CartButtons";
 import { CartType } from "@/types";
-import { getDocs, onSnapshot, query, where, collection } from "firebase/firestore";
+import {
+  getDocs,
+} from "firebase/firestore";
 import { useAuth } from "@/context/auth-context";
-import { cartItemRef, getUserCartItems } from "@/lib/cart";
-import { collectionName } from "@/lib/cart";
+import { cartItemRef } from "@/lib/cart";
 
-export const fetchInRealtimeAndRenderPostsFromDB = (userId: string, callback: (data: any[]) => void) => {
-  const cartItemRef = collection(db, collectionName);
-  const q = query(cartItemRef, where('userId', '==', userId));
+export const fetchInRealtimeAndRenderPostsFromDB = async () => {
+  const snapshot = await getDocs(cartItemRef);
 
-  return onSnapshot(q, (snapshot) => {
-    const data: any[] = [];
+  const data: any[] = [];
 
+  if (snapshot) {
     snapshot.forEach((cartDoc) => {
       data.push({ ...cartDoc.data(), uid: cartDoc.id });
     });
+  }
 
-    callback(data);
-  });
+  return data;
 };
 
 export default function CartOffCanvas() {
@@ -34,19 +32,19 @@ export default function CartOffCanvas() {
   const { user } = useAuth();
 
   useEffect(() => {
-    if (user) {
-      const unsubscribe = fetchInRealtimeAndRenderPostsFromDB(user.uid, setCartItems);
+    const fetchCartItems = async () => {
+      const data = await fetchInRealtimeAndRenderPostsFromDB();
+      setCartItems(data);
+    };
+    fetchCartItems();
 
-      // Cleanup subscription on unmount
-      return () => unsubscribe();
-    }
-  }, [user]);
+    // return () => fetchCartItems();
+  }, [cartItems]);
 
   const cartTotal = cartItems?.reduce(
     (prev, curr) => prev + curr?.price * curr?.quantity,
     0
   );
-  console.log(cartItems);
 
   return (
     <section className="cart-offcanvas-wrapper">
@@ -80,7 +78,7 @@ export default function CartOffCanvas() {
                     title={item.title}
                     price={item.price}
                     quantity={item.quantity}
-                    id={item.uid as string} 
+                    id={item.id}
                   />
                 ))}
 
@@ -150,7 +148,7 @@ const CartTile = ({
   price: number;
   quantity: number;
   id: string | number;
-  }) => (
+}) => (
   <div className="cart-product-wrapper mb-4 pb-4 border-bottom">
     <div className="single-cart-product">
       <div className="cart-product-thumb">

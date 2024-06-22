@@ -43,7 +43,6 @@ useEffect(() => {
   
   }, []);
   return (
-  
     <section
       className={clsx("flex items-center justify-between px-2 w-full", {
         "fixed top-0 left-0 bg-white z-40": isFixedNav,
@@ -75,8 +74,8 @@ useEffect(() => {
       <div className="col-md-6 col-lg-3 col-xl-4 col-6">
         <div className="header-actions header-actions-width">
           <div className="header-action-left">
-          <React.Suspense>
-            <Search />
+            <React.Suspense>
+              <Search />
             </React.Suspense>
           </div>
 
@@ -125,6 +124,5 @@ useEffect(() => {
       </div>
       {/* <!-- Header Action End --> */}
     </section>
-
   );
 }

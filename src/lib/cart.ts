@@ -2,9 +2,7 @@ import { auth, db } from "@/config/firebase-config";
 import { CartType } from "@/types";
 import { User } from "firebase/auth";
 import {
-  setDoc,
   doc,
-  getDoc,
   deleteDoc,
   collection,
   addDoc,
@@ -12,26 +10,29 @@ import {
   onSnapshot,
   updateDoc,
   query,
-  where
+  where,
+  getDoc,
 } from "firebase/firestore";
 
 export const collectionName = "cartItems";
 
 export const cartItemRef = collection(db, collectionName);
 
-export const getUserCartItems = (user: User | null, callback: (items: any[]) => void) => {
+export const getUserCartItems = (
+  user: User | null,
+  callback: (items: any[]) => void
+) => {
   if (!user) {
     throw new Error("User is not authenticated");
   }
 
   try {
-    const cartItemsRef = collection(db, collectionName);
-    const q = query(cartItemsRef, where('userId', '==', user.uid));
+    const q = query(cartItemRef, where("userId", "==", user.uid));
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const items = querySnapshot.docs.map(doc => ({
+      const items = querySnapshot.docs.map((doc) => ({
         id: doc.id,
-        ...doc.data()
+        ...doc.data(),
       }));
       callback(items);
     });
@@ -42,6 +43,8 @@ export const getUserCartItems = (user: User | null, callback: (items: any[]) => 
     console.error("An error occurred while getting cart items", error);
     throw new Error("An error occurred while getting cart items");
   }
+
+  // return data;
 };
 
 export const addToCart = async (cart: CartType) => {
@@ -49,7 +52,7 @@ export const addToCart = async (cart: CartType) => {
   const cartItemId = cart.id.toString() ?? "";
 
   try {
-    const cartItemsQuery = query(cartItemRef, where('userId', '==', userId));
+    const cartItemsQuery = query(cartItemRef, where("userId", "==", userId));
     const cartItemsSnapshot = await getDocs(cartItemsQuery);
 
     let itemExists = false;
@@ -61,7 +64,7 @@ export const addToCart = async (cart: CartType) => {
           itemExists = true;
           const userDoc = doc(db, collectionName, docSnapshot.id);
           await updateDoc(userDoc, {
-            quantity: data.quantity + cart.quantity
+            quantity: data.quantity + cart.quantity,
           });
           console.log(`Updated quantity of item: ${cartItemId}`);
         }
@@ -92,20 +95,20 @@ export const removeSingleCartItem = async (id: string | number) => {
   const cartItemId = id.toString();
 
   try {
-    const cartItemRef = doc(db, collectionName, cartItemId);
-    const cartItemDoc = await getDoc(cartItemRef);
+    const singleCartItemRef = doc(db, collectionName, cartItemId);
+    const cartItemDoc = await getDoc(singleCartItemRef);
 
     if (cartItemDoc.exists()) {
       const cartItemData = cartItemDoc.data();
-     const currentQuantity = cartItemData.quantity;
+      const currentQuantity = cartItemData.quantity;
 
       if (currentQuantity > 1) {
         // Decrement the quantity
-        await updateDoc(cartItemRef, { quantity: currentQuantity - 1 });
+        await updateDoc(singleCartItemRef, { quantity: currentQuantity - 1 });
         console.log(`Decremented quantity for item: ${cartItemId}`);
       } else {
         // Remove the item from the cart
-        await deleteDoc(cartItemRef);
+        await deleteDoc(singleCartItemRef);
         console.log(`Deleted item from cart: ${cartItemId}`);
       }
     } else {
@@ -126,8 +129,8 @@ export const clearAllItemsFromCart = async () => {
   }
 
   try {
-    const cartItemsRef = collection(db, collectionName);
-    const q = query(cartItemsRef, where('userId', '==', userId));
+    // const cartItemsRef = collection(db, collectionName);
+    const q = query(cartItemRef, where("userId", "==", userId));
     const querySnapshot = await getDocs(q);
 
     const deletePromises = querySnapshot.docs.map((docSnapshot) =>
@@ -143,9 +146,12 @@ export const clearAllItemsFromCart = async () => {
   }
 };
 
-export const getNumberOfItemsInCart = async (userId: string, callback: (total: number) => void) => {
+export const getNumberOfItemsInCart = async (
+  userId: string,
+  callback: (total: number) => void
+) => {
   const cartItemRef = collection(db, collectionName);
-  const q = query(cartItemRef, where('userId', '==', userId));
+  const q = query(cartItemRef, where("userId", "==", userId));
 
   return onSnapshot(q, (querySnapshot) => {
     let totalItems = 0;
