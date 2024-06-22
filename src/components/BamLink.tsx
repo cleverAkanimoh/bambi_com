@@ -20,7 +20,7 @@ export default function BamLink({
       className={clsx("transition-all duration-300 p-2", className, {
         "hover:bg-black bg-primary": variant === "solid",
         "border border-primary hover:border-black": variant === "outline",
-        "": variant === "ghost",
+        "text-gray-500 hover:text-primary": variant === "ghost",
       })}
       {...rest}
     >

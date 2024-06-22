@@ -12,7 +12,7 @@ export default function BamIcon({
 }) {
   return (
     <Icon
-      className={clsx("", className, {
+      className={clsx("font-thin transition-colors duration-300", className, {
         "size-8": size === "big",
         "size-6": size === "med",
         "size-4": size === "sm",
