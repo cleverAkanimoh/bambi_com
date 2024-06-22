@@ -8,8 +8,6 @@ import SliderImage2 from "../../../public/assets/images/slider/slider3-2.1.png";
 import SliderImage3 from "../../../public/assets/images/slider/slider3.jpg";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import "swiper/swiper-bundle.css";
-
 export default function Header() {
   return (
     <header className="flex flex-col h-full">

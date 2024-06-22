@@ -4,22 +4,13 @@ import "./globals.css";
 import "react-toastify/dist/ReactToastify.min.css";
 import React from "react";
 
-// Vendor CSS (Icon Font)
-import "./css/vendor/fontawesome.min.css";
-import "./css/vendor/pe-icon-7-stroke.min.css";
-
-// Plugins style
-import "./css/plugins/aos.min.css";
-
-import "./css/plugins/animate.min.css";
-import "./css/plugins/nice-select.min.css";
-import "./css/style.css";
-
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 
 import { Providers } from "../context/Providers";
 import { ToastContainer } from "react-toastify";
+import "swiper/swiper-bundle.css";
+import "swiper/css";
 
 const inter = Inter({ subsets: ["latin"] });
 
