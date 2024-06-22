@@ -9,13 +9,9 @@ import { DeleteAllCartItemsButton, DeleteCartItemById } from "../CartButtons";
 import { CartType } from "@/types";
 import {
   getDocs,
-  onSnapshot,
-  query,
-  where,
-  collection,
 } from "firebase/firestore";
 import { useAuth } from "@/context/auth-context";
-import { cartItemRef, getUserCartItems } from "@/lib/cart";
+import { cartItemRef } from "@/lib/cart";
 
 export const fetchInRealtimeAndRenderPostsFromDB = async () => {
   const snapshot = await getDocs(cartItemRef);

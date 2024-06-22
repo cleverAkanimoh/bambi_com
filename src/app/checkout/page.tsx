@@ -22,58 +22,22 @@ export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [cartItems, setCartItems] = useState<CartType[]>([]);
 
-  const [userInfo, setUserInfo] = useState({
-    name: user?.displayName ?? "",
-    email: user?.email ?? "",
-    phone: user?.phoneNumber ?? "",
-  });
-
   useEffect(() => {
     const fetchCartItems = async () => {
       const data = await fetchInRealtimeAndRenderPostsFromDB();
       setCartItems(data);
     };
     fetchCartItems();
-    // if (!user) return NotFound();
-
-    // return () => fetchCartItems();
   }, [cartItems, user]);
-
-  console.log(user?.email);
 
   const cartTotal = cartItems?.reduce(
     (prev, curr) => prev + curr?.price * curr?.quantity,
     0
   );
 
-  const handleUserInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserInfo({
-      ...userInfo,
-      [e.target.name]: e.target.value,
-    });
-    console.log(userInfo);
-  };
-
   const handlePaymentMethod = (x: string) => {
     document?.getElementById("update-billing")?.click();
-    setPaymentMethod(x);
-  };
-
-  const componentProps = {
-    email: userInfo.email,
-    amount: cartTotal,
-    metadata: {
-      name: userInfo.name,
-      phone: userInfo.phone,
-    },
-    className: clsx("my-3 w-full border py-2 hover:underline", {
-      hidden: paymentMethod !== "paystack",
-    }),
-    publicKey,
-    text: "Pay Now",
-    onSuccess: () =>
-      toast.success("Thanks for doing business with us! Come back soon!!"),
-    onClose: () => toast.info("User cancelled payment action"),
+    return x;
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -86,14 +50,39 @@ export default function CheckoutPage() {
     const address = formData.get("address") as string;
     const message = formData.get("message") as string;
 
-    await updateDoc(doc(db, "users", user.uid), {
-      name,
-      email,
-      country,
-      city,
-      address,
-      message,
-    });
+    try {
+      await updateDoc(doc(db, "users", user?.uid ?? ""), {
+        name,
+        email,
+        country,
+        city,
+        address,
+        message,
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("Something went wrong!");
+      }
+    }
+  };
+
+  const componentProps = {
+    email: "crushclever1@gmail.com",
+    amount: 400000.0,
+    metadata: {
+      name: "clever akanimoh",
+      phone: "08113530038",
+    },
+    className: clsx("my-3 w-full border py-2 hover:underline", {
+      hiden: paymentMethod !== "paystack",
+    }),
+    publicKey,
+    text: "Pay Now",
+    onSuccess: () =>
+      toast.success("Thanks for doing business with us! Come back soon!!"),
+    onClose: () => toast.info("User cancelled payment action"),
   };
 
   return (
@@ -109,8 +98,6 @@ export default function CheckoutPage() {
               name="name"
               id="name"
               placeholder="Full name"
-              value={userInfo.name}
-              onChange={handleUserInfoChange}
               required
             />
             <Input
