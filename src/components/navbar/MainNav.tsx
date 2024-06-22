@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import NavLink from "./NavLink";
 import { pagesArray } from "@/lib/navData";
@@ -10,22 +10,37 @@ import Search from "../Search";
 import Logo from "../../../public/assets/images/logo/logo.png";
 import clsx from "clsx";
 import { useGlobalContext } from "@/context/store";
-import { getUserCartItems } from "@/lib/cart";
+import { CartType } from "@/types";
+import { getNumberOfItemsInCart } from "@/lib/cart";
+import { useAuth } from "@/context/auth-context";
 
 export default function MainNav() {
   const { setIsMenuClicked } = useGlobalContext();
   const [isFixedNav, setIsFixedNav] = useState(false);
-  const [cartLength, setCartLength] = useState(0);
+  const { user } = useAuth();
+  // const [cartItems, setCartItems] = useState<CartType[]>([]);
+  const [totalItems, setTotalItems] = useState<number>(0); // New state for total items
 
-  React.useEffect(() => {
+  useEffect(() => {
+    if (user) {
+      const fetchCartItems = async () => {
+        // const unsubscribeItems = fetchInRealtimeAndRenderPostsFromDB(user.uid, setCartItems);
+        const unsubscribeTotal = await getNumberOfItemsInCart(user.uid, setTotalItems);
+
+        return () => {
+          // unsubscribeItems();
+          unsubscribeTotal();
+        };
+      };
+      
+      fetchCartItems();
+    }
+  }, [user]);
+
+useEffect(() => {
     window.onscroll = () =>
       window.scrollY > 120 ? setIsFixedNav(true) : setIsFixedNav(false);
-
-    const getCartItemsLength = async () => {
-      const cartItems = await getUserCartItems();
-      setCartLength(cartItems.length);
-    };
-    getCartItemsLength();
+  
   }, []);
   return (
     <section
@@ -89,8 +104,8 @@ export default function MainNav() {
             {/* <!-- Cart Action Button Start --> */}
             <button className="header-action-btn header-action-btn-cart">
               <i className="pe-7s-cart"></i>
-              {cartLength > 0 && (
-                <span className="header-action-num">{cartLength}</span>
+              {totalItems > 0 && (
+                <span className="header-action-num">{totalItems}</span>
               )}
             </button>
             {/* <!-- Cart Action Button End --> */}

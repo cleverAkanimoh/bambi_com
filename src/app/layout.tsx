@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.min.css";
+import React from "react"
 
 // Vendor CSS (Icon Font)
 import "./css/vendor/fontawesome.min.css";
@@ -41,6 +42,7 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body className={inter.className}>
         <Providers>
+          <React.Suspense>
           <Navbar />
           {children}
           <Footer />
@@ -55,12 +57,13 @@ export default function RootLayout({
             theme="colored"
             hideProgressBar={false}
           />
-
+</React.Suspense>
           <Script src="/js/vendor/popper.min.js" />
           <Script src="/js/vendor/bootstrap.min.js" />
           <Script src="/js/vendor/jquery-3.6.0.min.js" />
           <Script src="/js/vendor/jquery-migrate-3.3.2.min.js" />
           <Script src="/js/vendor/modernizr-3.11.2.min.js" />
+          <Script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" />
 
           {/* <!-- Plugins JS --> */}
 

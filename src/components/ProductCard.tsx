@@ -177,7 +177,7 @@ export const ProductCard = ({
           price,
           quantity,
           id,
-        }}
+          }}
       />
     </div>
     <div className="flex flex-col items-center">

@@ -13,6 +13,7 @@ import clsx from "clsx";
 
 import Button from "./Button";
 import { BiRefresh, BiTrash } from "react-icons/bi";
+import { IoCloseCircleSharp } from "react-icons/io5";
 import { useAuth } from "@/context/auth-context";
 
 export function AddToCartButton({
@@ -31,7 +32,7 @@ export function AddToCartButton({
     try {
       await addToCart(cart);
 
-      toast.success(`${cart.title ?? "Item"} has been added to cart`);
+      // toast.success(`${cart.title ?? "Item"} has been added to cart`);
       setLoading(false);
     } catch (error) {
       if (error instanceof Error) {
@@ -97,13 +98,13 @@ export const DeleteCartItemById = ({
   };
   return (
     <button
-      className="cart-product-remove text-sm"
+      className="cart-product-remove text-xl text-red-600"
       onClick={() => handleDelete()}
     >
       {loading ? (
         <BiRefresh className="animate-spin" />
       ) : (
-        <i className="pe-7s-close"></i>
+        <IoCloseCircleSharp />
       )}
     </button>
   );
