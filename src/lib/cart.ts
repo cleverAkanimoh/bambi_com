@@ -85,9 +85,9 @@ export const addToCart = async (cart: CartType) => {
       console.log("Added new item to cart: ", docRef.id);
     }
   } catch (error) {
-    const errorText = "Please check your network connection";
-    console.error(errorText, error);
-    throw new Error(errorText);
+    // const errorText = "Please check your network connection";
+    // console.error(errorText, error);
+    throw new Error(error);
   }
 };
 

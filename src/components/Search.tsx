@@ -32,7 +32,6 @@ export default function Search({
       }
     >
       <input
-        type="search"
         name="search"
         placeholder={
           variant === "on-canvas" ? "Search our store" : "Search Product..."
@@ -41,7 +40,7 @@ export default function Search({
           variant === "on-canvas"
             ? "search-bar-input"
             : variant === "mobile-view"
-            ? " placeholder:text-gray-600 flex-1 block"
+            ? " placeholder:text-gray-600 block"
             : "offcanvas-search-input"
         }
         onChange={(e) => handleSearch(e.target.value)}
