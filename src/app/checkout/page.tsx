@@ -34,11 +34,10 @@ export default function CheckoutPage() {
       setCartItems(data);
     };
     fetchCartItems();
+    // if (!user) return NotFound();
 
     // return () => fetchCartItems();
-  }, [cartItems]);
-
-  if (!user) return NotFound();
+  }, [cartItems, user]);
 
   console.log(user?.email);
 
@@ -261,9 +260,13 @@ const Input = ({ label, id, required, ...rest }: InputProps) => {
   return (
     <div className="flex flex-col gap-1 mb-5 last:mb-0">
       {label && (
-        <label htmlFor={id} className="text-base font-medium">
+        <label htmlFor={id} className="text-base font-medium pl-1">
           {label}
-          {required && <span className="text-red-500">*</span>}
+          {required ? (
+            <span className="text-red-500">*</span>
+          ) : (
+            <span className="text-gray-300 text-sm">{"(optional)"}</span>
+          )}
         </label>
       )}
       <input
