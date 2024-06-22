@@ -28,17 +28,19 @@ export default function Products() {
           spaceBetween={10}
           className="size-full overflow-hidden"
         >
-          {shopProducts.map(({ src1, heading, new_price }, index) => (
-            <SwiperSlide key={index}>
-              <ProductCard
-                id={index + 1}
-                src={src1}
-                href={`/shop/${index + 1}`}
-                heading={heading}
-                price={new_price}
-              />
-            </SwiperSlide>
-          ))}
+          {shopProducts
+            .splice(0, 8)
+            .map(({ src1, heading, new_price }, index) => (
+              <SwiperSlide key={index}>
+                <ProductCard
+                  id={index + 1}
+                  src={src1}
+                  href={`/shop/${index + 1}`}
+                  heading={heading}
+                  price={new_price}
+                />
+              </SwiperSlide>
+            ))}
         </Swiper>
       </div>
     </section>
