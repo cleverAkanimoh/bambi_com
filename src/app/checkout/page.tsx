@@ -69,10 +69,10 @@ export default function CheckoutPage() {
   };
 
   const componentProps = {
-    email: "crushclever1@gmail.com",
+    email: user?.email || "",
     amount: 400000.0,
     metadata: {
-      name: "clever akanimoh",
+      name: user?.displayName || "clever akanimoh",
       phone: "08113530038",
     },
     className: clsx("my-3 w-full border py-2 hover:underline", {
