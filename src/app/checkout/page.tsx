@@ -9,14 +9,22 @@ import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { PaystackButton } from "react-paystack";
 import { toast } from "react-toastify";
+import NotFound from "../not-found";
 
 const orderStyle = clsx("p-2 flex justify-between");
 
 const publicKey = "pk_test_ef5e04574fd9f51d757806866fce40f5ebfd6b26";
 
 export default function CheckoutPage() {
+  const { user } = useAuth();
   const [paymentMethod, setPaymentMethod] = useState("bank");
   const [cartItems, setCartItems] = useState<CartType[]>([]);
+
+  const [userInfo, setUserInfo] = useState({
+    name: user?.displayName ?? "",
+    email: user?.email ?? "",
+    phone: user?.phoneNumber ?? "",
+  });
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -28,7 +36,7 @@ export default function CheckoutPage() {
     // return () => fetchCartItems();
   }, [cartItems]);
 
-  const { user } = useAuth();
+  if (!user) return NotFound();
 
   console.log(user?.email);
 
@@ -36,12 +44,6 @@ export default function CheckoutPage() {
     (prev, curr) => prev + curr?.price * curr?.quantity,
     0
   );
-
-  const [userInfo, setUserInfo] = useState({
-    name: user?.displayName ?? "",
-    email: user?.email ?? "",
-    phone: user?.phoneNumber ?? "",
-  });
 
   const handleUserInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserInfo({
@@ -73,7 +75,16 @@ export default function CheckoutPage() {
     onClose: () => toast.info("User cancelled payment action"),
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email") as string;
+    const name = formData.get("firstName") as string;
+    const country = formData.get("country") as string;
+    const city = formData.get("city") as string;
+    const address = formData.get("address") as string;
+    const message = formData.get("message") as string;
+  };
 
   return (
     <main className="flex flex-col gap-4">
@@ -82,7 +93,7 @@ export default function CheckoutPage() {
       <section className="p-2 md:w-10/12 w-full flex max-md:flex-col max-md:items-center justify-center gap-4 mx-auto">
         <section className="w-full max-md:max-w-md">
           <h3 className="mb-3">Billing Details</h3>
-          <form onSubmit={() => handleSubmit()}>
+          <form onSubmit={handleSubmit}>
             <Input
               label="Full name"
               name="name"
@@ -92,16 +103,25 @@ export default function CheckoutPage() {
               onChange={handleUserInfoChange}
               required
             />
-            <Input label="Country" placeholder="Country" required />
-            <Input label="Town/City" placeholder="Town/City" required />
-            <Input label="Address" placeholder="Address" required />
+            <Input
+              label="Country"
+              name="country"
+              placeholder="Country"
+              required
+            />
+            <Input
+              label="Town/City"
+              name="city"
+              placeholder="Town/City"
+              required
+            />
+            <Input label="Address" placeholder="Address" name="city" required />
             <Input
               label="Email"
+              type="email"
               id="email"
               name="email"
-              value={userInfo.email}
-              onChange={handleUserInfoChange}
-              type="email"
+              defaultValue={user?.email ?? ""}
               placeholder="Email"
               required
             />
@@ -110,16 +130,20 @@ export default function CheckoutPage() {
               type="number"
               name="phone"
               id="phone"
-              value={userInfo.phone}
+              defaultValue={user?.phoneNumber ?? ""}
               placeholder="Phone number"
-              onChange={handleUserInfoChange}
               required
             />
-            <Input label="Apply coupon" placeholder="Enter coupon code" />
+            <Input
+              label="Apply coupon"
+              placeholder="Enter coupon code"
+              name="coupon"
+            />
 
             <textarea
               placeholder="Additional note about your order, e.g special note for delivery."
               className="w-full min-h-40 max-h-60 border-2 rounded-md p-2"
+              name="message"
             />
 
             <button className="sr-oly" id="update-billing">
