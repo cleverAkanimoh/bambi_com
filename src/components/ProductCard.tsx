@@ -97,7 +97,6 @@ const ShopProductCard = ({
                 price: new_price,
                 quantity: 1,
                 id,
-                uid: ""
               }}
             />
           </div>
@@ -178,8 +177,7 @@ export const ProductCard = ({
           price,
           quantity,
           id,
-          uid: ""
-        }}
+          }}
       />
     </div>
     <div className="flex flex-col items-center">

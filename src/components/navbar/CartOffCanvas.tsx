@@ -80,7 +80,7 @@ export default function CartOffCanvas() {
                     title={item.title}
                     price={item.price}
                     quantity={item.quantity}
-                    id={item.uid} 
+                    id={item.uid as string} 
                   />
                 ))}
 
