@@ -9,40 +9,38 @@ import { db } from "@/config/firebase-config";
 
 import { DeleteAllCartItemsButton, DeleteCartItemById } from "../CartButtons";
 import { CartType } from "@/types";
-import { getDocs, onSnapshot } from "firebase/firestore";
+import { getDocs, onSnapshot, query, where, collection } from "firebase/firestore";
 import { useAuth } from "@/context/auth-context";
 import { cartItemRef, getUserCartItems } from "@/lib/cart";
+import { collectionName } from "@/lib/cart";
 
-const fetchInRealtimeAndRenderPostsFromDB = async () => {
-  const snapshot = await getDocs(cartItemRef);
+export const fetchInRealtimeAndRenderPostsFromDB = (userId: string, callback: (data: any[]) => void) => {
+  const cartItemRef = collection(db, collectionName);
+  const q = query(cartItemRef, where('userId', '==', userId));
 
-  const data: any[] = [];
+  return onSnapshot(q, (snapshot) => {
+    const data: any[] = [];
 
-  if (snapshot) {
     snapshot.forEach((cartDoc) => {
-      console.log(cartDoc);
-
       data.push({ ...cartDoc.data(), uid: cartDoc.id });
     });
-  }
 
-  return data;
+    callback(data);
+  });
 };
 
 export default function CartOffCanvas() {
   const [cartItems, setCartItems] = useState<CartType[]>([]);
-
   const { user } = useAuth();
 
   useEffect(() => {
-    const fetchCartItems = async () => {
-      const data = await fetchInRealtimeAndRenderPostsFromDB();
-      setCartItems(data);
-    };
-    fetchCartItems();
+    if (user) {
+      const unsubscribe = fetchInRealtimeAndRenderPostsFromDB(user.uid, setCartItems);
 
-    // return () => fetchCartItems();
-  }, [cartItems]);
+      // Cleanup subscription on unmount
+      return () => unsubscribe();
+    }
+  }, [user]);
 
   const cartTotal = cartItems?.reduce(
     (prev, curr) => prev + curr?.price * curr?.quantity,
@@ -82,7 +80,7 @@ export default function CartOffCanvas() {
                     title={item.title}
                     price={item.price}
                     quantity={item.quantity}
-                    id={item.id}
+                    id={item.uid} 
                   />
                 ))}
 
@@ -152,7 +150,7 @@ const CartTile = ({
   price: number;
   quantity: number;
   id: string | number;
-}) => (
+  }) => (
   <div className="cart-product-wrapper mb-4 pb-4 border-bottom">
     <div className="single-cart-product">
       <div className="cart-product-thumb">
