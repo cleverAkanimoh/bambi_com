@@ -8,6 +8,7 @@ import { CartType } from "@/types";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { PaystackButton } from "react-paystack";
+import { toast } from "react-toastify";
 
 const orderStyle = clsx("p-2 flex justify-between");
 
@@ -34,26 +35,64 @@ export default function CheckoutPage() {
     0
   );
 
+  const [userInfo, setUserInfo] = useState({
+    name: user?.displayName ?? "",
+    email: user?.email ?? "",
+    phone: user?.phoneNumber ?? "",
+  });
+
+  const handleUserInfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserInfo({
+      ...userInfo,
+      [e.target.name]: e.target.value,
+    });
+    console.log(userInfo);
+  };
+
   const handlePaymentMethod = (x: string) => {
     setPaymentMethod(x);
+  };
+
+  const componentProps = {
+    email: userInfo.email,
+    amount: cartTotal,
+    metadata: {
+      name: userInfo.name,
+      phone: userInfo.phone,
+    },
+    publicKey,
+    text: "Pay Now",
+    onSuccess: () =>
+      toast.success("Thanks for doing business with us! Come back soon!!"),
+    onClose: () => toast.dark("Wait! Don't leave :("),
   };
 
   return (
     <main className="flex flex-col gap-4">
       <Breadcrumbs active="Checkout" />
-      <section className="w-full h-20 bg-gray-400"></section>
+      <section className="w-full h-20 bg-gray-400" />
       <section className="p-2 md:w-10/12 w-full flex max-md:flex-col max-md:items-center justify-center gap-4 mx-auto">
         <section className="w-full max-md:max-w-md">
           <h3 className="mb-3">Billing Details</h3>
           <form action="#">
-            <Input label="First name" placeholder="First name" required />
-            <Input label="Last name" placeholder="Last name" required />
+            <Input
+              label="Full name"
+              name="name"
+              id="name"
+              placeholder="Full name"
+              value={userInfo.name}
+              onChange={handleUserInfoChange}
+              required
+            />
             <Input label="Country" placeholder="Country" required />
             <Input label="Town/City" placeholder="Town/City" required />
             <Input label="Address" placeholder="Address" required />
             <Input
               label="Email"
-              defaultValue={user?.email ?? ""}
+              id="email"
+              name="email"
+              value={userInfo.email}
+              onChange={handleUserInfoChange}
               type="email"
               placeholder="Email"
               required
@@ -61,8 +100,11 @@ export default function CheckoutPage() {
             <Input
               label="Phone number"
               type="number"
-              defaultValue={user?.phoneNumber ?? ""}
+              name="phone"
+              id="phone"
+              value={userInfo.phone}
               placeholder="Phone number"
+              onChange={handleUserInfoChange}
               required
             />
             <Input label="Apply coupon" placeholder="Enter coupon code" />
@@ -83,9 +125,9 @@ export default function CheckoutPage() {
             </div>
 
             <ul className="divide-y p-0.5">
-              {cartItems?.map((item) => (
+              {cartItems?.map((item, index) => (
                 <OrderTile
-                  key={item.id}
+                  key={index}
                   price={item.price}
                   title={item.title}
                   quantity={item.quantity}
@@ -106,7 +148,7 @@ export default function CheckoutPage() {
             </div>
           </aside>
           <section>
-            <form action="">
+            <aside>
               <div className="space-y-4">
                 <div>
                   <PaymentMethod
@@ -117,9 +159,9 @@ export default function CheckoutPage() {
                   />
                   <div
                     className={clsx(
-                      "px-4  rounded-b-md transition-all duration-300 ",
+                      "px-4 rounded-b-md transition-all duration-300",
                       {
-                        "border h-full mt-1": paymentMethod === "bank",
+                        "border h-full mt-1 py-3": paymentMethod === "bank",
                         " h-0 overflow-hidden": paymentMethod !== "bank",
                       }
                     )}
@@ -129,7 +171,7 @@ export default function CheckoutPage() {
                       Corrupti odio atque dicta cumque et beatae, repellat iusto
                       non
                     </p>
-                    <h5>Send order amount to:</h5>
+                    <h5>Send ${cartTotal} to:</h5>
                     <ul>
                       <li>
                         <b>Account name:</b> Bambi Stores
@@ -153,13 +195,16 @@ export default function CheckoutPage() {
                       document?.getElementById("paystack-pay")?.click();
                     }}
                   />
-                  <Button className="hidden" id="paystack-pay">
-                    Proceed to payment
-                  </Button>
+                  <PaystackButton
+                    className={clsx("my-3 w-full hover:underline", {
+                      hidden: paymentMethod !== "paystack",
+                    })}
+                    {...componentProps}
+                  />
                 </div>
                 {/* <PaymentMethod value="bank" title="Direct Bank Transfer" /> */}
               </div>
-            </form>
+            </aside>
           </section>
         </section>
       </section>
@@ -209,13 +254,13 @@ const OrderTile = ({
   </li>
 );
 
-const PaymentMethod = ({ label, id, value, ...rest }: InputProps) => {
+const PaymentMethod = ({ label, id, value, children, ...rest }: InputProps) => {
   return (
     <div
       className={clsx(
         "space-x-2 p-4 first:mt-6 rounded text-base font-medium hover:bg-primary hover:border-primary border transition-colors duration-300",
         {
-          "bg-primary": id === value,
+          "bg-primary text-white": id === value,
         }
       )}
     >
