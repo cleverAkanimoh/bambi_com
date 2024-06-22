@@ -55,7 +55,7 @@ export default function MainNav() {
   return (
     <section
       className={clsx(
-        "bg-white flex items-center justify-between px-2 w-full",
+        "bg-white flex items-center justify-between px-2 w-full transition-all duration-500",
         {
           "fixed top-0 left-0 shadow z-40": isFixedNav,
         }
