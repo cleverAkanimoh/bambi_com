@@ -5,12 +5,32 @@ import Button from "@/components/Button";
 import { useAuth } from "@/context/auth-context";
 import clsx from "clsx";
 import React, { useState } from "react";
+import { PaystackButton } from "react-paystack"
 
 const orderStyle = clsx("p-2 flex justify-between");
 
 export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState("bank");
+  const [cartItems, setCartItems] = useState<CartType[]>([]);
   const { user } = useAuth();
+  
+  useEffect(() => {
+      const fetchCartItems = async () => {
+          const data = await fetchInRealtimeAndRenderPostsFromDB();
+          setCartItems(data);
+        };
+        fetchCartItems();
+
+        
+        // return () => fetchCartItems();
+    }, [cartItems]);
+    
+    const { user } = useAuth();
+
+    const cartTotal = cartItems?.reduce(
+        (prev, curr) => prev + curr?.price * curr?.quantity,
+        0
+      );
 
   const handlePaymentMethod = (x: string) => {
     setPaymentMethod(x);
@@ -19,7 +39,7 @@ export default function CheckoutPage() {
   return (
     <main className="flex flex-col gap-4">
       <Breadcrumbs active="Checkout" />
-      <section></section>
+      <section className="w-full h-20 bg-gray-400"></section>
       <section className="p-2 md:w-10/12 w-full flex max-md:flex-col max-md:items-center justify-center gap-4 mx-auto">
         <section className="w-full max-md:max-w-md">
           <h3 className="mb-3">Billing Details</h3>
@@ -61,20 +81,18 @@ export default function CheckoutPage() {
             </div>
 
             <ul className="divide-y p-0.5">
-              <OrderTile price={200} title={"Lorem Ipsum text"} quantity={2} />
-              <OrderTile price={200} title={"Lorem Ipsum text"} quantity={1} />
-              <OrderTile price={200} title={"Lorem Ipsum text"} quantity={4} />
+              {cartItem.map((item) => <OrderTile key={item.id} price={item.price} title={item.title} quantity={item.quantity} />)}
             </ul>
 
             <div className={orderStyle}>
               <strong className="">Cart subtotal</strong>
-              <span>$234</span>
+              <span>${cartTotal}</span>
             </div>
 
             <div className={orderStyle}>
               <b className="text-primary">Order Total</b>
               <big>
-                <b>$349.00</b>
+                <b>${cartTotal}</b>
               </big>
             </div>
           </aside>
@@ -84,9 +102,9 @@ export default function CheckoutPage() {
                 <div>
                   <PaymentMethod
                     id="bank"
-                    value={"bank"}
+                    value={paymentMethod}
                     label="Direct Bank Transfer"
-                    onChange={(e) => handlePaymentMethod(e.target.value)}
+                    onChange={(e) => handlePaymentMethod("bank")}
                   />
                   <div
                     className={clsx(
@@ -116,16 +134,20 @@ export default function CheckoutPage() {
                     </ul>
                   </div>
                 </div>
+                <div>
                 <PaymentMethod
                   id="paystack"
-                  value={"paystack"}
-                  label="Paystack"
-                  onChange={(e) => handlePaymentMethod(e.target.value)}
+                  label="Continue with Paystack"
+                  value={paymentMethod}
+                  onChange={() => {handlePaymentMethod("paystack")
+                    document.getElementById("paystack-pay").click()
+                  }}
                 />
+              <Button className="hidden" id="paystack-pay">Proceed to payment</Button>
+                </div>
                 {/* <PaymentMethod value="bank" title="Direct Bank Transfer" /> */}
               </div>
 
-              <Button className="!mx-auto mt-4 px-4">Proceed to payment</Button>
             </form>
           </section>
         </section>
@@ -178,11 +200,18 @@ const OrderTile = ({
 
 const PaymentMethod = ({ label, id, value, ...rest }: InputProps) => {
   return (
-    <div className="space-x-2 p-4 first:mt-6 rounded text-base font-medium hover:bg-primary hover:border-primary border transition-colors duration-300">
+    <div
+      className={clsx(
+        "space-x-2 p-4 first:mt-6 rounded text-base font-medium hover:bg-primary hover:border-primary border transition-colors duration-300",
+        {
+          "bg-primary": id === value,
+        }
+      )}
+    >
       <input
         type="radio"
         name="payment"
-        defaultChecked={value === "bank"}
+        defaultChecked={id === value}
         {...rest}
       />
       <label htmlFor={id}>{label}</label>

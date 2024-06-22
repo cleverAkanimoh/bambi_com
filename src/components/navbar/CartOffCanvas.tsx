@@ -7,19 +7,23 @@ import { CiShoppingCart } from "react-icons/ci";
 
 import { DeleteAllCartItemsButton, DeleteCartItemById } from "../CartButtons";
 import { CartType } from "@/types";
-import { getDocs, onSnapshot, query, where, collection } from "firebase/firestore";
+import {
+  getDocs,
+  onSnapshot,
+  query,
+  where,
+  collection,
+} from "firebase/firestore";
 import { useAuth } from "@/context/auth-context";
 import { cartItemRef, getUserCartItems } from "@/lib/cart";
 
-const fetchInRealtimeAndRenderPostsFromDB = async () => {
+export const fetchInRealtimeAndRenderPostsFromDB = async () => {
   const snapshot = await getDocs(cartItemRef);
 
   const data: any[] = [];
 
   if (snapshot) {
     snapshot.forEach((cartDoc) => {
-      console.log(cartDoc);
-
       data.push({ ...cartDoc.data(), uid: cartDoc.id });
     });
   }
@@ -45,7 +49,6 @@ export default function CartOffCanvas() {
     (prev, curr) => prev + curr?.price * curr?.quantity,
     0
   );
-  console.log(cartItems);
 
   return (
     <section className="cart-offcanvas-wrapper">
@@ -149,7 +152,7 @@ const CartTile = ({
   price: number;
   quantity: number;
   id: string | number;
-  }) => (
+}) => (
   <div className="cart-product-wrapper mb-4 pb-4 border-bottom">
     <div className="single-cart-product">
       <div className="cart-product-thumb">
