@@ -2,35 +2,37 @@
 
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Button from "@/components/Button";
+import { fetchInRealtimeAndRenderPostsFromDB } from "@/components/navbar/CartOffCanvas";
 import { useAuth } from "@/context/auth-context";
+import { CartType } from "@/types";
 import clsx from "clsx";
-import React, { useState } from "react";
-import { PaystackButton } from "react-paystack"
+import React, { useEffect, useState } from "react";
+import { PaystackButton } from "react-paystack";
 
 const orderStyle = clsx("p-2 flex justify-between");
 
 export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState("bank");
   const [cartItems, setCartItems] = useState<CartType[]>([]);
-  const { user } = useAuth();
-  
+
+  const publicKey = "pk_your_public_key_here";
+
   useEffect(() => {
-      const fetchCartItems = async () => {
-          const data = await fetchInRealtimeAndRenderPostsFromDB();
-          setCartItems(data);
-        };
-        fetchCartItems();
+    const fetchCartItems = async () => {
+      const data = await fetchInRealtimeAndRenderPostsFromDB();
+      setCartItems(data);
+    };
+    fetchCartItems();
 
-        
-        // return () => fetchCartItems();
-    }, [cartItems]);
-    
-    const { user } = useAuth();
+    // return () => fetchCartItems();
+  }, [cartItems]);
 
-    const cartTotal = cartItems?.reduce(
-        (prev, curr) => prev + curr?.price * curr?.quantity,
-        0
-      );
+  const { user } = useAuth();
+
+  const cartTotal = cartItems?.reduce(
+    (prev, curr) => prev + curr?.price * curr?.quantity,
+    0
+  );
 
   const handlePaymentMethod = (x: string) => {
     setPaymentMethod(x);
@@ -81,7 +83,14 @@ export default function CheckoutPage() {
             </div>
 
             <ul className="divide-y p-0.5">
-              {cartItem.map((item) => <OrderTile key={item.id} price={item.price} title={item.title} quantity={item.quantity} />)}
+              {cartItems?.map((item) => (
+                <OrderTile
+                  key={item.id}
+                  price={item.price}
+                  title={item.title}
+                  quantity={item.quantity}
+                />
+              ))}
             </ul>
 
             <div className={orderStyle}>
@@ -135,19 +144,21 @@ export default function CheckoutPage() {
                   </div>
                 </div>
                 <div>
-                <PaymentMethod
-                  id="paystack"
-                  label="Continue with Paystack"
-                  value={paymentMethod}
-                  onChange={() => {handlePaymentMethod("paystack")
-                    document.getElementById("paystack-pay").click()
-                  }}
-                />
-              <Button className="hidden" id="paystack-pay">Proceed to payment</Button>
+                  <PaymentMethod
+                    id="paystack"
+                    label="Continue with Paystack"
+                    value={paymentMethod}
+                    onChange={() => {
+                      handlePaymentMethod("paystack");
+                      document?.getElementById("paystack-pay")?.click();
+                    }}
+                  />
+                  <Button className="hidden" id="paystack-pay">
+                    Proceed to payment
+                  </Button>
                 </div>
                 {/* <PaymentMethod value="bank" title="Direct Bank Transfer" /> */}
               </div>
-
             </form>
           </section>
         </section>
