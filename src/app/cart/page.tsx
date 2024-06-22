@@ -87,7 +87,7 @@ if(loading || isFetching){
                   Go to shop <FaArrowRight className="" />
                 </Link>
               </section>): (
-        <div className="w-full md:w-[90%] mx-auto">
+        <div className="w-[95%]md:w-[90%] mx-auto">
        <table className="min-w-full bg-white text-center">
         <thead>
           {table.getHeaderGroups().map(headerGroup => (
