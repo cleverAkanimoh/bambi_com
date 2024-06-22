@@ -22,5 +22,4 @@ export type CartType = {
   title: string;
   price: number;
   quantity: number;
-  uid?: string
 };
