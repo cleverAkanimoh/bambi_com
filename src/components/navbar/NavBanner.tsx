@@ -1,42 +1,35 @@
 "use client";
 
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import React from "react";
+import BamIcon from "../Icon";
+import BamLink from "../BamLink";
 
 export default function NavBanner() {
   const [showBanner, setShowBanner] = React.useState(true);
   return (
     <>
       {showBanner && (
-        <div className=" bg-secondary p-2">
-          <div className="container">
-            <div className="row align-items-center">
-              {/* <!-- Header Top Message Start --> */}
-              <div className="col-12">
-                <div className="header-top-msg-wrapper text-center">
-                  <p className="header-top-message text-center w-10/12">
-                    Get 25% off any product from{" "}
-                    <strong>1st to 31st July</strong> Use Promo Code: LAUNCH
-                    SALES{" "}
-                    <Link
-                      href="/shop"
-                      className="btn btn-hover-dark btn-secondary"
-                    >
-                      Shop Now
-                    </Link>
-                  </p>
-                  <div className="header-top-close-btn">
-                    <button
-                      className="top-close-btn"
-                      onClick={() => setShowBanner(false)}
-                    >
-                      <i className="pe-7s-close"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              {/* <!-- Header Top Message End --> */}
-            </div>
+        <div className=" bg-secondary p-2 text-white text-sm sm:text-base">
+          <div className="container mx-auto flex items-center justify-center gap-4">
+            <p className="text-center w-10/12 leading-[2.3]">
+              Get 25% off any product from <strong>1st to 31st July</strong> Use
+              Promo Code: LAUNCH SALES{" "}
+              <BamLink
+                href="/shop"
+                className="btn btn-hover-dark btn-secondary"
+              >
+                Shop Now
+              </BamLink>
+            </p>
+
+            <button
+              className="border hover:border-primary hover:text-primary transition-colors duration-300"
+              onClick={() => setShowBanner(false)}
+            >
+              <BamIcon Icon={XMarkIcon} size="sm" />
+            </button>
           </div>
         </div>
       )}

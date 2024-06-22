@@ -7,7 +7,7 @@ import MenuSideNav from "./navbar/MenuSideNav";
 
 export default async function Navbar() {
   return (
-    <nav className="header">
+    <nav className="">
       {/* <!-- Header Section Start --> */}
 
       {/* <!-- Header Top Start --> */}
