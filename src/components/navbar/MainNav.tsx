@@ -83,13 +83,15 @@ export default function MainNav() {
           <BamIcon Icon={UserCircleIcon} size="med" />
         </BamLink>
 
-        <BamLink href="/wishlist" variant="ghost" className="">
+        <BamLink href="/wishlist" variant="ghost" className="" title="Wishlist">
           <BamIcon Icon={HeartIcon} size="med" />
+          <span className="sr-only">Wishlist</span>
         </BamLink>
 
         <button
           className="relative mx-2 hover:text-primary"
           onClick={() => setIsCartClicked(true)}
+          title="Cart"
         >
           <BamIcon Icon={ShoppingCartIcon} size="med" />
           {totalItems > 0 && (
@@ -104,6 +106,7 @@ export default function MainNav() {
 
         <button
           className="md:hidden mr-1"
+          title="Menu"
           onClick={() => setIsMenuClicked(true)}
         >
           <BamIcon Icon={BiMenu} size="big" className="hover:text-primary" />

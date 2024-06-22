@@ -20,24 +20,6 @@ export default async function Navbar() {
 
       <MenuSideNav />
 
-      {/* <!-- Offcanvas Search Start --> */}
-      <div className="offcanvas-search">
-        <div className="offcanvas-search-inner">
-          {/* <!-- Button Close Start --> */}
-          <div className="offcanvas-btn-close">
-            <i className="pe-7s-close"></i>
-          </div>
-          {/* <!-- Button Close End --> */}
-
-          {/* <!-- Offcanvas Search Form Start --> */}
-          <React.Suspense>
-            <Search variant="off-canvas" />
-          </React.Suspense>
-          {/* <!-- Offcanvas Search Form End --> */}
-        </div>
-      </div>
-      {/* <!-- Offcanvas Search End --> */}
-
       {/* <!-- Cart Offcanvas Start --> */}
       <CartOffCanvas />
       {/* <!-- Cart Offcanvas End --> */}
