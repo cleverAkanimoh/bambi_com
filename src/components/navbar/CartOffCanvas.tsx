@@ -57,10 +57,10 @@ export default function CartOffCanvas() {
   return (
     <section
       className={clsx(
-        "fixed top-0 right-0 h-screen w-full flex transition-all duration-500",
+        "fixed top-0 right-0 h-screen w-screen flex transition-all duration-500",
         {
-          "bg-black/35 z-[200] visible": !isCartClicked,
-          "opacity-0 invisible -z-30": isCartClicked,
+          "bg-black/35 z-[200] visible": isCartClicked,
+          "opacity-0 invisible -z-30": !isCartClicked,
         }
       )}
     >
@@ -71,8 +71,8 @@ export default function CartOffCanvas() {
 
       <div
         className={clsx("relative w-full flex transition-all duration-500", {
-          "translate-x-0 opacity-100 visible": !isCartClicked,
-          "translate-x-full opacity-0 invisible": isCartClicked,
+          "translate-x-0 opacity-100 visible": isCartClicked,
+          "translate-x-full opacity-0 invisible": !isCartClicked,
         })}
       >
         <div onClick={() => setIsCartClicked(false)}>
@@ -86,7 +86,7 @@ export default function CartOffCanvas() {
         </div>
         <aside
           className={clsx(
-            "w-11/12 xs:min-w-[320px] shrink-0 relative h-screen overflow-y-auto p-2 xs:p-4 py-10 bg-white"
+            "w-11/12 xs:min-w-[320px] max-w-[360px] shrink-0 relative h-screen overflow-y-auto p-2 xs:p-4 py-10 bg-white"
           )}
         >
           {user ? (
