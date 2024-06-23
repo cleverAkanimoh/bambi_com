@@ -7,11 +7,11 @@ import { CiShoppingCart } from "react-icons/ci";
 
 import { DeleteAllCartItemsButton, DeleteCartItemById } from "../CartButtons";
 import { CartType } from "@/types";
-import {
-  getDocs,
-} from "firebase/firestore";
+import { getDocs } from "firebase/firestore";
 import { useAuth } from "@/context/auth-context";
 import { cartItemRef } from "@/lib/cart";
+import clsx from "clsx";
+import { useGlobalContext } from "@/context/store";
 
 export const fetchInRealtimeAndRenderPostsFromDB = async () => {
   const snapshot = await getDocs(cartItemRef);
@@ -28,6 +28,7 @@ export const fetchInRealtimeAndRenderPostsFromDB = async () => {
 };
 
 export default function CartOffCanvas() {
+  const { isCartClicked, setIsCartClicked } = useGlobalContext();
   const [cartItems, setCartItems] = useState<CartType[]>([]);
   const { user } = useAuth();
 
@@ -47,11 +48,22 @@ export default function CartOffCanvas() {
   );
 
   return (
-    <section className="cart-offcanvas-wrapper">
-      <div className="offcanvas-overlay"></div>
+    <section
+      className={clsx(
+        "md:hidden fixed top-0 right-0 h-screen w-full flex transition-all duration-500",
+        {
+          "bg-black/35 z-[200] visible": isCartClicked,
+          "opacity-0 invisible -z-30": !isCartClicked,
+        }
+      )}
+    >
+      <div
+        className="h-screen w-full"
+        onClick={() => setIsCartClicked(false)}
+      />
 
       {/* <!-- Cart Offcanvas Inner Start --> */}
-      <aside className="cart-offcanvas-inner">
+      <aside className="">
         {/* <!-- Button Close Start --> */}
         <div className="offcanvas-btn-close">
           <i className="pe-7s-close"></i>
