@@ -12,8 +12,13 @@ import { useAuth } from "@/context/auth-context";
 import { cartItemRef } from "@/lib/cart";
 import clsx from "clsx";
 import { useGlobalContext } from "@/context/store";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  ShareIcon,
+  ShoppingCartIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import BamIcon from "../Icon";
+import BamLink from "../BamLink";
 
 export const fetchInRealtimeAndRenderPostsFromDB = async () => {
   const snapshot = await getDocs(cartItemRef);
@@ -52,10 +57,10 @@ export default function CartOffCanvas() {
   return (
     <section
       className={clsx(
-        "md:hidden fixed top-0 right-0 h-screen w-full flex transition-all duration-500",
+        "fixed top-0 right-0 h-screen w-full flex transition-all duration-500",
         {
-          "bg-black/35 z-[200] visible": isCartClicked,
-          "opacity-0 invisible -z-30": !isCartClicked,
+          "bg-black/35 z-[200] visible": !isCartClicked,
+          "opacity-0 invisible -z-30": isCartClicked,
         }
       )}
     >
@@ -66,8 +71,8 @@ export default function CartOffCanvas() {
 
       <div
         className={clsx("relative w-full flex transition-all duration-500", {
-          "translate-x-0 opacity-100 visible": isCartClicked,
-          "translate-x-full opacity-0 invisible": !isCartClicked,
+          "translate-x-0 opacity-100 visible": !isCartClicked,
+          "translate-x-full opacity-0 invisible": isCartClicked,
         })}
       >
         <div onClick={() => setIsCartClicked(false)}>
@@ -86,9 +91,9 @@ export default function CartOffCanvas() {
         >
           {user ? (
             <>
-              {cartItems.length > 0 ? (
-                <div className="offcanvas-cart-content">
-                  <div className="w-full flex items-center justify-between mb-3 -mt-8">
+              {user ? (
+                <div className="pb-16">
+                  <div className="w-full flex items-center justify-between mb-3">
                     <Link href="/shop" className="hover:underline text-primary">
                       Continue shopping
                     </Link>
@@ -114,19 +119,21 @@ export default function CartOffCanvas() {
                   {/* <!-- Cart Product Total End --> */}
 
                   {/* <!-- Cart Product Button Start --> */}
-                  <div className="cart-product-btn mt-4">
-                    <Link
+                  <div className="text-white space-y-2">
+                    <BamLink
+                      variant="ghost"
                       href="/cart"
-                      className="btn btn-light btn-hover-primary w-100"
+                      className="p-3 flex gap-2 bg-gray-100 border border-gray-300 hover:bg-gray-50  rounded-full !text-black justify-center items-center"
                     >
-                      <i className="fa fa-shopping-cart"></i> View cart
-                    </Link>
-                    <Link
+                      <BamIcon Icon={ShoppingCartIcon} size="med" /> View cart
+                    </BamLink>
+                    <BamLink
+                      variant="ghost"
                       href="/checkout"
-                      className="btn btn-light btn-hover-primary w-100 mt-4"
+                      className="p-3 flex gap-2 bg-gray-100 border border-gray-300 hover:bg-gray-50  rounded-full !text-black justify-center items-center"
                     >
-                      <i className="fa fa-share"></i> Checkout
-                    </Link>
+                      <BamIcon Icon={ShareIcon} size="med" /> Checkout
+                    </BamLink>
                   </div>
                   {/* <!-- Cart Product Button End --> */}
                 </div>
@@ -142,14 +149,9 @@ export default function CartOffCanvas() {
             </>
           ) : (
             <section className="h-full flex flex-col gap-5 items-center justify-center">
-              <h4>No user Found</h4>
-              <p>You have to login to see your cart item</p>
-              <Link
-                href="/auth/login"
-                className="bg-primary p-2 text-white hover:opacity-60"
-              >
-                Take me to login
-              </Link>
+              <strong>{"You're currently not logged in"}</strong>
+              <small>You have to login to view your cart</small>
+              <BamLink href="/auth/login">Take me to login</BamLink>
             </section>
           )}
         </aside>
