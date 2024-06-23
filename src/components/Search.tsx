@@ -26,7 +26,7 @@ export default function Search({
   return (
     <div
       className={`${
-        variant === "on-canvas" ? "max-md:hidden " : ""
+        variant === "on-canvas" ? "max-lg:hidden " : ""
       } relative w-full flex items-center`}
     >
       <input
@@ -34,7 +34,7 @@ export default function Search({
         placeholder={
           variant === "on-canvas" ? "Search our store" : "Search Product..."
         }
-        className=" placeholder:text-gray-600 bg-gray-200/80 w-full max-w-md shrink-0 p-3 text-[0.96rem] text-gray-600"
+        className=" placeholder:text-gray-600 bg-gray-200/80 w-full max-w-md shrink-0 p-3 text-[0.96rem] text-gray-600 md:p-2 md:rounded-md focus-within:border-primary"
         onChange={(e) => handleSearch(e.target.value)}
         required
       />

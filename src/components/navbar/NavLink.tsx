@@ -5,6 +5,8 @@ import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
+import BamIcon from "../Icon";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
 
 export default function NavLink({
   href,
@@ -23,10 +25,11 @@ export default function NavLink({
   const { setIsMenuClicked } = useGlobalContext();
   const pathname = usePathname();
   return (
-    <li className={array ? "has-children group" : ""}>
-      {mobile && array ? (
+    <li className={array ? "relative group" : ""}>
+      {array ? (
         <button className="peer">
-          {children} <i className="fa fa-angle-down"></i>
+          {children}{" "}
+          <BamIcon Icon={ChevronDownIcon} size="sm" className="inline" />
         </button>
       ) : (
         <Link
@@ -36,14 +39,16 @@ export default function NavLink({
             "text-primary  font-medium": pathname === href,
           })}
         >
-          {children} {array && <i className="fa fa-angle-down"></i>}
+          {children}
         </Link>
       )}
       {array && (
         <ul
-          className={clsx("sub-menu", {
+          className={clsx("", {
             "h-0 peer-focus:h-full group-hover:h-full peer-focus:mt-2 group-hover:mt-2 overflow-hidden transition-all duration-500 text-sm px-3 space-y-3":
               mobile,
+            "absolute  h-0 peer-focus:h-full group-hover:h-full peer-focus:mt-2 group-hover:mt-2 overflow-hidden transition-all duration-500 text-sm px-3 space-y-3 bg-white":
+              array && !mobile,
           })}
         >
           {array.map(({ title, href }, index) => (
@@ -53,6 +58,7 @@ export default function NavLink({
                 className={clsx("hover:text-primary", {
                   "font-light hover:pl-2": mobile,
                   "text-primary  font-medium": pathname === href,
+                  "mt-3": array && !mobile,
                 })}
                 onClick={() => setIsMenuClicked(false)}
               >

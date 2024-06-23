@@ -65,7 +65,7 @@ export default function MainNav() {
         <Image src={Logo} alt="Bambi" />
       </Link>
 
-      <ul className=" max-md:hidden flex justify-center items-center gap-2">
+      <ul className=" max-lg:hidden flex justify-center items-center gap-8">
         <NavLink href="/">Home</NavLink>
         <NavLink href="/shop">Shop</NavLink>
         <NavLink href="/faq">Faqs</NavLink>
@@ -74,7 +74,7 @@ export default function MainNav() {
         </NavLink>
       </ul>
 
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center xs:gap-2">
         <React.Suspense>
           <Search />
         </React.Suspense>
@@ -105,7 +105,7 @@ export default function MainNav() {
         </button>
 
         <button
-          className="md:hidden mr-1"
+          className="lg:hidden mr-1"
           title="Menu"
           onClick={() => setIsMenuClicked(true)}
         >

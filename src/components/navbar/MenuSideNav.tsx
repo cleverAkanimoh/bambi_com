@@ -25,7 +25,7 @@ export default function MenuSideNav() {
   return (
     <section
       className={clsx(
-        "md:hidden fixed top-0 right-0 h-screen w-full flex transition-all duration-500",
+        "lg:hidden fixed top-0 right-0 h-screen w-full flex transition-all duration-500",
         {
           "bg-black/35 z-[200] visible": isMenuClicked,
           "opacity-0 invisible -z-30": !isMenuClicked,
@@ -80,7 +80,7 @@ export default function MenuSideNav() {
               />
             </div>
 
-            <address className="font-semibold flex flex-col gap-y-4 w-full shrink-0">
+            <aside className="font-semibold flex flex-col gap-y-4 w-full shrink-0">
               <MenuAddress
                 Icon={BsPhone}
                 href="tel:+012 3456 789"
@@ -95,7 +95,7 @@ export default function MenuSideNav() {
                 Icon={BsClock}
                 title="Monday - Sunday 9.00 - 18.00"
               />
-            </address>
+            </aside>
 
             <div className="flex items-center gap-2.5 pb-10">
               <IconLink href="https://facebook.com/" Icon={FaFacebook} />

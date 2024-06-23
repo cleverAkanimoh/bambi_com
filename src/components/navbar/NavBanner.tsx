@@ -1,7 +1,6 @@
 "use client";
 
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
 import React from "react";
 import BamIcon from "../Icon";
 import BamLink from "../BamLink";
@@ -15,13 +14,7 @@ export default function NavBanner() {
           <div className="container mx-auto flex items-center justify-center gap-4">
             <p className="text-center w-10/12 leading-[2.3]">
               Get 25% off any product from <strong>1st to 31st July</strong> Use
-              Promo Code: LAUNCH SALES{" "}
-              <BamLink
-                href="/shop"
-                className="btn btn-hover-dark btn-secondary"
-              >
-                Shop Now
-              </BamLink>
+              Promo Code: LAUNCH SALES <BamLink href="/shop">Shop Now</BamLink>
             </p>
 
             <button
