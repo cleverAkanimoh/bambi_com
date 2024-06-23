@@ -148,7 +148,7 @@ export default function CartOffCanvas() {
               )}
             </>
           ) : (
-            <section className="h-full flex flex-col gap-5 items-center justify-center">
+            <section className="h-full flex flex-col gap-6 items-center justify-center">
               <strong>{"You're currently not logged in"}</strong>
               <small>You have to login to view your cart</small>
               <BamLink href="/auth/login">Take me to login</BamLink>
