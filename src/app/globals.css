@@ -6,6 +6,6 @@
   button,
   a,
   li {
-    @apply transition-all duration-300;
+    @apply active:scale-90 transition-all duration-300;
   }
 }
