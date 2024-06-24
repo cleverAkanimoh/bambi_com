@@ -27,7 +27,7 @@ export default function NavLink({
   return (
     <li className={array ? "relative group" : ""}>
       {array ? (
-        <button className="peer">
+        <button className="peer h-14">
           {children}{" "}
           <BamIcon Icon={ChevronDownIcon} size="sm" className="inline" />
         </button>
@@ -47,12 +47,12 @@ export default function NavLink({
           className={clsx("text-sm  space-y-3 transition-all duration-500", {
             "h-full peer-focus:h-full group-hover:h-full peer-focus:mt-2 group-hover:mt-2 px-3 overflow-hidden ":
               mobile,
-            "absolute left-0 w-[200px] min-h-full peer-focus:min-h-full group-hover:min-h-full overflow-hidden peer-focus:overflow-visible group-hover:overflow-visible peer-focus:mt-8 group-hover:mt-8 opacity-0 peer-focus:opacity-100 group-hover:opacity-100 divide-y divide-gray-200 bg-white border border-gray-200 rounded":
+            "absolute left-0 w-[200px] h-0 group-hover:h-fit peer-focus:h-fit overflow-hidden opacity-0 peer-focus:opacity-100 group-hover:opacity-100 divide-y divide-gray-200 bg-white border border-gray-200 rounded":
               array && !mobile,
           })}
         >
           {array.map(({ title, href }, index) => (
-            <li key={index} className="pt-3 px-4">
+            <li key={index} className="pt-3 last:pb-3 px-4">
               <Link
                 href={href ?? title}
                 className={clsx("hover:text-primary", {
