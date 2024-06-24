@@ -21,7 +21,7 @@ export default function ThumbsSlider({
   const [isActiveIndex, setIsActiveIndex] = useState(0);
 
   return (
-    <aside className="w-full space-y-3">
+    <aside className="w-full max-lg:space-y-3 lg:flex">
       {/* main swiper */}
       <Swiper
         // loop
@@ -33,7 +33,7 @@ export default function ThumbsSlider({
         modules={[Thumbs, Autoplay]}
         thumbs={{ swiper: thumbsSwiper }}
         onSlideChange={(swiper) => setIsActiveIndex(swiper.activeIndex)}
-        className="size-full"
+        className="size-full shrink-0"
       >
         {images.map((src, index) => (
           <SwiperSlide key={index}>
@@ -77,6 +77,7 @@ export default function ThumbsSlider({
         modules={[Thumbs]}
         watchSlidesProgress
         onSwiper={setThumbsSwiper}
+        className="lg:rotate-90"
       >
         {images.map((src, index) => (
           <SwiperSlide key={index} className="bg-white max-w-fit rounded-sm">
