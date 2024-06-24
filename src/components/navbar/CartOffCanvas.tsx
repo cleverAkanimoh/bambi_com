@@ -57,7 +57,7 @@ export default function CartOffCanvas() {
   return (
     <section
       className={clsx(
-        "fixed top-0 right-0 h-screen w-screen flex transition-all duration-500",
+        "fixed top-0 right-0 h-screen w-full flex max-xs:flex-col transition-all duration-500",
         {
           "bg-black/35 z-[200] visible": isCartClicked,
           "opacity-0 invisible -z-30": !isCartClicked,
@@ -65,12 +65,12 @@ export default function CartOffCanvas() {
       )}
     >
       <div
-        className="h-screen w-full"
+        className="h-screen xs:w-full"
         onClick={() => setIsCartClicked(false)}
       />
 
       <div
-        className={clsx("relative w-fit flex transition-all duration-500", {
+        className={clsx("w-full flex transition-all duration-500", {
           "translate-x-0 opacity-100 visible": isCartClicked,
           "translate-x-full opacity-0 invisible": !isCartClicked,
         })}
