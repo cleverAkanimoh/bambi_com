@@ -15,10 +15,10 @@ export default function CtaSection() {
       >
         {/* <!-- Section Title Start --> */}
         <div className="text-center space-y-4 mb-8">
-          <h2 className="font-bold text-2xl sm:text-3xl mx-auto max-w-lg">
+          <h2 className="font-semibold text-2xl sm:text-3xl mx-auto max-w-lg">
             Promoting screen-free healthy development
           </h2>
-          <h5 className="max-w-md mx-auto font-light">
+          <h5 className="max-w-md mx-auto font-normal">
             Once upon a time, families played. Today, between screen time and
             homework, free play Otilo.
           </h5>
@@ -70,8 +70,8 @@ const CtaCard = ({
     transition={fadeUp.transition}
   >
     <Icon className="size-20 text-secondary" />
-    <div className="text-center mb-10">
-      <h4 className="font-semibold text-xl">{heading}</h4>
+    <div className="text-center mb-10 space-y-2">
+      <h4 className="font-normal text-xl">{heading}</h4>
       <p>{paragraph}</p>
     </div>
   </motion.div>

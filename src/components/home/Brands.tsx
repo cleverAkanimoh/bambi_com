@@ -16,33 +16,34 @@ import { fadeUp } from "@/lib/framer";
 import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/css';
 import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { Autoplay, Controller, Navigation } from "swiper/modules";
 
 
 export default function Brands() {
   return (
     <section>
       <div className="py-8">
-        <div className="row">
+        <div className="">
           <motion.div
-            className="col-12"
+            className="w-11/12 md:w-10/12 mx-auto"
             initial={fadeUp.initial}
             whileInView={fadeUp.whileInView}
             transition={fadeUp.transition}
           // data-aos="fade-up"
           >
             <Swiper
+              loop
+              modules={[Autoplay, Controller, Navigation]}
               navigation={true}
-              modules={[Autoplay, Navigation, Pagination]}
-              autoplay={{
-                delay: 2000,
+                autoplay={{
+                delay: 5000,
+                disableOnInteraction: false,
                 pauseOnMouseEnter: true,
               }}
               slidesPerView={4}
-              //   pagination={pagination}
+              grid={{rows: 1}}
               autoHeight={true}
-              className="size-full">
+              className="size-full grid place-items-center justify-center">
               <SwiperSlide className="size-full">
                 <Brand src={Brand1} title="" />
               </SwiperSlide>

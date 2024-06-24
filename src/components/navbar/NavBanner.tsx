@@ -12,9 +12,9 @@ export default function NavBanner() {
       {showBanner && (
         <div className=" bg-secondary p-2 text-white text-sm sm:text-base">
           <div className="container mx-auto flex items-center justify-center gap-4">
-            <p className="text-center w-10/12 leading-[2.3]">
+            <p className="text-center w-10/12 leading-[2.3] p-2">
               Get 25% off any product from <strong>1st to 31st July</strong> Use
-              Promo Code: LAUNCH SALES <BamLink href="/shop">Shop Now</BamLink>
+              Promo Code: LAUNCH SALES &nbsp;<BamLink href="/shop">Shop Now</BamLink>
             </p>
 
             <button
