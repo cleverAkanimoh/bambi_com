@@ -25,7 +25,7 @@ export default function NavLink({
   const { setIsMenuClicked } = useGlobalContext();
   const pathname = usePathname();
   return (
-    <li className={array ? "relative group" : ""}>
+    <li className={array ? "relative group z-20" : ""}>
       {array ? (
         <button className="peer lg:h-14">
           {children}{" "}
@@ -44,15 +44,15 @@ export default function NavLink({
       )}
       {array && (
         <ul
-          className={clsx("text-sm  space-y-3 transition-all duration-500", {
+          className={clsx("text-sm z-20  space-y-3 transition-all duration-500", {
             "h-0 peer-focus:h-full group-hover:h-full peer-focus:mt-2 group-hover:mt-2 px-3 overflow-hidden ":
               mobile,
-            "absolute left-0 w-[200px] h-0 group-hover:h-fit peer-focus:h-fit overflow-hidden opacity-0 peer-focus:opacity-100 group-hover:opacity-100 divide-y divide-gray-200 bg-white border border-gray-200 rounded":
+            "absolute left-0 w-[200px] z-20 h-0 group-hover:h-fit peer-focus:h-fit overflow-hidden opacity-0 peer-focus:opacity-100 group-hover:opacity-100 divide-y divide-gray-200 bg-white border border-gray-200 rounded":
               array && !mobile,
           })}
         >
           {array.map(({ title, href }, index) => (
-            <li key={index} className="pt-3 last:pb-3 px-4">
+            <li key={index} className="pt-3 z-20 last:pb-3 px-4">
               <Link
                 href={href ?? title}
                 className={clsx("hover:text-primary", {

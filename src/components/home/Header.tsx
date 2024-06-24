@@ -60,7 +60,7 @@ export type ItemType = {
 };
 
 const SlideItem = ({ src, paragraph, title }: ItemType) => (
-  <div className="h-[60svh] w-screen overflow-hidden">
+  <div className="h-[45svh] w-screen overflow-hidden">
     <div className="hero-slide-bg !size-full">
       <Image
         src={src}

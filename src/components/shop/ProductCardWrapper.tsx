@@ -39,17 +39,16 @@ export default function ProductCardWrapper({
   return (
     <>
       <Suspense>
-        <Header postPerPage={10} totalPages={totalPages} />
+        <Header postPerPage={POST_PER_PAGE} totalPages={totalPages} />
       </Suspense>
-      <section className="space-y-4 my-8 p-4">
+      <section className="">
         {filteredProducts.length ? (
-          <section className="row shop_wrapper grid_4">
+          <section className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-12 p-6 md:p-12 items-center place-tems-center">
             {sortedFilteredProduct.map((x, i) => (
               <ShopProductCard
                 key={i}
                 id={i + 1}
                 src1="/assets/images/products/medium-product/2.jpg"
-                src2="/assets/images/products/medium-product/3.jpg"
                 new_price={x.new_price}
                 old_price={x.old_price}
                 heading={x.heading}
