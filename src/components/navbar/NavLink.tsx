@@ -44,10 +44,10 @@ export default function NavLink({
       )}
       {array && (
         <ul
-          className={clsx("", {
-            "h-full peer-focus:h-full group-hover:h-full peer-focus:mt-2 group-hover:mt-2 overflow-hidden transition-all duration-500 text-sm px-3 space-y-3":
+          className={clsx("text-sm  space-y-3 transition-all duration-500", {
+            "h-full peer-focus:h-full group-hover:h-full peer-focus:mt-2 group-hover:mt-2 px-3 overflow-hidden ":
               mobile,
-            "absolute left-0 w-[200px]  min-h-full peer-focus:min-h-full group-hover:min-h-full overflow-hidden peer-focus:mt-8 group-hover:mt-8 transition-all duration-500 text-sm space-y-3 divide-y divide-gray-300 bg-white border rounded":
+            "absolute left-0 w-[200px] min-h-full peer-focus:min-h-full group-hover:min-h-full overflow-hidden peer-focus:overflow-visible group-hover:overflow-visible peer-focus:mt-8 group-hover:mt-8 opacity-0 peer-focus:opacity-100 group-hover:opacity-100 divide-y divide-gray-200 bg-white border border-gray-200 rounded":
               array && !mobile,
           })}
         >
