@@ -113,7 +113,7 @@ const ShopProductCard = ({
           </h5>
           <span className="flex items-center gap-2">
             <span className="!text-primary">${new_price}</span>
-            {old_price && <span className="!text-red-400">${old_price}</span>}
+            {old_price && <del className="text-red-400">${old_price}</del>}
           </span>
           {/* <p>{description}</p> */}
         </div>
