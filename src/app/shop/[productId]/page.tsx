@@ -23,14 +23,12 @@ export default function SingleProductPage({
     <main className="flex flex-col">
       <Breadcrumbs active="Single Product Page" />
       <section className="section-margin-top">
-        <div className="container">
-          {/* dynamic */}
-          <Suspense>
-            <ProductDisplay singleProduct={singleProduct} />
-          </Suspense>
+        {/* dynamic */}
+        <Suspense>
+          <ProductDisplay singleProduct={singleProduct} />
+        </Suspense>
 
-          <AdditionalInformationForProduct />
-        </div>
+        <AdditionalInformationForProduct />
       </section>
     </main>
   );

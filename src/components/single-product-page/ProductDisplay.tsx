@@ -2,9 +2,22 @@
 
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { Products } from "@/types";
 import { AddToCartButton } from "../CartButtons";
+import ThumbsSlider from "../ThumbsSlider";
+
+const Images = [
+  "/assets/images/products/large-product/1.jpg",
+  "/assets/images/products/large-product/2.jpg",
+  "/assets/images/products/large-product/2.jpg",
+  "/assets/images/products/large-product/3.jpg",
+  "/assets/images/products/large-product/4.jpg",
+  "/assets/images/products/large-product/1.jpg",
+  "/assets/images/products/large-product/3.jpg",
+  "/assets/images/products/large-product/4.jpg",
+  "/assets/images/products/large-product/5.jpg",
+  "/assets/images/products/large-product/5.jpg",
+];
 
 export default function ProductDisplay({
   singleProduct,
@@ -12,138 +25,14 @@ export default function ProductDisplay({
   singleProduct: Products;
 }) {
   return (
-    <div className="row">
-      <div className="col-lg-5 offset-lg-0 col-md-8 offset-md-2">
-        {/* <!-- Product Details Image Start --> */}
-        <div className="product-details-img">
-          {/* <!-- Single Product Image Start --> */}
-          <div className="single-product-img swiper-container product-gallery-top">
-            <div className="swiper-wrapper popup-gallery">
-              <Link className="swiper-slide w-100" href={singleProduct.src1}>
-                <Image
-                  width={100}
-                  height={100}
-                  className="w-100"
-                  src="/assets/images/products/large-product/1.jpg"
-                  alt="Product"
-                />
-              </Link>
-              <a
-                className="swiper-slide w-100"
-                href="assets/images/products/large-product/2.jpg"
-              >
-                <Image
-                  width={100}
-                  height={100}
-                  className="w-100"
-                  src="/assets/images/products/large-product/2.jpg"
-                  alt="Product"
-                />
-              </a>
-              <a
-                className="swiper-slide w-100"
-                href="assets/images/products/large-product/3.jpg"
-              >
-                <Image
-                  width={100}
-                  height={100}
-                  className="w-100"
-                  src="/assets/images/products/large-product/3.jpg"
-                  alt="Product"
-                />
-              </a>
-              <a
-                className="swiper-slide w-100"
-                href="assets/images/products/large-product/4.jpg"
-              >
-                <Image
-                  width={100}
-                  height={100}
-                  className="w-100"
-                  src="/assets/images/products/large-product/4.jpg"
-                  alt="Product"
-                />
-              </a>
-              <a
-                className="swiper-slide w-100"
-                href="assets/images/products/large-product/5.jpg"
-              >
-                <Image
-                  width={100}
-                  height={100}
-                  className="w-100"
-                  src="/assets/images/products/large-product/5.jpg"
-                  alt="Product"
-                />
-              </a>
-            </div>
-          </div>
-          {/* <!-- Single Product Image End --> */}
-
-          {/* <!-- Single Product Thumb Start --> */}
-          <div className="single-product-thumb swiper-container product-gallery-thumbs">
-            <div className="swiper-wrapper">
-              <div className="swiper-slide">
-                <Image
-                  width={100}
-                  height={100}
-                  src="/assets/images/products/small-product/10.jpg"
-                  alt="Product"
-                />
-              </div>
-              <div className="swiper-slide">
-                <Image
-                  width={100}
-                  height={100}
-                  src="/assets/images/products/small-product/2.jpg"
-                  alt="Product"
-                />
-              </div>
-              <div className="swiper-slide">
-                <Image
-                  width={100}
-                  height={100}
-                  src="/assets/images/products/small-product/3.jpg"
-                  alt="Product"
-                />
-              </div>
-              <div className="swiper-slide">
-                <Image
-                  width={100}
-                  height={100}
-                  src="/assets/images/products/small-product/15.jpg"
-                  alt="Product"
-                />
-              </div>
-              <div className="swiper-slide">
-                <Image
-                  width={100}
-                  height={100}
-                  src="/assets/images/products/small-product/8.jpg"
-                  alt="Product"
-                />
-              </div>
-            </div>
-
-            {/* <!-- Next Previous Button Start --> */}
-            <div className="swiper-button-next swiper-button-white">
-              <i className="pe-7s-angle-right"></i>
-            </div>
-            <div className="swiper-button-prev swiper-button-white">
-              <i className="pe-7s-angle-left"></i>
-            </div>
-            {/* <!-- Next Previous Button End --> */}
-          </div>
-          {/* <!-- Single Product Thumb End --> */}
-        </div>
-        {/* <!-- Product Details Image End --> */}
-      </div>
-      <div className="col-lg-7">
+    <section className="p-4">
+      <ThumbsSlider images={Images} />
+      <div className="">
         {/* <!-- Product Summery Start --> */}
-        <div className="product-summery position-relative">
+        <div className="">
           {/* <!-- Product Head Start --> */}
-          <div className="product-head mb-3">
-            <h2 className="product-title">{singleProduct.heading}</h2>
+          <div className="">
+            <h2 className="">{singleProduct.heading}</h2>
           </div>
           {/* <!-- Product Head End --> */}
 
@@ -295,6 +184,6 @@ export default function ProductDisplay({
         </div>
         {/* <!-- Product Summery End --> */}
       </div>
-    </div>
+    </section>
   );
 }
