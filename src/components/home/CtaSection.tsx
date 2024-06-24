@@ -7,14 +7,14 @@ import { BiDesktop, BiRefresh, BiStreetView } from "react-icons/bi";
 
 export default function CtaSection() {
   return (
-    <section className="my-10 p-2">
+    <section className="my-10 p-2 flex flex-col items-center justify-center gap-12">
       <motion.div
         initial={fadeUp.initial}
         whileInView={fadeUp.whileInView}
         transition={fadeUp.transition}
       >
         {/* <!-- Section Title Start --> */}
-        <div className="text-center space-y-4 mb-8">
+        <div className="text-center space-y-4">
           <h2 className="font-semibold text-2xl sm:text-3xl mx-auto max-w-lg">
             Promoting screen-free healthy development
           </h2>

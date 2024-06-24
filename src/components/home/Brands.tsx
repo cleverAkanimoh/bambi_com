@@ -25,9 +25,8 @@ export default function Brands() {
   const IsTabletView = useMediaQuery({ query: "(min-width: 760px)" });
   const IsLaptopView = useMediaQuery({ query: "(min-width: 900px)" });
   return (
-    <section>
-      <div className="py-8">
-        <div className="">
+    <section className="mt-20">
+      
           <motion.div
             className="w-11/12 md:w-10/12 mx-auto"
             initial={fadeUp.initial}
@@ -48,7 +47,7 @@ export default function Brands() {
               grid={{rows: 1}}
               autoHeight={true}
               spaceBetween={IsLaptopView? 10:IsTabletView? 20: IsBigMobile ? 30 : 40}
-              className="size-full grid place-items-center justify-center">
+              className="size-full grid !place-items-center !items-center justify-center">
               <SwiperSlide className="size-full">
                 <Brand src={Brand1} title="" />
               </SwiperSlide>
@@ -70,8 +69,7 @@ export default function Brands() {
 
             </Swiper>
           </motion.div>
-        </div>
-      </div>
+     
     </section>
   );
 }
