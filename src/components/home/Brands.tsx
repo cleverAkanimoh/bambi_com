@@ -16,32 +16,25 @@ import { fadeUp } from "@/lib/framer";
 
 export default function Brands() {
   return (
-    <section>
-      <div className="py-8">
-        <div className="row">
-          <motion.div
-            className="col-12"
-            initial={fadeUp.initial}
-            whileInView={fadeUp.whileInView}
-            transition={fadeUp.transition}
-            // data-aos="fade-up"
-          >
-            {/* <!-- Brand Logo Wrapper Start --> */}
-            <div className="brand-logo-carousel arrow-outside-container">
-              <div className="swiper-container">
-                <div className="swiper-wrapper">
-                  <Brand src={Brand1} title="" />
-                  <Brand src={Brand2} title="" />
-                  <Brand src={Brand3} title="" />
-                  <Brand src={Brand4} title="" />
-                  <Brand src={Brand5} title="" />
-                  <Brand src={Brand6} title="" />
-                </div>
-              </div>
-            </div>
-          </motion.div>
+    <section className="flex">
+      <motion.div
+        className="col-12"
+        initial={fadeUp.initial}
+        whileInView={fadeUp.whileInView}
+        transition={fadeUp.transition}
+        // data-aos="fade-up"
+      >
+        <div className="swiper-container">
+          <div className="swiper-wrapper">
+            <Brand src={Brand1} title="" />
+            <Brand src={Brand2} title="" />
+            <Brand src={Brand3} title="" />
+            <Brand src={Brand4} title="" />
+            <Brand src={Brand5} title="" />
+            <Brand src={Brand6} title="" />
+          </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
