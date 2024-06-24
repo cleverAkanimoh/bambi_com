@@ -8,6 +8,7 @@ import { type Swiper as SwiperType } from "swiper/types";
 import { Thumbs, Autoplay } from "swiper/modules";
 import "swiper/css";
 import clsx from "clsx";
+import Link from "next/link";
 
 export default function ThumbsSlider({
   images,
@@ -24,7 +25,7 @@ export default function ThumbsSlider({
       {/* main swiper */}
       <Swiper
         // loop
-        autoHeight={true}
+        // autoHeight={true}
         autoplay={{
           delay: 20000,
           pauseOnMouseEnter: true,
@@ -37,26 +38,26 @@ export default function ThumbsSlider({
         {images.map((src, index) => (
           <SwiperSlide key={index}>
             {typeof src === "string" ? (
-              <a
+              <Link
                 href={src}
                 //   download
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Click to view larger image"
-                className="block border border-blue-100 hover:border-primary rounded-md p-1 xs:hover:p-1.5 transition-all duration-300"
+                className="block border border-blue-100 hover:border-primary rounded-md p-1 xs:hover:p-1.5 transition-all duration-300 cursor-e-resize"
               >
                 <Image
                   src={src}
-                  alt={heading ?? "Chemistry department university of uyo"}
+                  alt={heading ?? "Single product page"}
                   width={300}
                   height={200}
                   className={"w-full h-auto rounded-md"}
                 />
-              </a>
+              </Link>
             ) : (
               <Image
                 src={src}
-                alt={heading ?? "Chemistry department university of uyo"}
+                alt={heading ?? ""}
                 className={"w-full h-auto"}
                 width={300}
                 height={200}
@@ -72,21 +73,18 @@ export default function ThumbsSlider({
         // slidesPerView={6}
 
         autoHeight={true}
-        slidesPerView={images.length}
+        slidesPerView={images.length > 5 ? 5 : images.length}
         modules={[Thumbs]}
         watchSlidesProgress
         onSwiper={setThumbsSwiper}
       >
         {images.map((src, index) => (
-          <SwiperSlide
-            key={index}
-            className="bg-white border max-w-fit rounded-md"
-          >
+          <SwiperSlide key={index} className="bg-white max-w-fit rounded-sm">
             <Image
               src={src}
-              alt={heading ?? "Chemistry department"}
+              alt={heading ?? ""}
               className={clsx(
-                "size-14 md:size-12 scale-90 rounded-md hover:brightness-[.8]",
+                "size-20  scale-90 rounded-md hover:brightness-[.8]",
                 {
                   "ring ring-primary p-[1px] pointer-events-none":
                     isActiveIndex === index,
