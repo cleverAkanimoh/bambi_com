@@ -17,9 +17,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Autoplay, Controller, Navigation } from "swiper/modules";
+import { useMediaQuery } from "react-responsive";
 
 
 export default function Brands() {
+  const IsBigMobile = useMediaQuery({ query: "(min-width: 500px)" });
+  const IsTabletView = useMediaQuery({ query: "(min-width: 760px)" });
+  const IsLaptopView = useMediaQuery({ query: "(min-width: 900px)" });
   return (
     <section>
       <div className="py-8">
@@ -34,15 +38,16 @@ export default function Brands() {
             <Swiper
               loop
               modules={[Autoplay, Controller, Navigation]}
-              navigation={true}
+              // navigation={true}
                 autoplay={{
-                delay: 5000,
+                delay: 3000,
                 disableOnInteraction: false,
                 pauseOnMouseEnter: true,
               }}
               slidesPerView={4}
               grid={{rows: 1}}
               autoHeight={true}
+              spaceBetween={IsLaptopView? 10:IsTabletView? 20: IsBigMobile ? 30 : 40}
               className="size-full grid place-items-center justify-center">
               <SwiperSlide className="size-full">
                 <Brand src={Brand1} title="" />
