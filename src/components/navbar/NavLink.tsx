@@ -27,7 +27,7 @@ export default function NavLink({
   return (
     <li className={array ? "relative group" : ""}>
       {array ? (
-        <button className="peer h-14">
+        <button className="peer lg:h-14">
           {children}{" "}
           <BamIcon Icon={ChevronDownIcon} size="sm" className="inline" />
         </button>
@@ -45,7 +45,7 @@ export default function NavLink({
       {array && (
         <ul
           className={clsx("text-sm  space-y-3 transition-all duration-500", {
-            "h-full peer-focus:h-full group-hover:h-full peer-focus:mt-2 group-hover:mt-2 px-3 overflow-hidden ":
+            "h-0 peer-focus:h-full group-hover:h-full peer-focus:mt-2 group-hover:mt-2 px-3 overflow-hidden ":
               mobile,
             "absolute left-0 w-[200px] h-0 group-hover:h-fit peer-focus:h-fit overflow-hidden opacity-0 peer-focus:opacity-100 group-hover:opacity-100 divide-y divide-gray-200 bg-white border border-gray-200 rounded":
               array && !mobile,
