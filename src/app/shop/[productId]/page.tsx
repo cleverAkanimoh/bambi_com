@@ -22,7 +22,7 @@ export default function SingleProductPage({
   return (
     <main className="flex flex-col">
       <Breadcrumbs active="Single Product Page" />
-      <section className="my-8">
+      <section className="mt-8 mb-3">
         {/* dynamic */}
         <Suspense>
           <ProductDisplay singleProduct={singleProduct} />
