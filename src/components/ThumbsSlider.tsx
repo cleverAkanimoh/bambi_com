@@ -21,7 +21,7 @@ export default function ThumbsSlider({
   const [isActiveIndex, setIsActiveIndex] = useState(0);
 
   return (
-    <aside className="w-full max-lg:space-y-3 mx-auto max-w-lg -z-10">
+    <aside className="w-full max-lg:space-y-3 mx-auto max-w-lg">
       {/* main swiper */}
       <Swiper
         autoplay={{
