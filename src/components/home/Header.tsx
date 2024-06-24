@@ -9,11 +9,22 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import BamLink from "../BamLink";
 import { motion } from "framer-motion";
 import { fadeUp } from "@/lib/framer";
+import { Autoplay, Controller, Pagination } from "swiper/modules";
 
 export default function Header() {
   return (
     <header className="flex flex-col h-full">
-      <Swiper className="size-full">
+      <Swiper
+        loop
+        
+        modules={[Autoplay, Pagination, Controller]}
+        className="size-full"
+        autoplay={{
+          delay: 10000,
+          disableOnInteraction: true,
+          pauseOnMouseEnter: true,
+        }}
+      >
         <SwiperSlide className="size-full">
           <SlideItem
             src={SliderImage1}
