@@ -83,7 +83,7 @@ export default function ProductDisplay({
           </BamLink>
         </div>
 
-        <div className="flex items-center">
+        <div className="flex flex-wrap items-center">
           <strong>Social: </strong>
           <IconText Icon={HeartIcon} text="Like" href="#" />
           <IconText Icon={ShareIcon} text="Share" href="#" />
