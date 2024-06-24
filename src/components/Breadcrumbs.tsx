@@ -11,23 +11,22 @@ export default function Breadcrumbs({
   active: string;
 }) {
   return (
-    <section className="w-full p-3 bg-primary">
-      <div className="breadcrumb-content">
-        <ul className="flex gap-2 items-center text-white text-sm">
-          <li>
-            <Link href="/" className="hover:text-white text-secondary">
-              <BamIcon Icon={HomeIcon} size="med" />
+    <section className="w-full p-3 py-4 bg-primary">
+      <ul className="flex gap-2 items-center text-white text-sm">
+        <li>
+          <Link href="/" className="text-white hover:text-secondary">
+            <BamIcon Icon={HomeIcon} size="sm" />
+          </Link>
+        </li>
+        <span>/</span>
+        {array &&
+          array?.map(({ title, href }, index) => (
+            <Link href={href} key={index}>
+              {title} <span className="last:hidden">/</span>
             </Link>
-          </li>
-          {array &&
-            array?.map(({ title, href }, index) => (
-              <Link href={href} key={index}>
-                {title}
-              </Link>
-            ))}
-          <li className="active"> {active}</li>
-        </ul>
-      </div>
+          ))}
+        <li className=""> {active}</li>
+      </ul>
     </section>
   );
 }
