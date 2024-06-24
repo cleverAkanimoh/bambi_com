@@ -33,47 +33,25 @@ export default function ProductDisplay({
     <section className="p-4 flex max-lg:flex-col gap-4">
       <ThumbsSlider images={Images} />
 
-      <div className="space-y-2">
-        <h2 className="text-2xl font-bold">{singleProduct.heading}</h2>
+      <div className="space-y-3 py-4">
+        <h2 className="text-3xl font-bold">{singleProduct.heading}</h2>
 
         {/* <!-- Price Box Start --> */}
         <div className="flex gap-2 mb-2">
           <span className="">${singleProduct.new_price}</span>
           <del className="text-red-500">${singleProduct.old_price}</del>
         </div>
-        {/* <!-- Price Box End --> */}
-
-        {/* <!-- SKU Start --> */}
-        {singleProduct.sku && (
-          <div className="sku mb-3">
-            <span>SKU: {singleProduct.sku}</span>
-          </div>
-        )}
-        {/* <!-- SKU End --> */}
-
-        {/* <!-- Product Inventory Start --> */}
-        {singleProduct.availability && (
-          <div className="product-inventroy mb-3">
-            <span className="inventroy-title">
-              <strong>Availability: </strong>
-            </span>
-            <span className="inventory-varient">
-              {singleProduct.availability} Left in Stock
-            </span>
-          </div>
-        )}
-        {/* <!-- Product Inventory End --> */}
 
         {/* <!-- Description Start --> */}
-        <p className="mb-7">{singleProduct.description}</p>
+        <p className="pb-4">{singleProduct.description}</p>
 
-        <div className="flex items-center gap-4 mb-5">
+        <div className="flex items-center gap-4 pb-4">
           <strong>Qty: </strong>
 
           <div className="">
             <input
               type="number"
-              className="h-9 w-16 text-center ring ring-primary"
+              className="h-9 w-16 text-center border"
               value={quantity}
               onChange={(e) => setQuantity(Number(e.target.value))}
             />
