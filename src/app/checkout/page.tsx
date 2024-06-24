@@ -9,8 +9,7 @@ import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { PaystackButton } from "react-paystack";
 import { toast } from "react-toastify";
-import NotFound from "../not-found";
-import { doc, setDoc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { db } from "@/config/firebase-config";
 
 const orderStyle = clsx("p-2 flex justify-between");
@@ -143,9 +142,9 @@ export default function CheckoutPage() {
               name="message"
             />
 
-            <button className="sr-oly" id="update-billing">
-              submit
-            </button>
+            <Button className="w-full text-sm my-2" id="update-billing">
+              Submit
+            </Button>
           </form>
         </section>
 

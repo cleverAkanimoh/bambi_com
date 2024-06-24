@@ -21,10 +21,10 @@ export default function Brands() {
         <div className="row">
           <motion.div
             className="col-12"
-            // initial={fadeUp.initial}
-            // whileInView={fadeUp.whileInView}
-            // transition={fadeUp.transition}
-            data-aos="fade-up"
+            initial={fadeUp.initial}
+            whileInView={fadeUp.whileInView}
+            transition={fadeUp.transition}
+            // data-aos="fade-up"
           >
             {/* <!-- Brand Logo Wrapper Start --> */}
             <div className="brand-logo-carousel arrow-outside-container">

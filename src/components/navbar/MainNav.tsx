@@ -13,9 +13,17 @@ import { useGlobalContext } from "@/context/store";
 import { CartType } from "@/types";
 import { getNumberOfItemsInCart } from "@/lib/cart";
 import { useAuth } from "@/context/auth-context";
+import BamIcon from "../Icon";
+import {
+  HeartIcon,
+  ShoppingCartIcon,
+  UserCircleIcon,
+} from "@heroicons/react/24/outline";
+import { BiMenu } from "react-icons/bi";
+import BamLink from "../BamLink";
 
 export default function MainNav() {
-  const { setIsMenuClicked } = useGlobalContext();
+  const { setIsMenuClicked, setIsCartClicked } = useGlobalContext();
   const [isFixedNav, setIsFixedNav] = useState(false);
   const { user } = useAuth();
   // const [cartItems, setCartItems] = useState<CartType[]>([]);
@@ -25,104 +33,85 @@ export default function MainNav() {
     if (user) {
       const fetchCartItems = async () => {
         // const unsubscribeItems = fetchInRealtimeAndRenderPostsFromDB(user.uid, setCartItems);
-        const unsubscribeTotal = await getNumberOfItemsInCart(user.uid, setTotalItems);
+        const unsubscribeTotal = await getNumberOfItemsInCart(
+          user.uid,
+          setTotalItems
+        );
 
         return () => {
           // unsubscribeItems();
           unsubscribeTotal();
         };
       };
-      
+
       fetchCartItems();
     }
   }, [user]);
 
-useEffect(() => {
+  useEffect(() => {
     window.onscroll = () =>
       window.scrollY > 120 ? setIsFixedNav(true) : setIsFixedNav(false);
-  
   }, []);
   return (
     <section
-      className={clsx("flex items-center justify-between px-2 w-full", {
-        "fixed top-0 left-0 bg-white z-40": isFixedNav,
-      })}
+      className={clsx(
+        "bg-white flex items-center justify-between px-2 w-full transition-all duration-500",
+        {
+          "fixed top-0 left-0 shadow z-40": isFixedNav,
+        }
+      )}
     >
-      {/* <!-- Header Logo Start --> */}
-
       <Link href="/">
         <Image src={Logo} alt="Bambi" />
       </Link>
-      {/* <!-- Header Logo End --> */}
 
-      {/* <!-- Header Menu Start --> */}
-      <div className={"col-md-6 d-none d-md-block"}>
-        <div className="main-menu xl:ml-6">
-          <ul className="">
-            <NavLink href="/">Home</NavLink>
-            <NavLink href="/shop">Shop</NavLink>
-            <NavLink href="/faq">Faqs</NavLink>
-            <NavLink href="#" array={pagesArray}>
-              Pages
-            </NavLink>
-          </ul>
-        </div>
+      <ul className=" max-lg:hidden flex justify-center items-center gap-8">
+        <NavLink href="/">Home</NavLink>
+        <NavLink href="/shop">Shop</NavLink>
+        <NavLink href="/faq">Faqs</NavLink>
+        <NavLink href="#" array={pagesArray}>
+          Pages
+        </NavLink>
+      </ul>
+
+      <div className="flex items-center justify-center xs:gap-2">
+        <React.Suspense>
+          <Search />
+        </React.Suspense>
+
+        <BamLink href="/dashboard" className="" variant="ghost">
+          <BamIcon Icon={UserCircleIcon} size="med" />
+        </BamLink>
+
+        <BamLink href="/wishlist" variant="ghost" className="" title="Wishlist">
+          <BamIcon Icon={HeartIcon} size="med" />
+          <span className="sr-only">Wishlist</span>
+        </BamLink>
+
+        <button
+          className="relative mx-2 hover:text-primary"
+          onClick={() => setIsCartClicked(true)}
+          title="Cart"
+        >
+          <BamIcon Icon={ShoppingCartIcon} size="med" />
+          {totalItems > 0 && (
+            <span
+              key={totalItems}
+              className="absolute -top-1 -right-0.5 bg-primary text-white rounded-full size-4 text-xs grid place-items-center transition-all duration-500"
+            >
+              {totalItems}
+            </span>
+          )}
+        </button>
+
+        <button
+          className="lg:hidden mr-1"
+          title="Menu"
+          onClick={() => setIsMenuClicked(true)}
+        >
+          <BamIcon Icon={BiMenu} size="big" className="hover:text-primary" />
+        </button>
       </div>
-      {/* <!-- Header Menu End --> */}
-
-      {/* <!-- Header Action Start --> */}
-      <div className="col-md-6 col-lg-3 col-xl-4 col-6">
-        <div className="header-actions header-actions-width">
-          <div className="header-action-left">
-            <React.Suspense>
-              <Search />
-            </React.Suspense>
-          </div>
-
-          <div className="header-action-right">
-            <button className="header-action-btn header-action-btn-search d-xl-none d-lg-block d-none">
-              <i className="pe-7s-search"></i>
-            </button>
-
-            {/* <UserDropdown /> */}
-
-            <Link
-              href="/dashboard"
-              className="text-gray-500 hover:text-primary text-3xl header-action-btn"
-            >
-              <i className="pe-7s-user"></i>
-            </Link>
-
-            <Link
-              href="/wishlist"
-              className="header-action-btn header-action-btn-wishlist"
-            >
-              <i className="pe-7s-like"></i>
-            </Link>
-            {/* <!-- Wishlist Action Button End --> */}
-
-            {/* <!-- Cart Action Button Start --> */}
-            <button className="header-action-btn header-action-btn-cart">
-              <i className="pe-7s-cart"></i>
-              {totalItems > 0 && (
-                <span className="header-action-num">{totalItems}</span>
-              )}
-            </button>
-            {/* <!-- Cart Action Button End --> */}
-
-            {/* <!-- Mobile Menu Hambarger Action Button Start --> */}
-            <button
-              className="header-action-btn header-action-btn-menu d-lg-none d-md-block"
-              onClick={() => setIsMenuClicked(true)}
-            >
-              <i className="fa fa-bars"></i>
-            </button>
-            {/* <!-- Mobile Menu Hambarger Action Button End --> */}
-          </div>
-          {/* <!-- Header Action Right Side End --> */}
-        </div>
-      </div>
-      {/* <!-- Header Action End --> */}
     </section>
   );
 }

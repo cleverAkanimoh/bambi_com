@@ -49,6 +49,7 @@ const ShopProductCard = ({
       initial={fadeUp.initial}
       whileInView={fadeUp.whileInView}
       transition={fadeUp.transition}
+      viewport={{ once: true }}
       className="col-xl-3 col-lg-4 col-md-4 col-sm-6 product"
     >
       <div className="product-inner">
@@ -177,7 +178,7 @@ export const ProductCard = ({
           price,
           quantity,
           id,
-          }}
+        }}
       />
     </div>
     <div className="flex flex-col items-center">

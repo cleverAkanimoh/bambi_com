@@ -1,15 +1,18 @@
+"use client";
+
 import Link from "next/link";
 import React from "react";
 import Image, { StaticImageData } from "next/image";
 import SliderImage1 from "../../../public/assets/images/slider/slider3-1.png";
 import SliderImage2 from "../../../public/assets/images/slider/slider3-2.1.png";
 import SliderImage3 from "../../../public/assets/images/slider/slider3.jpg";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 export default function Header() {
   return (
-    <header className="section">
-      <div className="hero-slider swiper-container">
-        <div className="swiper-wrapper">
+    <header className="flex flex-col h-full">
+      <Swiper className="">
+        <SwiperSlide className="size-full">
           <SlideItem
             src={SliderImage1}
             title={
@@ -20,6 +23,8 @@ export default function Header() {
               </>
             }
           />
+        </SwiperSlide>
+        <SwiperSlide>
           <SlideItem
             src={SliderImage2}
             title={
@@ -29,6 +34,8 @@ export default function Header() {
             }
             paragraph="Check out the best gift collection for your baby."
           />
+        </SwiperSlide>
+        <SwiperSlide>
           <SlideItem
             src={SliderImage3}
             title={
@@ -40,17 +47,8 @@ export default function Header() {
             }
             paragraph="Check out the best gift collection for your baby."
           />
-        </div>
-
-        <div className="swiper-pagination d-md-none"></div>
-
-        <div className="home-slider-prev swiper-button-prev main-slider-nav d-md-flex d-none">
-          <i className="pe-7s-angle-left"></i>
-        </div>
-        <div className="home-slider-next swiper-button-next main-slider-nav d-md-flex d-none">
-          <i className="pe-7s-angle-right"></i>
-        </div>
-      </div>
+        </SwiperSlide>
+      </Swiper>
     </header>
   );
 }
@@ -62,11 +60,16 @@ export type ItemType = {
 };
 
 const SlideItem = ({ src, paragraph, title }: ItemType) => (
-  <div className="hero-slide-item swiper-slide">
-    <div className="hero-slide-bg">
-      <Image src={src} alt="Slider Image" priority />
+  <div className="h-[60svh] w-screen overflow-hidden">
+    <div className="hero-slide-bg !size-full">
+      <Image
+        src={src}
+        alt="Slider Image"
+        className="size-full object-fill"
+        priority
+      />
     </div>
-    <div className="container">
+    <div className="container !flex flex-col mt-8">
       <div className="hero-slide-content">
         <h2 className="title m-0">{title}</h2>
         <p className="text-white">{paragraph}</p>
