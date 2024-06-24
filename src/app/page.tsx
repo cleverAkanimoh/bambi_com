@@ -1,3 +1,4 @@
+"use client"
 import BannerSection from "@/components/home/BannerSection";
 import Brands from "@/components/home/Brands";
 import CtaSection from "@/components/home/CtaSection";

@@ -87,7 +87,7 @@ export default function ProductDisplay({
           <strong>Social: </strong>
           <IconText Icon={HeartIcon} text="Like" href="#" />
           <IconText Icon={ShareIcon} text="Share" href="#" />
-          <IconText Icon={BsTwitter} text="`Tweet`" href="#" />
+          <IconText Icon={BsTwitter} text="Tweet" href="#" />
           <IconText Icon={BiSave} text="Save" href="#" />
         </div>
         {/* <!-- Social Shear End --> */}

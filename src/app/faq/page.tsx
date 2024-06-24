@@ -1,8 +1,6 @@
 "use client"
 import Accordion from '@/components/Accordion';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import { motion } from "framer-motion";
-import { fadeUp } from "@/lib/framer";
 import React from 'react'
 
 const page = () => {
@@ -23,11 +21,7 @@ const page = () => {
 
 
     return (
-        <motion.div
-         initial={fadeUp.initial}
-        whileInView={fadeUp.whileInView}
-        transition={fadeUp.transition}
-        className='flex flex-col gap-6'>
+        <div className='flex flex-col gap-6'>
   
         <Breadcrumbs active="Faq" />
         <div className='p-6 md:p-10 mb-4'>
@@ -41,7 +35,7 @@ const page = () => {
                 </div>
             </div>
         </div>
-        </motion.div>
+        </div>
     )
 }
 
