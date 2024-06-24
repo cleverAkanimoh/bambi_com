@@ -6,6 +6,8 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { motion } from "framer-motion";
+import { fadeUp } from "@/lib/framer";
 
 import Breadcrumbs from "@/components/Breadcrumbs";
 
@@ -44,7 +46,11 @@ const Page = () => {
       <Breadcrumbs active="Login" />
 
       <div className="flex items-center justify-center p-4 md:p-10 mb-4">
-        <form
+        <motion.form
+        
+            initial={fadeUp.initial}
+        whileInView={fadeUp.whileInView}
+        transition={fadeUp.transition}
           onSubmit={login}
           action=""
           className="bg-[#efefef] text-center w-full mx-auto md:w-3/4 lg:w-1/2 flex flex-col gap-8 items-center px-4 py-10 md:px-6 md:py-12"
@@ -104,7 +110,7 @@ const Page = () => {
           >
             Create account
           </Link>
-        </form>
+        </motion.form>
       </div>
     </div>
   );

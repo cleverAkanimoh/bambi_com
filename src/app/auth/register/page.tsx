@@ -8,6 +8,8 @@ import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import { motion } from "framer-motion";
+import { fadeUp } from "@/lib/framer";
 
 const Page = () => {
   const { user } = useAuth();
@@ -66,7 +68,10 @@ const Page = () => {
       <Breadcrumbs active="Register" />
 
       <div className="min-h-screen flex items-center justify-center py-10">
-        <form
+        <motion.form
+            initial={fadeUp.initial}
+        whileInView={fadeUp.whileInView}
+        transition={fadeUp.transition}
           onSubmit={signIn}
           action=""
           className="bg-[#efefef] text-center w-[90%] mx-auto md:w-1/2 lg:w-2/5 flex flex-col gap-8 items-center px-6 py-12"
@@ -122,7 +127,7 @@ const Page = () => {
           >
             {isSubmitted ? "Registering..." : "Register"}
           </button>
-        </form>
+        </motion.form>
       </div>
     </div>
   );
