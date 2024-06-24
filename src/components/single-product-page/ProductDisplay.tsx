@@ -1,10 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { Products } from "@/types";
 import { AddToCartButton } from "../CartButtons";
 import ThumbsSlider from "../ThumbsSlider";
+import Link from "next/link";
+import BamLink from "../BamLink";
+import BamIcon from "../Icon";
+import { HeartIcon } from "@heroicons/react/24/outline";
 
 const Images = [
   "/assets/images/products/large-product/1.jpg",
@@ -24,28 +28,18 @@ export default function ProductDisplay({
 }: {
   singleProduct: Products;
 }) {
+  const [quantity, setQuantity] = useState(1);
   return (
     <section className="p-4 flex max-lg:flex-col gap-4">
       <ThumbsSlider images={Images} />
 
-      <div className="">
-        <h2 className="">{singleProduct.heading}</h2>
-
-        {/* <!-- Rating Start --> */}
-        <span className="ratings justify-content-start mb-2">
-          <span className="rating-wrap">
-            <span className="star" style={{ width: " 100%" }}></span>
-          </span>
-          <span className="rating-num">(4)</span>
-        </span>
-        {/* <!-- Rating End --> */}
+      <div className="space-y-2">
+        <h2 className="text-2xl font-bold">{singleProduct.heading}</h2>
 
         {/* <!-- Price Box Start --> */}
-        <div className="price-box mb-2">
-          <span className="regular-price">${singleProduct.new_price}</span>
-          <span className="old-price">
-            <del>${singleProduct.old_price}</del>
-          </span>
+        <div className="flex gap-2 mb-2">
+          <span className="">${singleProduct.new_price}</span>
+          <del className="text-red-500">${singleProduct.old_price}</del>
         </div>
         {/* <!-- Price Box End --> */}
 
@@ -71,63 +65,47 @@ export default function ProductDisplay({
         {/* <!-- Product Inventory End --> */}
 
         {/* <!-- Description Start --> */}
-        <p className="desc-content mb-5">{singleProduct.description}</p>
-        {/* <!-- Description End --> */}
+        <p className="mb-7">{singleProduct.description}</p>
 
-        {/* <!-- Quantity Start --> */}
-        <div className="quantity d-flex align-items-center mb-5">
-          <span className="me-2">
-            <strong>Qty: </strong>
-          </span>
-          <div className="cart-plus-minus">
+        <div className="flex items-center gap-4 mb-5">
+          <strong>Qty: </strong>
+
+          <div className="">
             <input
-              className="cart-plus-minus-box"
-              defaultValue="1"
-              type="text"
-            />
-            <div className="dec qtybutton"></div>
-            <div className="inc qtybutton"></div>
-          </div>
-        </div>
-        {/* <!-- Quantity End --> */}
-
-        {/* <!-- Cart Button Start --> */}
-        <div className="cart-btn mb-4">
-          <div className="add-to_cart">
-            <AddToCartButton
-              cart={{
-                id: singleProduct.id,
-                src: singleProduct.src1,
-                href: singleProduct.href,
-                title: singleProduct.heading,
-                price: singleProduct.new_price,
-                quantity: 1,
-              }}
+              type="number"
+              className="h-9 w-16 text-center ring ring-primary"
+              value={quantity}
+              onChange={(e) => setQuantity(Number(e.target.value))}
             />
           </div>
         </div>
-        {/* <!-- Cart Button End --> */}
 
-        {/* <!-- Action Button Start --> */}
-        <div className="actions border-bottom mb-4 pb-4">
-          {/* <a href="" title="Compare" className="action compare">
-              <i className="pe-7s-refresh-2"></i>
-              Compare
-            </a> */}
-          <a href="/wishlist" title="Wishlist" className="action wishlist">
-            <i className="pe-7s-like"></i>
-            Wishlist
-          </a>
-        </div>
-        {/* <!-- Action Button End --> */}
+        <AddToCartButton
+          cart={{
+            id: singleProduct.id,
+            src: singleProduct.src1,
+            href: singleProduct.href,
+            title: singleProduct.heading,
+            price: singleProduct.new_price,
+            quantity,
+          }}
+        />
 
-        {/* <!-- Social Shear Start --> */}
-        <div className="social-share">
-          <span>
-            <strong>Social: </strong>
-          </span>
-          <a href="#" className="facebook-color">
-            <i className="fa fa-facebook"></i> Like
+        <BamLink
+          variant="ghost"
+          href="/wishlist"
+          title="Wishlist"
+          className="flex items-center gap-1"
+        >
+          <BamIcon Icon={HeartIcon} size="med" />
+          <span>Wishlist</span>
+        </BamLink>
+
+        <div className="">
+          <strong>Social: </strong>
+
+          <a href="#" className="">
+            Like
           </a>
           <a href="#" className="twitter-color">
             <i className="fa fa-twitter"></i> Tweet
@@ -139,19 +117,18 @@ export default function ProductDisplay({
         {/* <!-- Social Shear End --> */}
 
         {/* <!-- Payment Option Start --> */}
-        <div className="payment-option mt-4 d-flex">
-          <span>
-            <strong>Payment: </strong>
-          </span>
-          <a href="#">
+        <div className="flex items-center gap-2">
+          <strong>Payment: </strong>
+
+          <Link href="#">
             <Image
               width={100}
               height={100}
-              className="fit-image ms-1/"
+              className=""
               src="/assets/images/payment/payment.png"
               alt="Payment Option Image"
             />
-          </a>
+          </Link>
         </div>
         {/* <!-- Payment Option End --> */}
 
