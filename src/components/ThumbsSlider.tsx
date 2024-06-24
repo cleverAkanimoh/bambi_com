@@ -1,6 +1,6 @@
 "use client";
 
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 
 import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -15,17 +15,15 @@ export default function ThumbsSlider({
   heading,
 }: {
   heading?: string;
-  images: string[] | StaticImageData[];
+  images: string[];
 }) {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
   const [isActiveIndex, setIsActiveIndex] = useState(0);
 
   return (
-    <aside className="w-full max-lg:space-y-3 lg:flex">
+    <aside className="w-full max-lg:space-y-3 mx-auto max-w-lg -z-10">
       {/* main swiper */}
       <Swiper
-        // loop
-        // autoHeight={true}
         autoplay={{
           delay: 20000,
           pauseOnMouseEnter: true,
@@ -33,36 +31,25 @@ export default function ThumbsSlider({
         modules={[Thumbs, Autoplay]}
         thumbs={{ swiper: thumbsSwiper }}
         onSlideChange={(swiper) => setIsActiveIndex(swiper.activeIndex)}
-        className="size-full shrink-0"
+        className="size-full sm:h-auto scale-95"
       >
         {images.map((src, index) => (
           <SwiperSlide key={index}>
-            {typeof src === "string" ? (
-              <Link
-                href={src}
-                //   download
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Click to view larger image"
-                className="block border border-blue-100 hover:border-primary rounded-md p-1 xs:hover:p-1.5 transition-all duration-300 cursor-e-resize"
-              >
-                <Image
-                  src={src}
-                  alt={heading ?? "Single product page"}
-                  width={300}
-                  height={200}
-                  className={"w-full h-auto rounded-md"}
-                />
-              </Link>
-            ) : (
+            <Link
+              href={src}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Click to view larger image"
+              className="block hover:border-primary transition-all duration-300 cursor-e-resize"
+            >
               <Image
                 src={src}
-                alt={heading ?? ""}
-                className={"w-full h-auto"}
+                alt={heading ?? "Single product page"}
                 width={300}
                 height={200}
+                className={"w-full h-full"}
               />
-            )}
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>
@@ -70,28 +57,22 @@ export default function ThumbsSlider({
       {/* Thumbnail(s) */}
       <Swiper
         spaceBetween={5}
-        // slidesPerView={6}
-
-        autoHeight={true}
         slidesPerView={images.length > 5 ? 5 : images.length}
         modules={[Thumbs]}
         watchSlidesProgress
         onSwiper={setThumbsSwiper}
-        className="lg:rotate-90"
+        className="shrink-0 size-full sm:mt-4"
       >
         {images.map((src, index) => (
-          <SwiperSlide key={index} className="bg-white max-w-fit rounded-sm">
+          <SwiperSlide key={index} className="bg-white  rounded-sm">
             <Image
               src={src}
               alt={heading ?? ""}
-              className={clsx(
-                "size-20  scale-90 rounded-md hover:brightness-[.8]",
-                {
-                  "ring ring-primary p-[1px] pointer-events-none":
-                    isActiveIndex === index,
-                  "cursor-pointer": isActiveIndex !== index,
-                }
-              )}
+              className={clsx("size-24 scale-95  hover:brightness-[.9]", {
+                "ring ring-primary p-[1px] pointer-events-none":
+                  isActiveIndex === index,
+                "cursor-pointer": isActiveIndex !== index,
+              })}
               width={30}
               height={30}
             />

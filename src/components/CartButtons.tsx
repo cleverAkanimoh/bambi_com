@@ -1,4 +1,5 @@
 "use client";
+
 import { toast } from "react-toastify";
 
 import React, { useState } from "react";
@@ -18,7 +19,7 @@ import { useAuth } from "@/context/auth-context";
 
 export function AddToCartButton({
   cart,
-  className = "btn btn-dark btn-hover-primary",
+  className = "px-6 py-3 bg-primary hover:bg-black hover:rounded text-white transition-colors duration-300",
 }: {
   cart: CartType;
   className?: string;
@@ -33,7 +34,7 @@ export function AddToCartButton({
       await addToCart(cart);
       console.log("added")
 
-      // toast.success(`${cart.title ?? "Item"} has been added to cart`);
+      toast.success(`${cart.title ?? "Item"} has been added to cart`);
       setLoading(false);
     } catch (error) {
       if (error instanceof Error) {
