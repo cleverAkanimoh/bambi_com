@@ -87,7 +87,7 @@ export const addToCart = async (cart: CartType) => {
   } catch (error) {
     // const errorText = "Please check your network connection";
     // console.error(errorText, error);
-    throw new Error(error);
+    throw new Error(`${error}`);
   }
 };
 
