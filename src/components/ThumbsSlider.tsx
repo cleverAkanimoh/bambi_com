@@ -21,7 +21,7 @@ export default function ThumbsSlider({
   const [isActiveIndex, setIsActiveIndex] = useState(0);
 
   return (
-    <aside className="w-full max-lg:space-y-3 lg:flex">
+    <aside className="w-full max-lg:space-y-3 lg:flex flex-row-reverse">
       {/* main swiper */}
       <Swiper
         // loop
@@ -44,14 +44,14 @@ export default function ThumbsSlider({
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Click to view larger image"
-                className="block border border-blue-100 hover:border-primary rounded-md p-1 xs:hover:p-1.5 transition-all duration-300 cursor-e-resize"
+                className="border border-blue-100 hover:border-primary rounded-md p-1 xs:hover:p-1.5 transition-all duration-300 cursor-e-resize max-w-fit"
               >
                 <Image
                   src={src}
                   alt={heading ?? "Single product page"}
                   width={300}
                   height={200}
-                  className={"w-full h-auto rounded-md"}
+                  className={"w-full max-w-[350px] h-auto rounded-sm"}
                 />
               </Link>
             ) : (
@@ -77,7 +77,7 @@ export default function ThumbsSlider({
         modules={[Thumbs]}
         watchSlidesProgress
         onSwiper={setThumbsSwiper}
-        className="lg:rotate-90"
+        className="lg:rotate-90 shrink-0"
       >
         {images.map((src, index) => (
           <SwiperSlide key={index} className="bg-white max-w-fit rounded-sm">
