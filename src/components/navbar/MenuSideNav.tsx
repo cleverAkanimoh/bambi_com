@@ -38,7 +38,7 @@ export default function MenuSideNav() {
       />
 
       <div
-        className={clsx(" w-full flex transition-all duration-500", {
+        className={clsx("w-full flex transition-all duration-500", {
           "translate-x-0 opacity-100 visible": isMenuClicked,
           "translate-x-full opacity-0 invisible": !isMenuClicked,
         })}
