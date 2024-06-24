@@ -3,10 +3,10 @@ import Image from "next/image";
 
 export default function AdditionalInformationForProduct() {
   return (
-    <div className="row section-margin">
+    <div className="flex">
       {/* <!-- Single Product Tab Start --> */}
-      <div className="col-lg-12 single-product-tab">
-        <ul className="nav nav-tabs" id="myTab" role="tablist">
+      <div className="">
+        <ul className="flex">
           <li className="nav-item">
             <a
               className="nav-link active"
