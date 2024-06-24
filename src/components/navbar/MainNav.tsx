@@ -62,7 +62,7 @@ export default function MainNav() {
       )}
     >
       <Link href="/">
-        <Image src={Logo} alt="Bambi" />
+        <Image src={Logo} className="max-xs:w-28" alt="Bambi" />
       </Link>
 
       <ul className=" max-lg:hidden flex justify-center items-center gap-8">
