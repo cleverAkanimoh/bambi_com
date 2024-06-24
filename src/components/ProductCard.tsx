@@ -60,7 +60,7 @@ const ShopProductCard = ({
       className=""
     >
       <div className="group">
-        <div className="relative">
+        <div className="relative overflow-hidden">
           <Link href={href} className="image">
             <Image
               className="size-full"
@@ -92,7 +92,7 @@ const ShopProductCard = ({
               <CiSearch />
             </button>
           </div>
-          <div className="absolute -translate-y-[0rem] invisible !opacity-0 group-hover:!opacity-100 group-hover:-translate-y-[4.4rem] md:group-hover:-translate-y-[4rem] group-hover:visible left-1/2 -translate-x-1/2 w-1/2 bg-white hover:bg-primary hover:!text-white mx-auto text-center rounded p-3 transition-all ease-linear duration-[400ms]">
+          <div className="absolute -translate-y-[0rem] invisible !opacity-0 group-hover:!opacity-100 group-hover:-translate-y-[4.4rem] md:group-hover:-translate-y-[4rem] group-hover:visible left-1/2 -translate-x-1/2 w-1/2 mx-auto text-center rounded p-3 transition-all ease-linear duration-[400ms]">
             <AddToCartButton
               cart={{
                 src: src1,
