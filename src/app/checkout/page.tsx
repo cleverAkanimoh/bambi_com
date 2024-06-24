@@ -76,12 +76,12 @@ export default function CheckoutPage() {
         {
           display_name: "Name",
           variable_name: "name",
-          value: user?.displayName || "clever akanimoh",
+          value: user?.displayName || "Lorem Name",
         },
         {
           display_name: "Phone",
           variable_name: "phone",
-          value: "08113530038",
+          value: "",
         },
       ],
     },

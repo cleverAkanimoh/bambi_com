@@ -1,5 +1,4 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
-import ModalQuickView from "@/components/shop/ModalQuickView";
 import ProductCardWrapper from "@/components/shop/ProductCardWrapper";
 import React from "react";
 import Loading from "../loading";
@@ -21,7 +20,6 @@ export default function page({
         />
       </React.Suspense>
 
-      <ModalQuickView />
-    </main>
+          </main>
   );
 }
