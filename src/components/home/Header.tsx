@@ -16,7 +16,6 @@ export default function Header() {
     <header className="flex flex-col h-full">
       <Swiper
         loop
-        
         modules={[Autoplay, Pagination, Controller]}
         className="size-full"
         autoplay={{
@@ -84,12 +83,12 @@ const SlideItem = ({ src, paragraph, title }: ItemType) => (
       initial={fadeUp.initial}
       whileInView={fadeUp.whileInView}
       transition={fadeUp.transition}
-      className="text-white max-w-[60%] p-4 xs:p-6 space-y-8 md:ml-[5%] lg:ml-[10%]"
+      className="text-white max-w-[60%] p-4 xs:p-6 space-y-6 md:ml-[5%] lg:ml-[10%]"
     >
       <h2 className="text-lg xs:text-2xl md:text-4xl lg:5xl font-bold">
         {title}
       </h2>
-      {paragraph && <p className="mb-6">{paragraph}</p>}
+      {paragraph && <p className="">{paragraph}</p>}
       <BamLink
         href="/shop"
         className="w-fit px-6 xs:px-8 py-4 xs:text-base lg:text-lg block hover:animate-pulse"
