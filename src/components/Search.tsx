@@ -3,11 +3,13 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 import { useDebouncedCallback } from "use-debounce";
+import BamIcon from "./Icon";
+import { BiSearch } from "react-icons/bi";
 
 export default function Search({
   variant = "on-canvas",
 }: {
-  variant?: "off-canvas" | "on-canvas" | "mobile-view";
+  variant?: "on-canvas" | "mobile-view";
 }) {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
@@ -23,35 +25,24 @@ export default function Search({
   }, 600);
   return (
     <div
-      className={
-        variant === "on-canvas"
-          ? "search-bar d-xl-flex d-none position-relative md:!min-w-32"
-          : variant === "mobile-view"
-          ? "bg-gray-200/80 w-full p-2 text-[0.96rem] text-gray-600 flex"
-          : "offcanvas-search-form"
-      }
+      className={`${
+        variant === "on-canvas" ? "max-lg:hidden " : ""
+      } relative w-full flex items-center`}
     >
       <input
-        type="search"
         name="search"
         placeholder={
           variant === "on-canvas" ? "Search our store" : "Search Product..."
         }
-        className={
-          variant === "on-canvas"
-            ? "search-bar-input"
-            : variant === "mobile-view"
-            ? " placeholder:text-gray-600 flex-1 block"
-            : "offcanvas-search-input"
-        }
+        className=" placeholder:text-gray-600 bg-gray-200/80 w-full max-w-md shrink-0 p-3 text-[0.96rem] text-gray-600 md:p-2 md:rounded-md focus-within:border-primary"
         onChange={(e) => handleSearch(e.target.value)}
         required
       />
-      {variant !== "off-canvas" && (
-        <button className="search-bar-button">
-          <i className="pe-7s-search"></i>
+      {
+        <button className="absolute right-2 text-gray-500">
+          <BamIcon Icon={BiSearch} size="sm" />
         </button>
-      )}
+      }
     </div>
   );
 }

@@ -2,4 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-
+@component {
+  button,
+  a,
+  li {
+    @apply active:scale-90 transition-all duration-300;
+  }
+}

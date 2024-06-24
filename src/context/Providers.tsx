@@ -9,8 +9,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   useEffect(() => setLoaded(true), [loaded]);
 
-  if (!loaded) return null;
-
   return (
     <GlobalContextProvider>
       <AuthProvider>{children}</AuthProvider>

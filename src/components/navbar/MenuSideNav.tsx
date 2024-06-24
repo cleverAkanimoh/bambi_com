@@ -17,13 +17,15 @@ import { BiMailSend } from "react-icons/bi";
 import { useGlobalContext } from "@/context/store";
 import clsx from "clsx";
 import { FaFacebook } from "react-icons/fa";
+import BamIcon from "../Icon";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 export default function MenuSideNav() {
   const { setIsMenuClicked, isMenuClicked } = useGlobalContext();
   return (
     <section
       className={clsx(
-        "lg:hidden fixed top-0 left-0 h-screen w-screen  flex transition-all duration-500",
+        "lg:hidden fixed top-0 right-0 h-screen w-full flex transition-all duration-500",
         {
           "bg-black/35 z-[200] visible": isMenuClicked,
           "opacity-0 invisible -z-30": !isMenuClicked,
@@ -36,29 +38,31 @@ export default function MenuSideNav() {
       />
 
       <div
-        className={clsx("relative flex transition-all duration-500", {
+        className={clsx("relative w-full flex transition-all duration-500", {
           "translate-x-0 opacity-100 visible": isMenuClicked,
           "translate-x-full opacity-0 invisible": !isMenuClicked,
         })}
       >
-        <div className="shrink-0" onClick={() => setIsMenuClicked(false)}>
-          <button className="bg-primary size-10 text-white grid place-items-center active:scale-90 transition-all duration-500">
-            <span className="text-2xl hover:rotate-180 transition-all duration-500 block">
-              X
-            </span>
+        <div onClick={() => setIsMenuClicked(false)}>
+          <button className="bg-primary size-10 text-white grid place-items-center">
+            <BamIcon
+              Icon={XMarkIcon}
+              size="big"
+              className="hover:rotate-90 transition-all duration-500"
+            />
           </button>
         </div>
         <aside
           className={clsx(
-            "w-11/12 max-w-[300px] xs:max-w-[320px] sm:max-w-[350px] shrink-0 relative h-screen overflow-y-auto  p-2 xs:p-4 py-6 bg-white"
+            "w-11/12 xs:min-w-[320px] shrink-0 relative h-screen overflow-y-auto p-2 xs:p-4 py-10 bg-white"
           )}
         >
-          <div className="space-y-10 px-2">
+          <div className="space-y-12 px-2 w-full">
             <Suspense>
               <Search variant="mobile-view" />
             </Suspense>
 
-            <ul className="space-y-6 px-0.5 font-semibold">
+            <ul className="space-y-5 px-0.5 font-medium">
               <NavLink href="/">Home</NavLink>
               <NavLink href="/shop">Shop</NavLink>
               <NavLink href="/faq">Faqs</NavLink>
@@ -67,7 +71,7 @@ export default function MenuSideNav() {
               </NavLink>
             </ul>
 
-            <div className="space-y-1">
+            <div className="space-y-3">
               <MenuDropDown title="Language" placeholder="English" />
               <MenuDropDown
                 title="Currency"
@@ -76,7 +80,7 @@ export default function MenuSideNav() {
               />
             </div>
 
-            <address className="font-semibold">
+            <aside className="font-semibold flex flex-col gap-y-4 w-full shrink-0">
               <MenuAddress
                 Icon={BsPhone}
                 href="tel:+012 3456 789"
@@ -91,9 +95,9 @@ export default function MenuSideNav() {
                 Icon={BsClock}
                 title="Monday - Sunday 9.00 - 18.00"
               />
-            </address>
+            </aside>
 
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2.5 pb-10">
               <IconLink href="https://facebook.com/" Icon={FaFacebook} />
               <IconLink href="https://x.com" Icon={BsTwitter} />
               <IconLink href="https://linkedin.com/" Icon={BsLinkedin} />
@@ -116,8 +120,8 @@ const MenuAddress = ({
   href?: string;
   title: string;
 }) => (
-  <p className="flex gap-2 ">
-    <Icon className="size-5" />
+  <p className="flex gap-3">
+    <Icon className="size-6" />
     {href ? (
       <Link href={href} className="hover:text-primary">
         {title}
@@ -137,13 +141,13 @@ const MenuDropDown = ({
   placeholder: string;
   array?: string[];
 }) => (
-  <div className="flex items-center gap-2">
+  <div className="flex items-center gap-2 xs:text-sm">
     <span>{title}:</span>
     <div>
       <label htmlFor="title">
         {placeholder} {array && "v"}
       </label>
-      <input type="checkbox" id={title} />
+      <input type="checkbox" id={title} className="hidden" />
 
       {array && (
         <div className="border">
@@ -164,6 +168,6 @@ const IconLink = ({
   Icon: React.ElementType;
 }) => (
   <a href={href} target="__blank" className="hover:text-primary">
-    <Icon className="size-6 xs:size-4" />
+    <Icon className="size-7 xs:size-5" />
   </a>
 );
