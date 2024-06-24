@@ -14,12 +14,11 @@ export default function page({
 
       <React.Suspense fallback={<Loading />}>
         <ProductCardWrapper
-          sortBy={sort_by ?? ""}
-          currentPage={Number(currentPage) ?? 1}
-          search={search ?? ""}
+          sortBy={sort_by || ""}
+          currentPage={Number(currentPage) || 1}
+          search={search || ""}
         />
       </React.Suspense>
-
-          </main>
+    </main>
   );
 }

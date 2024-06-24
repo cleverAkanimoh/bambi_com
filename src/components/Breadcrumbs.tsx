@@ -12,7 +12,7 @@ export default function Breadcrumbs({
 }) {
   return (
     <section className="w-full p-3 py-4 bg-primary">
-      <ul className="flex gap-2 items-center text-white text-sm">
+      <ul className="md:w-11/12 w-full mx-auto flex gap-2 items-center text-white text-sm">
         <li>
           <Link href="/" className="text-white hover:text-secondary">
             <BamIcon Icon={HomeIcon} size="sm" />

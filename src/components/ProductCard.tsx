@@ -31,7 +31,7 @@ const ShopProductCard = ({
   category?: string;
   id: string | number;
 }) => {
-  const [isLiked, setIsLiked] = useState(false)
+  const [isLiked, setIsLiked] = useState(false);
   const quickViewClicked = () => {
     localStorage.setItem(
       "productInfo",
@@ -47,10 +47,9 @@ const ShopProductCard = ({
       })
     );
   };
-const addToWishList = () =>{
-  setIsLiked(prevState=>!prevState)
-}
-
+  const addToWishList = () => {
+    setIsLiked((prevState) => !prevState);
+  };
 
   return (
     <motion.div
@@ -70,15 +69,18 @@ const addToWishList = () =>{
               width={100}
               height={100}
             />
-                    </Link>
+          </Link>
           <span className="absolute top-2 left-2 bg-black p-1 !text-sm min-w-14 grid place-items-center rounded-md   text-white ">
             <span className="text-center">{category ?? "-18%"}</span>
           </span>
           <div className="flex flex-col gap-6 absolute top-4 group-hover:top-2 right-4 text-xl p-3 text-[#555] opacity-0 group-hover:opacity-100 transition-all ease-linear duration-[400ms]">
-            <button onClick={addToWishList} className="bg-white p-2 hover:bg-primary hover:text-white transition-all ease-linear duration-150 rounded">
-             {isLiked ? <FcLike /> : <CiHeart />} 
-            </button>
-            <Link href="/compare" className="bg-white p-2 hover:bg-primary hover:text-white transition-all ease-linear duration-150 rounded">
+            <Button onClick={addToWishList}>
+              {isLiked ? <FcLike /> : <CiHeart />}
+            </Button>
+            <Link
+              href="/compare"
+              className="bg-white p-2 hover:bg-primary hover:text-white transition-all ease-linear duration-150 rounded"
+            >
               <SlRefresh />
             </Link>
             <button
@@ -86,7 +88,6 @@ const addToWishList = () =>{
               data-bs-toggle="modal"
               data-bs-target="#quick-view"
               onClick={() => quickViewClicked()}
-              
             >
               <CiSearch />
             </button>
@@ -106,7 +107,9 @@ const addToWishList = () =>{
         </div>
         <div className="flex flex-col items-center gap-2 mt-2">
           <h5 className="">
-            <Link className="text-black hover:text-primary" href={href}>{heading}</Link>
+            <Link className="text-black hover:text-primary" href={href}>
+              {heading}
+            </Link>
           </h5>
           <span className="flex items-center gap-2">
             <span className="!text-primary">${new_price}</span>
