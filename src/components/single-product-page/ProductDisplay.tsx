@@ -8,7 +8,9 @@ import ThumbsSlider from "../ThumbsSlider";
 import Link from "next/link";
 import BamLink from "../BamLink";
 import BamIcon from "../Icon";
-import { HeartIcon } from "@heroicons/react/24/outline";
+import { HeartIcon, ShareIcon, TruckIcon } from "@heroicons/react/24/outline";
+import { BsTwitter } from "react-icons/bs";
+import { BiCheckSquare, BiRefresh, BiSave } from "react-icons/bi";
 
 const Images = [
   "/assets/images/products/large-product/1.jpg",
@@ -33,7 +35,7 @@ export default function ProductDisplay({
     <section className="p-4 flex max-lg:flex-col gap-4">
       <ThumbsSlider images={Images} />
 
-      <div className="space-y-3 py-4">
+      <div className="space-y-3 py-4  mx-auto max-w-lg">
         <h2 className="text-3xl font-bold">{singleProduct.heading}</h2>
 
         {/* <!-- Price Box Start --> */}
@@ -58,39 +60,35 @@ export default function ProductDisplay({
           </div>
         </div>
 
-        <AddToCartButton
-          cart={{
-            id: singleProduct.id,
-            src: singleProduct.src1,
-            href: singleProduct.href,
-            title: singleProduct.heading,
-            price: singleProduct.new_price,
-            quantity,
-          }}
-        />
+        <div className="flex gap-4 pb-3">
+          <AddToCartButton
+            cart={{
+              id: singleProduct.id,
+              src: singleProduct.src1,
+              href: singleProduct.href,
+              title: singleProduct.heading,
+              price: singleProduct.new_price,
+              quantity,
+            }}
+          />
 
-        <BamLink
-          variant="ghost"
-          href="/wishlist"
-          title="Wishlist"
-          className="flex items-center gap-1"
-        >
-          <BamIcon Icon={HeartIcon} size="med" />
-          <span>Wishlist</span>
-        </BamLink>
+          <BamLink
+            variant="ghost"
+            href="/wishlist"
+            title="Wishlist"
+            className="flex items-center gap-1"
+          >
+            <BamIcon Icon={HeartIcon} size="med" />
+            <span>Wishlist</span>
+          </BamLink>
+        </div>
 
-        <div className="">
+        <div className="flex items-center">
           <strong>Social: </strong>
-
-          <a href="#" className="">
-            Like
-          </a>
-          <a href="#" className="twitter-color">
-            <i className="fa fa-twitter"></i> Tweet
-          </a>
-          <a href="#" className="pinterest-color">
-            <i className="fa fa-pinterest"></i> Save
-          </a>
+          <IconText Icon={HeartIcon} text="Like" href="#" />
+          <IconText Icon={ShareIcon} text="Share" href="#" />
+          <IconText Icon={BsTwitter} text="`Tweet`" href="#" />
+          <IconText Icon={BiSave} text="Save" href="#" />
         </div>
         {/* <!-- Social Shear End --> */}
 
@@ -98,7 +96,7 @@ export default function ProductDisplay({
         <div className="flex items-center gap-2">
           <strong>Payment: </strong>
 
-          <Link href="#">
+          <Link href="/checkout">
             <Image
               width={100}
               height={100}
@@ -108,26 +106,46 @@ export default function ProductDisplay({
             />
           </Link>
         </div>
-        {/* <!-- Payment Option End --> */}
 
-        {/* <!-- Product Delivery Policy Start --> */}
-        <ul className="product-delivery-policy border-top pt-4 mt-4 border-bottom pb-4">
-          <li>
-            {" "}
-            <i className="fa fa-check-square"></i>{" "}
-            <span>Security Policy (Edit With Customer Reassurance Module)</span>
-          </li>
-          <li>
-            <i className="fa fa-truck"></i>
-            <span>Delivery Policy (Edit With Customer Reassurance Module)</span>
-          </li>
-          <li>
-            <i className="fa fa-refresh"></i>
-            <span>Return Policy (Edit With Customer Reassurance Module)</span>
-          </li>
-        </ul>
+        <div className="product-delivery-policy border-top pt-4 mt-4 border-bottom pb-4">
+          <IconText
+            Icon={BiCheckSquare}
+            text="Security Policy (Edit With Customer Reassurance Module)"
+            href="#"
+          />
+          <IconText
+            Icon={TruckIcon}
+            text="Delivery Policy (Edit With Customer Reassurance Module)"
+            href="#"
+          />
+          <IconText
+            Icon={BiRefresh}
+            text="Return Policy (Edit With Customer Reassurance Module)"
+            href="#"
+          />
+        </div>
         {/* <!-- Product Delivery Policy End --> */}
       </div>
     </section>
   );
 }
+
+const IconText = ({
+  Icon,
+  text,
+  href,
+}: {
+  Icon: React.ElementType;
+  text: string;
+  href: string;
+}) => (
+  <BamLink
+    variant="ghost"
+    href={href}
+    title={text}
+    className="flex items-center gap-1"
+  >
+    <BamIcon Icon={Icon} size="med" />
+    <span>{text}</span>
+  </BamLink>
+);
