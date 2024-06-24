@@ -30,38 +30,39 @@ export default function Brands() {
             initial={fadeUp.initial}
             whileInView={fadeUp.whileInView}
             transition={fadeUp.transition}
-            // data-aos="fade-up"
+          // data-aos="fade-up"
           >
-              <Swiper
-              navigation={true} 
+            <Swiper
+              navigation={true}
               modules={[Autoplay, Navigation, Pagination]}
               autoplay={{
                 delay: 2000,
                 pauseOnMouseEnter: true,
               }}
+              slidesPerView={4}
               //   pagination={pagination}
               autoHeight={true}
               className="size-full">
-        <SwiperSlide className="size-full">
-        <Brand src={Brand1} title="" />
-        </SwiperSlide>
-        <SwiperSlide className="size-full">
-        <Brand src={Brand2} title="" />
-        </SwiperSlide>
-        <SwiperSlide className="size-full">
-        <Brand src={Brand3} title="" />
-        </SwiperSlide>
-        <SwiperSlide className="size-full">
-        <Brand src={Brand4} title="" />
-        </SwiperSlide>
-        <SwiperSlide className="size-full">
-        <Brand src={Brand5} title="" />
-        </SwiperSlide>
-        <SwiperSlide className="size-full">
-        <Brand src={Brand6} title="" />
-        </SwiperSlide>
-       
-        </Swiper>
+              <SwiperSlide className="size-full">
+                <Brand src={Brand1} title="" />
+              </SwiperSlide>
+              <SwiperSlide className="size-full">
+                <Brand src={Brand2} title="" />
+              </SwiperSlide>
+              <SwiperSlide className="size-full">
+                <Brand src={Brand3} title="" />
+              </SwiperSlide>
+              <SwiperSlide className="size-full">
+                <Brand src={Brand4} title="" />
+              </SwiperSlide>
+              <SwiperSlide className="size-full">
+                <Brand src={Brand5} title="" />
+              </SwiperSlide>
+              <SwiperSlide className="size-full">
+                <Brand src={Brand6} title="" />
+              </SwiperSlide>
+
+            </Swiper>
           </motion.div>
         </div>
       </div>

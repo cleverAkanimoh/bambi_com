@@ -48,6 +48,7 @@ export default function CtaSection() {
               harmful materials."
           Icon={BiRefresh}
         />
+        </div>
       </article>
     </section>
   );
