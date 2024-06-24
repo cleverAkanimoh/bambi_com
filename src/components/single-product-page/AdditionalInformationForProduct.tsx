@@ -4,7 +4,6 @@ import Image from "next/image";
 export default function AdditionalInformationForProduct() {
   return (
     <div className="flex">
-      {/* <!-- Single Product Tab Start --> */}
       <div className="">
         <ul className="flex">
           <li className="nav-item">
