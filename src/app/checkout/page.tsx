@@ -27,7 +27,7 @@ export default function CheckoutPage() {
       setCartItems(data);
     };
     fetchCartItems();
-  }, [cartItems, user]);
+  }, [user]);
 
   const cartTotal = cartItems?.reduce(
     (prev, curr) => prev + curr?.price * curr?.quantity,
@@ -35,15 +35,15 @@ export default function CheckoutPage() {
   );
 
   const handlePaymentMethod = (x: string) => {
+    setPaymentMethod(x);
     document?.getElementById("update-billing")?.click();
-    return x;
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email") as string;
-    const name = formData.get("firstName") as string;
+    const name = formData.get("name") as string;
     const country = formData.get("country") as string;
     const city = formData.get("city") as string;
     const address = formData.get("address") as string;
@@ -58,6 +58,7 @@ export default function CheckoutPage() {
         address,
         message,
       });
+      toast.success("Billing details updated successfully");
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message);
@@ -69,18 +70,24 @@ export default function CheckoutPage() {
 
   const componentProps = {
     email: user?.email || "",
-    amount: 400000.0,
+    amount: cartTotal * 100, // Paystack expects amount in kobo
     metadata: {
-      name: user?.displayName || "clever akanimoh",
-      phone: "08113530038",
+      custom_fields: [
+        {
+          display_name: "Name",
+          variable_name: "name",
+          value: user?.displayName || "clever akanimoh",
+        },
+        {
+          display_name: "Phone",
+          variable_name: "phone",
+          value: "08113530038",
+        },
+      ],
     },
-    className: clsx("my-3 w-full border py-2 hover:underline", {
-      hiden: paymentMethod !== "paystack",
-    }),
     publicKey,
     text: "Pay Now",
-    onSuccess: () =>
-      toast.success("Thanks for doing business with us! Come back soon!!"),
+    onSuccess: () => toast.success("Thanks for doing business with us! Come back soon!!"),
     onClose: () => toast.info("User cancelled payment action"),
   };
 
@@ -88,9 +95,9 @@ export default function CheckoutPage() {
     <main className="flex flex-col gap-4">
       <Breadcrumbs active="Checkout" />
       <section className="w-11/12 h-16 bg-gray-300 mx-auto" />
-      <section className="p-2 md:w-10/12 w-full flex max-md:flex-col max-md:items-center justify-center gap-4 mx-auto">
+      <section className="p-2 md:w-10/12 w-full flex max-md:flex-col max-md:items-center justify-center gap-4 md:gap-10 mx-auto">
         <section className="w-full max-md:max-w-md">
-          <h3 className="mb-3">Billing Details</h3>
+          <h3 className="mb-4 text-2xl">Billing Details</h3>
           <form onSubmit={handleSubmit}>
             <Input
               label="Full name"
@@ -111,7 +118,12 @@ export default function CheckoutPage() {
               placeholder="Town/City"
               required
             />
-            <Input label="Address" placeholder="Address" name="city" required />
+            <Input
+              label="Address"
+              placeholder="Address"
+              name="address"
+              required
+            />
             <Input
               label="Email"
               type="email"
@@ -142,7 +154,7 @@ export default function CheckoutPage() {
               name="message"
             />
 
-            <Button className="w-full text-sm my-2" id="update-billing">
+            <Button className="w-full !text-white text-sm my-2 !bg-primary hover:!bg-black" id="update-billing">
               Submit
             </Button>
           </form>
@@ -185,6 +197,7 @@ export default function CheckoutPage() {
                 <div>
                   <PaymentMethod
                     id="bank"
+                    name="payment method"
                     value={paymentMethod}
                     label="Direct Bank Transfer"
                     onChange={(e) => handlePaymentMethod("bank")}
@@ -221,6 +234,7 @@ export default function CheckoutPage() {
                   <PaymentMethod
                     id="paystack"
                     label="Continue with Paystack"
+                    name="payment method"
                     value={paymentMethod}
                     onChange={() => {
                       handlePaymentMethod("paystack");
@@ -228,7 +242,6 @@ export default function CheckoutPage() {
                   />
                   <PaystackButton {...componentProps} />
                 </div>
-                {/* <PaymentMethod value="bank" title="Direct Bank Transfer" /> */}
               </div>
             </aside>
           </section>
@@ -246,56 +259,49 @@ const Input = ({ label, id, required, ...rest }: InputProps) => {
   return (
     <div className="flex flex-col gap-1 mb-5 last:mb-0">
       {label && (
-        <label htmlFor={id} className="text-base font-medium pl-1">
-          {label}
-          {required ? (
-            <span className="text-red-500">*</span>
-          ) : (
-            <span className="text-gray-300 text-sm">{"(optional)"}</span>
-          )}
+        <label htmlFor={id} className="text-gray-500">
+          {label} {required && <span className="text-red-500">*</span>}
         </label>
       )}
       <input
-        {...rest}
+        id={id}
         required={required}
-        className="border focus:!border-primary p-2 rounded"
+        className="p-2 w-full border border-gray-400 rounded-md"
+        {...rest}
       />
     </div>
   );
 };
 
-const OrderTile = ({
-  title,
-  price,
-  quantity,
-}: {
+interface OrderTileProps {
   title: string;
-  quantity: number;
   price: number;
-}) => (
+  quantity: number;
+}
+
+const OrderTile = ({ title, price, quantity }: OrderTileProps) => (
   <li className={orderStyle}>
-    <span>
-      {title}{" "}
-      <b>
-        <small>x</small> {quantity}
-      </b>
-    </span>
-    <span>${price} </span>
+    <p className="m-0">
+      {title} x {quantity}
+    </p>
+    <b>${price * quantity}</b>
   </li>
 );
 
-const PaymentMethod = ({ label, id, value, children, ...rest }: InputProps) => {
+interface PaymentMethodProps
+  extends React.ComponentProps<"input"> {
+  label?: string;
+}
+
+const PaymentMethod = ({ label, id, required, ...rest }: PaymentMethodProps) => {
   return (
-    <div
-      className={clsx(
-        "space-x-2 p-4 first:mt-6 rounded text-base font-medium hover:bg-primary/60 hover:border-primary hover:text-white border transition-colors duration-300",
-        {
-          "bg-primary text-white": id === value,
-        }
+    <div className="flex items-center gap-3 mt-6">
+      <input id={id} type="radio" required={required} {...rest} />
+      {label && (
+        <label htmlFor={id} className="text-gray-500">
+          {label}
+        </label>
       )}
-    >
-      <input type="radio" name="payment" {...rest} />
-      <label htmlFor={id}>{label}</label>
     </div>
   );
 };
