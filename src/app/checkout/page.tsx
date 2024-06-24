@@ -95,9 +95,9 @@ export default function CheckoutPage() {
     <main className="flex flex-col gap-4">
       <Breadcrumbs active="Checkout" />
       <section className="w-11/12 h-16 bg-gray-300 mx-auto" />
-      <section className="p-2 md:w-10/12 w-full flex max-md:flex-col max-md:items-center justify-center gap-4 mx-auto">
+      <section className="p-2 md:w-10/12 w-full flex max-md:flex-col max-md:items-center justify-center gap-4 md:gap-10 mx-auto">
         <section className="w-full max-md:max-w-md">
-          <h3 className="mb-3">Billing Details</h3>
+          <h3 className="mb-4 text-2xl">Billing Details</h3>
           <form onSubmit={handleSubmit}>
             <Input
               label="Full name"
@@ -154,7 +154,7 @@ export default function CheckoutPage() {
               name="message"
             />
 
-            <Button className="w-full !text-white text-sm my-2 !bg-primary hover:!bg-opacity-85" id="update-billing">
+            <Button className="w-full !text-white text-sm my-2 !bg-primary hover:!bg-black" id="update-billing">
               Submit
             </Button>
           </form>
