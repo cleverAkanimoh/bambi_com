@@ -3,19 +3,22 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { fadeUp } from "@/lib/framer";
+import { BiDesktop, BiRefresh, BiStreetView } from "react-icons/bi";
 
 export default function CtaSection() {
   return (
-    <section className="my-10">
+    <section className="my-10 p-2">
       <motion.div
         initial={fadeUp.initial}
         whileInView={fadeUp.whileInView}
         transition={fadeUp.transition}
       >
         {/* <!-- Section Title Start --> */}
-        <div className="section-title text-center">
-          <h2 className="title">Promoting screen-free healthy development</h2>
-          <h5 className="sub-title mt-2 text-base max-w-sm mx-auto">
+        <div className="text-center space-y-4 mb-8">
+          <h2 className="font-bold text-2xl sm:text-3xl mx-auto max-w-lg">
+            Promoting screen-free healthy development
+          </h2>
+          <h5 className="max-w-md mx-auto font-light">
             Once upon a time, families played. Today, between screen time and
             homework, free play Otilo.
           </h5>
@@ -23,50 +26,50 @@ export default function CtaSection() {
         {/* <!-- Section Title End --> */}
       </motion.div>
 
-      <div className="row mb-n6">
+      <article className="flex flex-wrap justify-center items-center gap-x-4">
         <CtaCard
           heading="Open-ended Play"
           paragraph=" Our products allows children to be creative, experiment with
               different ideas and work through problems independently"
-          icon="fa fa-street-view"
+          Icon={BiStreetView}
         />
         <CtaCard
           heading="Non-digital"
           paragraph="We create screen-free games and storybooks that delight kids,
               spark imagination and create experiences that engage the whole
               family."
-          icon="fa fa-desktop"
+          Icon={BiDesktop}
         />
         <CtaCard
           heading="Environmental Friendly"
           paragraph="Bambi offers high-quality, sustainably made products focused on
               kids and families. We design with safety in mind, free from
               harmful materials."
-          icon="fa fa-refresh"
+          Icon={BiRefresh}
         />
-      </div>
+      </article>
     </section>
   );
 }
 
 const CtaCard = ({
-  icon,
+  Icon,
   paragraph,
   heading,
 }: {
-  icon: string;
+  Icon: React.ElementType;
   paragraph: string;
   heading: string;
 }) => (
   <motion.div
-    className="col-12 col-sm-6 col-md-6 col-lg-4"
+    className="flex items-center justify-center flex-col gap-4 max-w-md"
     initial={fadeUp.initial}
     whileInView={fadeUp.whileInView}
     transition={fadeUp.transition}
   >
-    <div className="single-choose-item text-center mb-6">
-      <i className={icon}></i>
-      <h4 className="cta-title">{heading}</h4>
+    <Icon className="size-20 text-secondary" />
+    <div className="text-center mb-10">
+      <h4 className="font-semibold text-xl">{heading}</h4>
       <p>{paragraph}</p>
     </div>
   </motion.div>
