@@ -28,7 +28,7 @@ export default function SingleProductPage({
           <ProductDisplay singleProduct={singleProduct} />
         </Suspense>
 
-        <AdditionalInformationForProduct />
+        {/* <AdditionalInformationForProduct /> */}
       </section>
     </main>
   );

@@ -7,59 +7,15 @@ import Button from "../Button";
 export default function AdditionalInformationForProduct() {
   return (
     <div className="">
-      <div>
+      <div className="flex">
         <TabButton text="Description" fn={() => {}} />
+        <TabButton text="Reviews" fn={() => {}} />
+        <TabButton text="Shipping" fn={() => {}} />
+        <TabButton text="Policy" fn={() => {}} />
+        <TabButton text="Size" fn={() => {}} />
+        <TabButton text="Chart" fn={() => {}} />
       </div>
-      <ul className="flex">
-        <li className="nav-item">
-          <a
-            className="nav-link active"
-            id="home-tab"
-            data-bs-toggle="tab"
-            href="#connect-1"
-            role="tab"
-            aria-selected="true"
-          >
-            Description
-          </a>
-        </li>
-        <li className="nav-item">
-          <a
-            className="nav-link"
-            id="profile-tab"
-            data-bs-toggle="tab"
-            href="#connect-2"
-            role="tab"
-            aria-selected="false"
-          >
-            Reviews
-          </a>
-        </li>
-        <li className="nav-item">
-          <a
-            className="nav-link"
-            id="contact-tab"
-            data-bs-toggle="tab"
-            href="#connect-3"
-            role="tab"
-            aria-selected="false"
-          >
-            Shipping Policy
-          </a>
-        </li>
-        <li className="nav-item">
-          <a
-            className="nav-link"
-            id="review-tab"
-            data-bs-toggle="tab"
-            href="#connect-4"
-            role="tab"
-            aria-selected="false"
-          >
-            Size Chart
-          </a>
-        </li>
-      </ul>
+
       <div className="tab-content mb-text" id="myTabContent">
         <div
           className="tab-pane fade show active"
@@ -337,5 +293,7 @@ export default function AdditionalInformationForProduct() {
 }
 
 const TabButton = ({ text, fn }: { text: string; fn: () => void }) => (
-  <Button onClick={fn}>{text}</Button>
+  <Button className="!text-sm !rounded-none" onClick={fn}>
+    {text}
+  </Button>
 );
