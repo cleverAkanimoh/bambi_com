@@ -54,15 +54,15 @@ export default function MenuSideNav() {
         </div>
         <aside
           className={clsx(
-            "w-11/12 xs:min-w-[320px] shrink-0 relative h-screen overflow-y-auto p-2 xs:p-4 py-10 bg-white"
+            "w-11/12 xs:min-w-[300px] shrink-0 relative h-screen overflow-y-auto p-2 xs:p-4 py-10 bg-white"
           )}
         >
-          <div className="space-y-12 px-2 w-full">
+          <div className="space-y-10 px-2 w-full">
             <Suspense>
               <Search variant="mobile-view" />
             </Suspense>
 
-            <ul className="space-y-5 px-0.5 font-medium">
+            <ul className="space-y-6 px-0.5 font-medium">
               <NavLink href="/">Home</NavLink>
               <NavLink href="/shop">Shop</NavLink>
               <NavLink href="/faq">Faqs</NavLink>

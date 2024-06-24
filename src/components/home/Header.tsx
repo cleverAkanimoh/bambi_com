@@ -11,7 +11,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 export default function Header() {
   return (
     <header className="flex flex-col h-full">
-      <Swiper className="">
+      <Swiper className="size-full">
         <SwiperSlide className="size-full">
           <SlideItem
             src={SliderImage1}
