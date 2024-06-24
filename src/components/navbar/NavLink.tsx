@@ -45,14 +45,14 @@ export default function NavLink({
       {array && (
         <ul
           className={clsx("", {
-            "h-0 peer-focus:h-full group-hover:h-full peer-focus:mt-2 group-hover:mt-2 overflow-hidden transition-all duration-500 text-sm px-3 space-y-3":
+            "h-full peer-focus:h-full group-hover:h-full peer-focus:mt-2 group-hover:mt-2 overflow-hidden transition-all duration-500 text-sm px-3 space-y-3":
               mobile,
-            "absolute  h-0 peer-focus:h-full group-hover:h-full peer-focus:mt-2 group-hover:mt-2 overflow-hidden transition-all duration-500 text-sm px-3 space-y-3 bg-white":
+            "absolute left-0 w-[200px]  min-h-full peer-focus:min-h-full group-hover:min-h-full overflow-hidden peer-focus:mt-8 group-hover:mt-8 transition-all duration-500 text-sm space-y-3 divide-y divide-gray-300 bg-white border rounded":
               array && !mobile,
           })}
         >
           {array.map(({ title, href }, index) => (
-            <li key={index}>
+            <li key={index} className="pt-3 px-4">
               <Link
                 href={href ?? title}
                 className={clsx("hover:text-primary", {

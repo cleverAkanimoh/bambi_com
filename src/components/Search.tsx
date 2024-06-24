@@ -26,7 +26,7 @@ export default function Search({
   return (
     <div
       className={`${
-        variant === "on-canvas" ? "max-lg:hidden " : ""
+        variant === "on-canvas" ? "max-lg:hidden" : ""
       } relative w-full flex items-center`}
     >
       <input
@@ -34,15 +34,14 @@ export default function Search({
         placeholder={
           variant === "on-canvas" ? "Search our store" : "Search Product..."
         }
-        className=" placeholder:text-gray-600 bg-gray-200/80 w-full max-w-md shrink-0 p-3 text-[0.96rem] text-gray-600 md:p-2 md:rounded-md focus-within:border-primary"
+        className="peer placeholder:text-gray-600 bg-gray-100/70 w-full max-w-md shrink-0 p-3 pr-4 indent-2 text-[0.96rem] text-gray-700 md:p-2 rounded-sm md:rounded-xl focus:outline-none focus:ring-1 focus:ring-primary ring-offset-3 xs:placeholder:text-sm"
         onChange={(e) => handleSearch(e.target.value)}
         required
       />
-      {
-        <button className="absolute right-2 text-gray-500">
-          <BamIcon Icon={BiSearch} size="sm" />
-        </button>
-      }
+
+      <button className="absolute right-3 text-gray-400 xs:peer-focus-within:text-primary/70">
+        <BamIcon Icon={BiSearch} size="sm" />
+      </button>
     </div>
   );
 }
