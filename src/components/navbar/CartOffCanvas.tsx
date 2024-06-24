@@ -86,7 +86,7 @@ export default function CartOffCanvas() {
         </div>
         <aside
           className={clsx(
-            "w-11/12 xs:min-w-[320px] max-w-[360px] grow shrink-0 relative h-screen overflow-y-auto p-2 xs:p-4 py-10 bg-white"
+            "w-[250px] xs:min-w-[320px] max-w-[360px] grow shrink-0 relative h-screen overflow-y-auto p-2 xs:p-4 py-10 bg-white"
           )}
         >
           {user ? (

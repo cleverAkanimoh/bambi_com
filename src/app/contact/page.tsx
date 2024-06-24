@@ -7,6 +7,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import { sendEmail } from "@/components/email/Email";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { fadeUp } from "@/lib/framer";
 
 const ContactPage = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -53,7 +54,12 @@ const ContactPage = () => {
                     ></iframe>
                 </div>
                 <section className='flex flex-col md:flex-row gap-8 justify-between w-[90%] mx-auto mt-14 '>
-                    <form onSubmit={handleSubmit} className='flex flex-col w-full gap-4'>
+                    <motion.form 
+                    initial={fadeUp.initial}
+                    whileInView={fadeUp.whileInView}
+                    transition={fadeUp.transition}
+        
+                    onSubmit={handleSubmit} className='flex flex-col w-full gap-4'>
                         <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                             <input className="w-full p-4 outline-none ring-0 bg-stone-100 focus:bg-white border focus:border-primary" type="text" placeholder="Your Name *" name="name" required />
                             <input className="w-full p-4 outline-none ring-0 bg-stone-100 focus:bg-white border focus:border-primary" type="email" placeholder="Email *" name="email" required />
@@ -67,8 +73,13 @@ const ContactPage = () => {
                         >
                             {isSubmitting ? "Sending..." : "Send Message"}
                         </button>
-                    </form>
-                    <aside className="flex flex-col gap-4">
+                    </motion.form>
+                    <motion.aside
+                    initial={fadeUp.initial}
+                    whileInView={fadeUp.whileInView}
+                    transition={fadeUp.transition}
+       
+                    className="flex flex-col gap-4">
                         <p>Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram anteposuerit litterarum formas human.</p>
                         <address className="contact-block">
                             <ul>
@@ -87,7 +98,7 @@ const ContactPage = () => {
                             <h6 className="title">Working Hours</h6>
                             <p>Monday – Saturday: 08AM – 10PM</p>
                         </div>
-                    </aside>
+                    </motion.aside>
                 </section>
             </div>
         </React.Suspense>

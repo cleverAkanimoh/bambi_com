@@ -32,6 +32,7 @@ export function AddToCartButton({
     setLoading(true);
     try {
       await addToCart(cart);
+      console.log("added")
 
       toast.success(`${cart.title ?? "Item"} has been added to cart`);
       setLoading(false);
