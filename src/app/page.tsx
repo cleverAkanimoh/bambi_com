@@ -9,6 +9,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { fadeUp } from "@/lib/framer";
 
+
 export default function Home() {
   return (
     <main className="overflow-hidden">

@@ -11,7 +11,7 @@ import Logo from "../../../public/assets/images/logo/logo.png";
 import clsx from "clsx";
 import { useGlobalContext } from "@/context/store";
 import { CartType } from "@/types";
-import { getNumberOfItemsInCart } from "@/lib/cart";
+import { useCartItems } from "@/lib/cart";
 import { useAuth } from "@/context/auth-context";
 import BamIcon from "../Icon";
 import {
@@ -26,27 +26,15 @@ export default function MainNav() {
   const { setIsMenuClicked, setIsCartClicked } = useGlobalContext();
   const [isFixedNav, setIsFixedNav] = useState(false);
   const { user } = useAuth();
-  // const [cartItems, setCartItems] = useState<CartType[]>([]);
-  const [totalItems, setTotalItems] = useState<number>(0); // New state for total items
+  const { data: cartItems, isLoading, error } = useCartItems(user);
+  const [totalItems, setTotalItems] = useState<number>(0);
 
   useEffect(() => {
-    if (user) {
-      const fetchCartItems = async () => {
-        // const unsubscribeItems = fetchInRealtimeAndRenderPostsFromDB(user.uid, setCartItems);
-        const unsubscribeTotal = await getNumberOfItemsInCart(
-          user.uid,
-          setTotalItems
-        );
-
-        return () => {
-          // unsubscribeItems();
-          unsubscribeTotal();
-        };
-      };
-
-      fetchCartItems();
+    if (cartItems) {
+      const total = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+      setTotalItems(total);
     }
-  }, [user]);
+  }, [cartItems]);
 
   useEffect(() => {
     window.onscroll = () =>

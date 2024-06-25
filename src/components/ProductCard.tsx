@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Button from "./Button";
-import { AddToCartButton } from "./CartButtons";
+import { AddToCartButton, AddToWishlistButton } from "./CartButtons";
 import { motion } from "framer-motion";
 import { fadeUp } from "@/lib/framer";
 import { CiSearch } from "react-icons/ci";
@@ -74,9 +74,16 @@ const ShopProductCard = ({
             <span className="text-center">{category ?? "-18%"}</span>
           </span>
           <div className="flex flex-col gap-6 absolute top-4 group-hover:top-2 right-4 text-xl p-3 text-[#555] opacity-0 group-hover:opacity-100 transition-all ease-linear duration-[400ms]">
-            <Button onClick={addToWishList}>
-              {isLiked ? <FcLike /> : <CiHeart />}
-            </Button>
+           <AddToWishlistButton
+           wishlistItem={{
+            src: src1,
+            href,
+            title: heading,
+            price: new_price,
+            quantity: 1,
+            id,
+          }}
+           />
             <Link
               href="/compare"
               className="bg-white p-2 hover:bg-primary hover:text-white transition-all ease-linear duration-150 rounded"

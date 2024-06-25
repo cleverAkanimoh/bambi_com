@@ -5,7 +5,7 @@ import { auth } from "@/config/firebase-config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 import Breadcrumbs from "@/components/Breadcrumbs";
 
@@ -13,12 +13,6 @@ const Page = () => {
   const { user } = useAuth();
   const router = useRouter();
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (!user) {
-      router.push("/auth/login");
-    }
-  }, [user, router]);
 
   const login = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -42,7 +36,17 @@ const Page = () => {
   return (
     <div className="flex flex-col gap-6">
       <Breadcrumbs active="Login" />
-
+      <ToastContainer
+                position="top-right"
+                autoClose={4000}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+                hideProgressBar={false}
+              />
       <div className="flex items-center justify-center p-4 md:p-10 mb-4">
         <form
           onSubmit={login}

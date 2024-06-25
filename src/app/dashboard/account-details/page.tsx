@@ -8,13 +8,25 @@ import {
   EmailAuthProvider,
 } from "firebase/auth";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { useAuth } from "@/context/auth-context";
+import { useAuth } from '@/context/auth-context';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import Loading from "@/app/loading";
+
+const fetchUserData = async (userId: string) => {
+  const docRef = doc(db, "users", userId);
+  const docSnap = await getDoc(docRef);
+  if (!docSnap.exists()) {
+    throw new Error("No such document!");
+  }
+  return docSnap.data();
+};
 
 const Page = () => {
   const { user } = useAuth();
+  const queryClient = useQueryClient();
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [formData, setFormData] = useState({
     firstName: "",
@@ -26,27 +38,45 @@ const Page = () => {
     confirmPassword: "",
   });
 
-  useEffect(() => {
-    if (user) {
-      const fetchUserData = async () => {
-        const docRef = doc(db, "users", user.uid);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          const userData = docSnap.data();
-          setFormData((prevData) => ({
-            ...prevData,
-            firstName: userData.firstName || "",
-            lastName: userData.lastName || "",
-            displayName: userData.displayName || "",
-            email: userData.email || "",
-          }));
-        } else {
-          console.log("No such document!");
-        }
-      };
-      fetchUserData();
+  const { data: userData, isLoading } = useQuery(
+    ['userData', user?.uid],
+    () => fetchUserData(user?.uid ?? ''),
+    {
+      enabled: !!user,
     }
-  }, [user]);
+  );
+
+  useEffect(() => {
+    if (userData) {
+      setFormData((prevData) => ({
+        ...prevData,
+        firstName: userData.firstName || "",
+        lastName: userData.lastName || "",
+        displayName: userData.displayName || "",
+        email: userData.email || "",
+      }));
+    }
+  }, [userData]);
+
+  const updateUserData = useMutation(
+    async (updatedData: any) => {
+      if (!user){
+        throw new Error("User is not authenticated");
+        toast.error("Please sign in to update your data")
+      } 
+      const userRef = doc(db, "users", user.uid);
+      await updateDoc(userRef, updatedData);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('userData');
+        toast.success("Profile updated successfully");
+      },
+      onError: (error: any) => {
+        toast.error(error.message);
+      }
+    }
+  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -61,46 +91,25 @@ const Page = () => {
     try {
       if (!user) throw new Error("User is not authenticated");
 
-      const userRef = doc(db, "users", user.uid);
+      const updatedData: any = {};
+      if (formData.firstName) updatedData.firstName = formData.firstName;
+      if (formData.lastName) updatedData.lastName = formData.lastName;
+      if (formData.displayName) updatedData.displayName = formData.displayName;
+      if (formData.email && user.email !== formData.email) updatedData.email = formData.email;
 
-      // Update Firestore user data if provided
-      if (
-        formData.firstName ||
-        formData.lastName ||
-        formData.displayName ||
-        formData.email
-      ) {
-        const updatedData: any = {};
-        if (formData.firstName) updatedData.firstName = formData.firstName;
-        if (formData.lastName) updatedData.lastName = formData.lastName;
-        if (formData.displayName)
-          updatedData.displayName = formData.displayName;
-        if (formData.email && user.email !== formData.email)
-          updatedData.email = formData.email;
-        await updateDoc(userRef, updatedData);
-      }
+      updateUserData.mutate(updatedData);
 
-      // Reauthenticate user if email is being updated
       if (user.email && formData.email && user.email !== formData.email) {
-        if (!formData.password)
-          throw new Error("Password is required to update email");
-        const credential = EmailAuthProvider.credential(
-          user.email,
-          formData.password
-        );
+        if (!formData.password) throw new Error("Password is required to update email");
+        const credential = EmailAuthProvider.credential(user.email, formData.password);
         await reauthenticateWithCredential(user, credential);
         await updateEmail(user, formData.email);
       }
 
-      // Update password if it has been changed and confirmed
-      if (
-        formData.newPassword &&
-        formData.newPassword === formData.confirmPassword
-      ) {
+      if (formData.newPassword && formData.newPassword === formData.confirmPassword) {
         await updatePassword(user, formData.newPassword);
       }
 
-      toast.success("Profile updated successfully");
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.log(error.message);
@@ -113,19 +122,12 @@ const Page = () => {
     }
   };
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <div className="p-2">
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-        hideProgressBar={false}
-      />
       <div className="min-h-screen flex items-center justify-center">
         <form
           onSubmit={handleSubmit}

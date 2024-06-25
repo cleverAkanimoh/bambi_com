@@ -1,64 +1,158 @@
+import { useQuery, useMutation, useQueryClient } from "react-query";
 import { auth, db } from "@/config/firebase-config";
 import { CartType } from "@/types";
 import { User } from "firebase/auth";
-import {
-  doc,
-  deleteDoc,
-  collection,
-  addDoc,
-  getDocs,
-  onSnapshot,
-  updateDoc,
-  query,
-  where,
-  getDoc,
-} from "firebase/firestore";
+import { collection, query, where, getDocs, addDoc, updateDoc, doc, deleteDoc, getDoc } from "firebase/firestore";
+import { useState } from "react";
 
-export const collectionName = "cartItems";
-
+const collectionName = "cartItems";
 export const cartItemRef = collection(db, collectionName);
 
-export const getUserCartItems = (
-  user: User | null,
-  callback: (items: any[]) => void
-) => {
-  if (!user) {
-    throw new Error("User is not authenticated");
-  }
+const wishlistRef = collection(db, "wishlist");
 
-  try {
-    const q = query(cartItemRef, where("userId", "==", user.uid));
+export const useWishlistItems = () => {
+  const user = auth.currentUser;
+  return useQuery<CartType[]>(['wishlistItems', user?.uid], async () => {
+    if (!user) {
+      throw new Error("User is not authenticated");
+    }
 
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const items = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      callback(items);
-    });
-
-    // Return the unsubscribe function to allow the caller to stop listening to changes
-    return unsubscribe;
-  } catch (error) {
-    console.error("An error occurred while getting cart items", error);
-    throw new Error("An error occurred while getting cart items");
-  }
-
-  // return data;
+    const q = query(wishlistRef, where("userId", "==", user.uid));
+    const querySnapshot = await getDocs(q);
+    const items = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as CartType[];
+    return items;
+  }, {
+    enabled: !!user,
+  });
 };
 
-export const addToCart = async (cart: CartType) => {
-  const userId = auth?.currentUser?.uid ?? "";
-  const cartItemId = cart.id.toString() ?? "";
+export const useToggleWishlistItem = (wishlistItemId: string | number) => {
+  const queryClient = useQueryClient();
 
-  try {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const toggleWishlistItemMutation = useMutation(
+    async () => {
+      const userId = auth?.currentUser?.uid ?? "";
+      if (!userId) {
+        throw new Error("User is not authenticated");
+      }
+
+      const q = query(wishlistRef, where("userId", "==", userId), where("itemId", "==", wishlistItemId));
+      const snapshot = await getDocs(q);
+      let isInWishlist = false;
+
+      if (!snapshot.empty) {
+        // Item exists in wishlist, remove it
+        const docId = snapshot.docs[0].id;
+        await deleteDoc(doc(db, 'wishlist', docId));
+      } else {
+        // Item does not exist in wishlist, add it
+        await addDoc(wishlistRef, {
+          itemId: wishlistItemId,
+          userId: userId,
+        });
+        isInWishlist = true;
+      }
+
+      return { isInWishlist };
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('wishlist');
+      },
+    }
+  );
+
+  return { toggleWishlistItemMutation, isLoading };
+};
+
+export const useRemoveFromWishlist = () => {
+  const queryClient = useQueryClient();
+  const [loading, setLoading] = useState(false);
+
+  const removeFromWishlistMutation = useMutation(
+    async (wishlistItemId: string) => {
+      const userId = auth?.currentUser?.uid;
+      if (!userId) {
+        throw new Error('User is not authenticated');
+      }
+
+      const q = query(wishlistRef, where('userId', '==', userId), where('itemId', '==', wishlistItemId));
+      const snapshot = await getDocs(q);
+
+      if (!snapshot.empty) {
+        // Item exists in wishlist, remove it
+        const docId = snapshot.docs[0].id;
+        await deleteDoc(doc(db, 'wishlist', docId));
+      } else {
+        throw new Error('Item not found in wishlist');
+      }
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('wishlist'); // Invalidate wishlist query on success
+        console.log('Item removed from wishlist');
+        setLoading(false);
+      },
+      onError: (error: unknown) => {
+        if (error instanceof Error) {
+          console.error(error.message);
+        }
+        setLoading(false);
+      },
+    }
+  );
+
+  const handleRemoveFromWishlist = async (wishlistItemId: string) => {
+    setLoading(true);
+    try {
+      await removeFromWishlistMutation.mutateAsync(wishlistItemId);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    handleRemoveFromWishlist,
+    loading,
+  };
+};
+
+
+export const useCartItems = (user: User | null) => {
+  return useQuery<CartType[]>(['cartItems', user?.uid], async () => {
+    if (!user) {
+      throw new Error("User is not authenticated");
+    }
+
+    const q = query(cartItemRef, where("userId", "==", user.uid));
+    const querySnapshot = await getDocs(q);
+    const items = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as CartType[];
+    return items;
+  }, {
+    enabled: !!user
+  });
+};
+
+export const useAddToCart = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(async (cart: CartType) => {
+    const userId = auth?.currentUser?.uid ?? "";
+    const cartItemId = cart.id.toString() ?? "";
+
     const cartItemsQuery = query(cartItemRef, where("userId", "==", userId));
     const cartItemsSnapshot = await getDocs(cartItemsQuery);
 
     let itemExists = false;
 
     if (!cartItemsSnapshot.empty) {
-      cartItemsSnapshot.forEach(async (docSnapshot) => {
+      for (const docSnapshot of cartItemsSnapshot.docs) {
         const data = docSnapshot.data();
         if (data.id === cartItemId) {
           itemExists = true;
@@ -66,13 +160,12 @@ export const addToCart = async (cart: CartType) => {
           await updateDoc(userDoc, {
             quantity: data.quantity + cart.quantity,
           });
-          console.log(`Updated quantity of item: ${cartItemId}`);
         }
-      });
+      }
     }
 
     if (!itemExists) {
-      const docRef = await addDoc(cartItemRef, {
+      await addDoc(cartItemRef, {
         id: cartItemId,
         src: cart.src,
         href: cart.href,
@@ -81,18 +174,20 @@ export const addToCart = async (cart: CartType) => {
         quantity: cart.quantity,
         userId,
       });
-
-      console.log("Added new item to cart: ", docRef.id);
     }
-  } catch (error) {
-    throw new Error(`${error}`);
-  }
+  }, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('cartItems');
+    },
+  });
 };
 
-export const removeSingleCartItem = async (id: string | number) => {
-  const cartItemId = id.toString();
+export const useRemoveSingleCartItem = () => {
+  const queryClient = useQueryClient();
 
-  try {
+  return useMutation(async (id: string | number) => {
+    const cartItemId = id.toString();
+
     const singleCartItemRef = doc(db, collectionName, cartItemId);
     const cartItemDoc = await getDoc(singleCartItemRef);
 
@@ -101,33 +196,30 @@ export const removeSingleCartItem = async (id: string | number) => {
       const currentQuantity = cartItemData.quantity;
 
       if (currentQuantity > 1) {
-        // Decrement the quantity
         await updateDoc(singleCartItemRef, { quantity: currentQuantity - 1 });
-        console.log(`Decremented quantity for item: ${cartItemId}`);
       } else {
-        // Remove the item from the cart
         await deleteDoc(singleCartItemRef);
-        console.log(`Deleted item from cart: ${cartItemId}`);
       }
     } else {
-      console.error("Cart item not found");
       throw new Error("Cart item not found");
     }
-  } catch (error) {
-    console.error("An error occurred, Cart item was not deleted", error);
-    throw new Error("An error occurred, Cart item was not deleted");
-  }
+  }, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('cartItems');
+    },
+  });
 };
 
-export const clearAllItemsFromCart = async () => {
-  const userId = auth?.currentUser?.uid ?? "";
+export const useClearAllItemsFromCart = () => {
+  const queryClient = useQueryClient();
 
-  if (!userId) {
-    throw new Error("User is not authenticated");
-  }
+  return useMutation(async () => {
+    const userId = auth?.currentUser?.uid ?? "";
 
-  try {
-    // const cartItemsRef = collection(db, collectionName);
+    if (!userId) {
+      throw new Error("User is not authenticated");
+    }
+
     const q = query(cartItemRef, where("userId", "==", userId));
     const querySnapshot = await getDocs(q);
 
@@ -136,28 +228,9 @@ export const clearAllItemsFromCart = async () => {
     );
 
     await Promise.all(deletePromises);
-
-    console.log(`All cart items for user ${userId} have been deleted.`);
-  } catch (error) {
-    console.error("An error occurred, Cart items were not deleted", error);
-    throw new Error("An error occurred, Cart items were not deleted");
-  }
-};
-
-export const getNumberOfItemsInCart = async (
-  userId: string,
-  callback: (total: number) => void
-) => {
-  const cartItemRef = collection(db, collectionName);
-  const q = query(cartItemRef, where("userId", "==", userId));
-
-  return onSnapshot(q, (querySnapshot) => {
-    let totalItems = 0;
-    querySnapshot.forEach((doc) => {
-      const data = doc.data() as CartType;
-      totalItems += data.quantity;
-    });
-
-    callback(totalItems);
+  }, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('cartItems');
+    },
   });
 };

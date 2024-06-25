@@ -1,4 +1,5 @@
-import { metadata } from "@/app/layout";
+"use client"
+// import { metadata } from "@/app/layout";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import AdditionalInformationForProduct from "@/components/single-product-page/AdditionalInformationForProduct";
 import ProductDisplay from "@/components/single-product-page/ProductDisplay";
@@ -16,8 +17,8 @@ export default function SingleProductPage({
 
   if (!singleProduct) return notFound();
 
-  metadata.title = singleProduct.heading;
-  metadata.description = singleProduct.description;
+  // metadata.title = singleProduct.heading;
+  // metadata.description = singleProduct.description;
 
   return (
     <main className="flex flex-col">

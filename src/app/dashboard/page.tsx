@@ -1,33 +1,29 @@
 "use client";
-import React, { useEffect, useState } from 'react';
-import { useRouter } from "next/navigation";
+import React from 'react';
 import { useAuth } from '@/context/auth-context';
+import { useQuery } from 'react-query';
 import { doc, getDoc } from "firebase/firestore";
-import { auth, db } from "@/config/firebase-config"
+import { db } from "@/config/firebase-config";
+
+const fetchUserDetails = async (userId: string) => {
+  const userDoc = await getDoc(doc(db, "users", userId));
+  if (!userDoc.exists()) {
+    throw new Error("User document does not exist");
+  }
+  return userDoc.data();
+};
 
 const Page = () => {
   const { user } = useAuth();
-  const [userDetails, setUserDetails] = useState<{ firstName: string; lastName: string } | null>(null);
-  
-  useEffect(() => {
-    const fetchUserDetails = async () => {
-        if (auth.currentUser) {
-            const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
-            if (userDoc.exists()) {
-                const userData = userDoc.data();
-                setUserDetails({
-                    firstName: userData.firstName,
-                    lastName: userData.lastName,
-                });
-            } else {
-                // Handle case where user document does not exist
-                console.log("User document does not exist");
-            }
-        }
-    };
 
-    fetchUserDetails();
-}, [auth.currentUser]);
+  const { data: userDetails, error, isLoading } = useQuery(
+    ['userDetails', user?.uid],
+    () => fetchUserDetails(user?.uid ?? ''),
+    {
+      enabled: !!user,
+      refetchOnWindowFocus: false,
+    }
+  );
  
 
   return (

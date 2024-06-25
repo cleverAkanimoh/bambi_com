@@ -107,7 +107,7 @@ export default function CartOffCanvas() {
                       title={item.title}
                       price={item.price}
                       quantity={item.quantity}
-                      id={item.id}
+                      id={`${item.uid}`}
                     />
                   ))}
 
@@ -175,8 +175,8 @@ const CartTile = ({
   quantity: number;
   id: string | number;
 }) => (
-  <div className="cart-product-wrapper mb-4 pb-4 border-bottom">
-    <div className="single-cart-product">
+  <div className="flex items-center w-11/12 mx-auto justify-between mb-4 pb-4 border-bottom">
+    <div className="flex items-center gap-4">
       <div className="cart-product-thumb">
         <Link href={href}>
           <Image width={100} height={100} src={src} alt="Cart Product" />

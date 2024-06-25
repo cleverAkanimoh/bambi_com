@@ -1,8 +1,9 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useAuth } from '@/context/auth-context';
+import { useQuery } from 'react-query';
 import { db } from "@/config/firebase-config";
 import { doc, getDoc } from "firebase/firestore";
-import { useAuth } from '@/context/auth-context';
 import Breadcrumbs from '@/components/Breadcrumbs';
 
 interface BillingAddress {
@@ -15,42 +16,33 @@ interface BillingAddress {
     mobile: string;
 }
 
+const fetchBillingAddress = async (userId: string) => {
+    const docRef = doc(db, "users", userId, "addresses", "billing");
+    const docSnap = await getDoc(docRef);
+
+    if (!docSnap.exists()) {
+        throw new Error("No billing address found");
+    }
+
+    return docSnap.data() as BillingAddress;
+};
+
 const Page = () => {
     const { user } = useAuth();
-    const [billingAddress, setBillingAddress] = useState<BillingAddress | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
 
-    useEffect(() => {
-        if (user) {
-            const fetchBillingAddress = async () => {
-                try {
-                    const docRef = doc(db, "users", user.uid, "addresses", "billing");
-                    const docSnap = await getDoc(docRef);
-
-                    if (docSnap.exists()) {
-                        setBillingAddress(docSnap.data() as BillingAddress);
-                    } else {
-                        setBillingAddress(null);
-                    }
-                } catch (error) {
-                    console.error("Error fetching billing address:", error);
-                    setBillingAddress(null);
-                } finally {
-                    setLoading(false);
-                }
-            };
-
-            fetchBillingAddress();
+    const { data: billingAddress, error, isLoading } = useQuery(
+        ['billingAddress', user?.uid],
+        () => fetchBillingAddress(user?.uid ?? ''),
+        {
+            enabled: !!user,
+            refetchOnWindowFocus: false,
         }
-    }, [user]);
+    );
 
-    // if (loading) {
-    //     return <div>Loading...</div>;
-    // }
 
     return (
         <div className=''>
-            {/* <Breadcrumbs active="Billing Address" /> */}
+            <Breadcrumbs active="Billing Address" />
             <div className='grid grid-cols-1 gap-4 p-4'>
                 <h1 className='text-black text-3xl font-bold'>Billing Address</h1>
                 {billingAddress ? (

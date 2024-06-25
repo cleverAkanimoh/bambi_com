@@ -6,7 +6,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore"; // Import Firestore functions
 import { useAuth } from "@/context/auth-context";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import Breadcrumbs from "@/components/Breadcrumbs";
 
 const Page = () => {
@@ -14,13 +14,6 @@ const Page = () => {
   const router = useRouter();
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (user) {
-      router.push("/");
-    } else {
-      router.push("/auth/register");
-    }
-  }, [user, router]);
 
   const signIn = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,7 +40,8 @@ const Page = () => {
 
       toast.success("Registration successful");
       console.log(auth?.currentUser?.email);
-      // e.currentTarget.reset();
+      router.push("/auth/login")
+      // e.currentTarget?.reset();
     } catch (error: unknown) {
       console.error(error);
       // Narrow down the type of 'error'
@@ -64,7 +58,17 @@ const Page = () => {
   return (
     <div className="flex flex-col gap-6">
       <Breadcrumbs active="Register" />
-
+      <ToastContainer
+                position="top-right"
+                autoClose={4000}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+                hideProgressBar={false}
+              />
       <div className="min-h-screen flex items-center justify-center py-10">
         <form
           onSubmit={signIn}

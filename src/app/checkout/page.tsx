@@ -2,7 +2,7 @@
 
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Button from "@/components/Button";
-import { fetchInRealtimeAndRenderPostsFromDB } from "@/components/navbar/CartOffCanvas";
+import { useCartItems } from "@/lib/cart";
 import { useAuth } from "@/context/auth-context";
 import { CartType } from "@/types";
 import clsx from "clsx";
@@ -11,23 +11,16 @@ import { PaystackButton } from "react-paystack";
 import { toast } from "react-toastify";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "@/config/firebase-config";
+import Loading from "@/app/loading";
 
 const orderStyle = clsx("p-2 flex justify-between");
 
 const publicKey = "pk_test_ef5e04574fd9f51d757806866fce40f5ebfd6b26";
 
 export default function CheckoutPage() {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const [paymentMethod, setPaymentMethod] = useState("");
-  const [cartItems, setCartItems] = useState<CartType[]>([]);
-
-  useEffect(() => {
-    const fetchCartItems = async () => {
-      const data = await fetchInRealtimeAndRenderPostsFromDB();
-      setCartItems(data);
-    };
-    fetchCartItems();
-  }, [user]);
+  const { data: cartItems = [], isLoading: isFetching } = useCartItems(user);
 
   const cartTotal = cartItems?.reduce(
     (prev, curr) => prev + curr?.price * curr?.quantity,
@@ -90,6 +83,10 @@ export default function CheckoutPage() {
     onSuccess: () => toast.success("Thanks for doing business with us! Come back soon!!"),
     onClose: () => toast.info("User cancelled payment action"),
   };
+
+  if (loading || isFetching) {
+    return <Loading />;
+  }
 
   return (
     <main className="flex flex-col gap-4">

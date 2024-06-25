@@ -1,14 +1,8 @@
-"use client";
-
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  ReactNode,
-} from "react";
+"use client"
+import { createContext, useContext, ReactNode } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "@/config/firebase-config";
+import { useQuery } from "react-query";
 
 interface AuthContextType {
   user: User | null;
@@ -21,18 +15,17 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
-export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const session = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      setLoading(false);
+const fetchAuthUser = (): Promise<User | null> => {
+  return new Promise((resolve) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      resolve(user);
+      unsubscribe();
     });
+  });
+};
 
-    return () => session();
-  }, []);
+export const AuthProvider = ({ children }: AuthProviderProps) => {
+  const { data: user = null, isLoading: loading } = useQuery("authUser", fetchAuthUser);
 
   return (
     <AuthContext.Provider value={{ user, loading }}>

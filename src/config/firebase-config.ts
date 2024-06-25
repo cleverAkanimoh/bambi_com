@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 // import { getAnalytics } from "firebase/analytics";
@@ -12,6 +12,14 @@ const firebaseConfig = {
   messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
   appId: process.env.NEXT_PUBLIC_APP_ID,
   // measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID,
+};
+
+export const initFirebase = () => {
+  if (!getApps().length) {
+    initializeApp(firebaseConfig);
+  } else {
+    getApp(); // If already initialized, use that one
+  }
 };
 
 // Initialize Firebase
