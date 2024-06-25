@@ -1,26 +1,10 @@
-// // middleware.ts
-// import { NextResponse, NextRequest } from 'next/server';
-// import { getAuth } from 'firebase/auth';
-// import { initFirebase } from '@/config/firebase-config'; // Ensure correct path to firebase-config
+import NextAuth from "next-auth";
+import { authConfig } from "./auth.config";
 
-// // Initialize Firebase
-// initFirebase(); // Assuming this initializes Firebase correctly
+export default NextAuth(authConfig).auth;
 
-// export function middleware(request: NextRequest) {
-//   const auth = getAuth();
-//   const { currentUser } = auth;
-//   const url = request.nextUrl.clone();
+export const config = {
+  // https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
 
-//   // Redirect to dashboard if the user is logged in and trying to access login or register pages
-//   if (currentUser && (url.pathname === '/auth/login' || url.pathname === '/auth/register')) {
-//     return NextResponse.redirect('/dashboard');
-//   }
-
-//   // Redirect to login if the user is not logged in and trying to access the dashboard
-//   if (!currentUser && url.pathname.startsWith('/dashboard')) {
-//     return NextResponse.redirect('/auth/login');
-//   }
-
-//   // Allow the request to proceed if none of the above conditions are met
-//   return NextResponse.next();
-// }
+  matcher: ["/((?!api|_next/static|_next/image|images|favicon.ico).*)"],
+};
