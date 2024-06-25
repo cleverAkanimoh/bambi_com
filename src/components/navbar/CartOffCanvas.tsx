@@ -70,7 +70,7 @@ export default function CartOffCanvas() {
       />
 
       <div
-        className={clsx("w-full flex transition-all duration-500", {
+        className={clsx("w-full xs:w-fit flex transition-all duration-500", {
           "translate-x-0 opacity-100 visible": isCartClicked,
           "translate-x-full opacity-0 invisible": !isCartClicked,
         })}
@@ -91,7 +91,7 @@ export default function CartOffCanvas() {
         >
           {user ? (
             <>
-              {user ? (
+              {cartItems.length > 0 ? (
                 <div className="pb-16">
                   <div className="w-full flex items-center justify-between mb-3">
                     <Link href="/shop" className="hover:underline text-primary">
@@ -99,7 +99,7 @@ export default function CartOffCanvas() {
                     </Link>
                     <DeleteAllCartItemsButton />
                   </div>
-                  {cartItems.map((item, index) => (
+                  {cartItems.splice(0, 6).map((item, index) => (
                     <CartTile
                       key={index}
                       src={item.src}
@@ -125,7 +125,8 @@ export default function CartOffCanvas() {
                       href="/cart"
                       className="p-3 flex gap-2 bg-gray-100 border border-gray-300 hover:bg-gray-50  rounded-full !text-black justify-center items-center"
                     >
-                      <BamIcon Icon={ShoppingCartIcon} size="med" /> View cart
+                      <BamIcon Icon={ShoppingCartIcon} size="med" /> View cart{" "}
+                      <small>{cartItems.length}</small>
                     </BamLink>
                     <BamLink
                       variant="ghost"
@@ -135,7 +136,6 @@ export default function CartOffCanvas() {
                       <BamIcon Icon={ShareIcon} size="med" /> Checkout
                     </BamLink>
                   </div>
-                  {/* <!-- Cart Product Button End --> */}
                 </div>
               ) : (
                 <section className="h-full flex flex-col gap-5 items-center justify-center">

@@ -8,7 +8,12 @@ import { IoCloseCircleSharp } from "react-icons/io5";
 import { useAuth } from "@/context/auth-context";
 import { CartType } from "@/types";
 import Button from "./Button";
-import { useAddToCart, useRemoveSingleCartItem, useClearAllItemsFromCart, useToggleWishlistItem } from "@/lib/cart";
+import {
+  useAddToCart,
+  useRemoveSingleCartItem,
+  useClearAllItemsFromCart,
+  useToggleWishlistItem,
+} from "@/lib/cart";
 import { FcLike } from "react-icons/fc";
 import { CiHeart } from "react-icons/ci";
 
@@ -23,7 +28,6 @@ export function AddToCartButton({
   const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
   const addToCartMutation = useAddToCart();
- 
 
   const handleAddToCart = () => {
     if (!user) {
@@ -37,7 +41,8 @@ export function AddToCartButton({
     addToCartMutation.mutate(cart, {
       onSuccess: () => {
         queryClient.invalidateQueries(["cartItems", user?.uid]);
-     
+        toast.success(`${cart.title} has been added to cart`);
+
         setLoading(false);
       },
       onError: (error: unknown) => {
@@ -69,8 +74,12 @@ export function AddToWishlistButton({
   className?: string;
 }) {
   const { user } = useAuth();
+  const [isLoading, setIsLoading] = useState(false)
+  const [isLiked, setIsLiked] = useState(false)
 
-  const { toggleWishlistItemMutation, isLoading } = useToggleWishlistItem(wishlistItem.id);
+  // const { toggleWishlistItemMutation, isLoading } = useToggleWishlistItem(
+  //   wishlistItem.id
+  // );
 
   const handleAddToWishlist = () => {
     if (!user) {
@@ -80,16 +89,20 @@ export function AddToWishlistButton({
       return;
     }
 
-    toggleWishlistItemMutation.mutate(); // Toggle the item in the wishlist
+    // toggleWishlistItemMutation.mutate(); // Toggle the item in the wishlist
   };
 
-  const isLiked = toggleWishlistItemMutation.data?.isInWishlist ?? false;
+  // const isLiked = toggleWishlistItemMutation.data?.isInWishlist ?? false;
 
   const styles = className;
 
   return (
-    <button onClick={handleAddToWishlist} className={styles} disabled={isLoading}>
-      {isLoading ? "Loading..." : (isLiked ? <FcLike /> : <CiHeart />)}
+    <button
+      onClick={handleAddToWishlist}
+      className={styles}
+      disabled={isLoading}
+    >
+      {isLoading ? "Loading..." : isLiked ? <FcLike /> : <CiHeart />}
     </button>
   );
 }
@@ -129,7 +142,11 @@ export const DeleteCartItemById = ({
       className="cart-product-remove text-xl text-red-600"
       onClick={handleDelete}
     >
-      {loading ? <BiRefresh className="animate-spin" /> : <IoCloseCircleSharp />}
+      {loading ? (
+        <BiRefresh className="animate-spin" />
+      ) : (
+        <IoCloseCircleSharp />
+      )}
     </button>
   );
 };

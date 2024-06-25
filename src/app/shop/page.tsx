@@ -3,7 +3,7 @@ import ProductCardWrapper from "@/components/shop/ProductCardWrapper";
 import React from "react";
 import Loading from "../loading";
 
-export default function page({
+export default async function page({
   searchParams: { sort_by, search, currentPage },
 }: {
   searchParams: { sort_by: string; search: string; currentPage: string };
