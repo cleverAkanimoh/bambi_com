@@ -2,14 +2,11 @@ import { auth } from "../../auth";
 import { prisma } from "./prisma";
 
 export const getDbUser = async ({ email }: { email: string }) => {
-  try {
-    const dbUser = await prisma.user.findUnique({
-      where: { email },
-    });
-    return dbUser;
-  } catch (error) {
-    console.log(error);
-  }
+  const dbUser = await prisma.user.findUnique({
+    where: { email },
+  });
+  if (!dbUser) return null;
+  return dbUser;
 };
 
 export const getCurrentUser = async () => {
@@ -41,20 +38,9 @@ export const getCompleteUserMetadata = async () => {
   return completeUserMetadata;
 };
 
-export const getCurrentUserCartItems = async () => {
-  const user = await getCurrentUser();
-  const profile = await prisma.cartItems.findUnique({
-    where: { userId: user?.id ?? "" },
-  });
-
-  return profile;
-};
 
 export const getCurrentUserWishlist = async () => {
-  const user = await getCurrentUser();
-  const wishes = await prisma.wishlist.findUnique({
-    where: { userId: user?.id ?? "" },
-  });
+  const user = await getCompleteUserMetadata();
 
-  return wishes;
+  return user?.Wishlist;
 };

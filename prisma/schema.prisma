@@ -23,23 +23,33 @@ model User {
   phone         String?   @default("")
   role          String?   @default("user")
 
-  last_signed_in DateTime   @default(now()) @map(name: "last_signed_in")
-  createdAt      DateTime   @default(now()) @map(name: "created_at")
-  updatedAt      DateTime   @updatedAt @map(name: "updated_at")
-  CartItems      CartItems?
-  Wishlist       Wishlist?
+  last_signed_in DateTime    @default(now()) @map(name: "last_signed_in")
+  createdAt      DateTime    @default(now()) @map(name: "created_at")
+  updatedAt      DateTime    @updatedAt @map(name: "updated_at")
+  CartItems      CartItems[]
+  Wishlist       Wishlist[]
 }
 
 model CartItems {
-  id     String @id @default(uuid()) @map("_id")
-  // add more here
+  id       String @id @default(uuid()) @map("_id")
+  src      String
+  href     String
+  title    String
+  price    Int
+  quantity Int
+
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String @unique
 }
 
 model Wishlist {
-  id     String @id @default(uuid()) @map("_id")
-  // add more here
+  id String @id @default(uuid()) @map("_id")
+
+  src   String
+  href  String
+  title String
+  price Int
+
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String @unique
 }

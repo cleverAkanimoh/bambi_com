@@ -1,15 +1,6 @@
-"use client";
-
-import Link from "next/link";
-import React, { useState, useEffect } from "react";
-import Image from "next/image";
-import NavLink from "./NavLink";
-import { pagesArray } from "@/lib/navData";
+import React from "react";
 import Search from "../Search";
 
-import Logo from "../../../public/assets/images/logo/logo.png";
-import clsx from "clsx";
-import { useGlobalContext } from "@/context/store";
 import BamIcon from "../Icon";
 import {
   HeartIcon,
@@ -18,40 +9,17 @@ import {
 } from "@heroicons/react/24/outline";
 import { BiMenu } from "react-icons/bi";
 import BamLink from "../BamLink";
+import MainNavClient from "./MainNavClient";
+import OffCartButton from "./OffCartButton";
+import MenuButton from "./MenuButton";
+import { getCurrentUserCartItems } from "@/lib/prismaHelpers";
 
-export default function MainNav() {
-  const { setIsMenuClicked, setIsCartClicked } = useGlobalContext();
-  const [isFixedNav, setIsFixedNav] = useState(false);
+export default async function MainNav() {
+  const totalItems = await getCurrentUserCartItems();
 
-  const totalItems = 0;
-
-  useEffect(() => {
-    window.onscroll = () =>
-      window.scrollY > 120 ? setIsFixedNav(true) : setIsFixedNav(false);
-  }, []);
   return (
-    <section
-      className={clsx(
-        "bg-white flex items-center justify-between px-2 w-full transition-all duration-500",
-        {
-          "fixed top-0 left-0 shadow z-40": isFixedNav,
-        }
-      )}
-    >
-      <Link href="/">
-        <Image src={Logo} className="max-xs:w-28" alt="Bambi" />
-      </Link>
-
-      <ul className=" max-lg:hidden flex justify-center items-center gap-8">
-        <NavLink href="/">Home</NavLink>
-        <NavLink href="/shop">Shop</NavLink>
-        <NavLink href="/faq">Faqs</NavLink>
-        <NavLink href="#" array={pagesArray}>
-          Pages
-        </NavLink>
-      </ul>
-
-      <div className="flex items-center justify-center xs:gap-2">
+    <MainNavClient>
+      <div className="flex items-center justify-center xs:gap-2 pr-1">
         <React.Suspense>
           <Search />
         </React.Suspense>
@@ -65,30 +33,10 @@ export default function MainNav() {
           <span className="sr-only">Wishlist</span>
         </BamLink>
 
-        <button
-          className="relative mx-2 hover:text-primary"
-          onClick={() => setIsCartClicked(true)}
-          title="Cart"
-        >
-          <BamIcon Icon={ShoppingCartIcon} size="med" />
-          {totalItems > 0 && (
-            <span
-              key={totalItems}
-              className="absolute -top-1 -right-0.5 bg-primary text-white rounded-full size-4 text-xs grid place-items-center transition-all duration-500"
-            >
-              {totalItems}
-            </span>
-          )}
-        </button>
+        <OffCartButton totalItems={0} />
 
-        <button
-          className="lg:hidden mr-1"
-          title="Menu"
-          onClick={() => setIsMenuClicked(true)}
-        >
-          <BamIcon Icon={BiMenu} size="big" className="hover:text-primary" />
-        </button>
+        <MenuButton />
       </div>
-    </section>
+    </MainNavClient>
   );
 }
