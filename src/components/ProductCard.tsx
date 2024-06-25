@@ -31,7 +31,7 @@ const ShopProductCard = ({
   category?: string;
   id: string | number;
 }) => {
-  const [isLiked, setIsLiked] = useState(false)
+  const [isLiked, setIsLiked] = useState(false);
   const quickViewClicked = () => {
     localStorage.setItem(
       "productInfo",
@@ -47,10 +47,9 @@ const ShopProductCard = ({
       })
     );
   };
-const addToWishList = () =>{
-  setIsLiked(prevState=>!prevState)
-}
-
+  const addToWishList = () => {
+    setIsLiked((prevState) => !prevState);
+  };
 
   return (
     <motion.div
@@ -61,7 +60,7 @@ const addToWishList = () =>{
       className=""
     >
       <div className="group">
-        <div className="relative">
+        <div className="relative overflow-hidden">
           <Link href={href} className="image">
             <Image
               className="size-full"
@@ -70,15 +69,18 @@ const addToWishList = () =>{
               width={100}
               height={100}
             />
-                    </Link>
+          </Link>
           <span className="absolute top-2 left-2 bg-black p-1 !text-sm min-w-14 grid place-items-center rounded-md   text-white ">
             <span className="text-center">{category ?? "-18%"}</span>
           </span>
           <div className="flex flex-col gap-6 absolute top-4 group-hover:top-2 right-4 text-xl p-3 text-[#555] opacity-0 group-hover:opacity-100 transition-all ease-linear duration-[400ms]">
-            <button onClick={addToWishList} className="bg-white p-2 hover:bg-primary hover:text-white transition-all ease-linear duration-150 rounded">
-             {isLiked ? <FcLike /> : <CiHeart />} 
-            </button>
-            <Link href="/compare" className="bg-white p-2 hover:bg-primary hover:text-white transition-all ease-linear duration-150 rounded">
+            <Button onClick={addToWishList}>
+              {isLiked ? <FcLike /> : <CiHeart />}
+            </Button>
+            <Link
+              href="/compare"
+              className="bg-white p-2 hover:bg-primary hover:text-white transition-all ease-linear duration-150 rounded"
+            >
               <SlRefresh />
             </Link>
             <button
@@ -86,12 +88,11 @@ const addToWishList = () =>{
               data-bs-toggle="modal"
               data-bs-target="#quick-view"
               onClick={() => quickViewClicked()}
-              
             >
               <CiSearch />
             </button>
           </div>
-          <div className="absolute -translate-y-[0rem] invisible !opacity-0 group-hover:!opacity-100 group-hover:-translate-y-[4.4rem] md:group-hover:-translate-y-[4rem] group-hover:visible left-1/2 -translate-x-1/2 w-1/2 bg-white hover:bg-primary hover:!text-white mx-auto text-center rounded p-3 transition-all ease-linear duration-[400ms]">
+          <div className="absolute -translate-y-[0rem] invisible !opacity-0 group-hover:!opacity-100 group-hover:-translate-y-[4.5rem] md: md:group-hover:-translate-y-[5rem] group-hover:visible left-1/2 -translate-x-1/2 w-1/2 md:w-3/4 mx-auto text-center rounded p-3 transition-all ease-linear duration-[400ms]">
             <AddToCartButton
               cart={{
                 src: src1,
@@ -106,11 +107,13 @@ const addToWishList = () =>{
         </div>
         <div className="flex flex-col items-center gap-2 mt-2">
           <h5 className="">
-            <Link className="text-black hover:text-primary" href={href}>{heading}</Link>
+            <Link className="text-black hover:text-primary" href={href}>
+              {heading}
+            </Link>
           </h5>
           <span className="flex items-center gap-2">
             <span className="!text-primary">${new_price}</span>
-            {old_price && <span className="!text-red-400">${old_price}</span>}
+            {old_price && <del className="text-red-400">${old_price}</del>}
           </span>
           {/* <p>{description}</p> */}
         </div>

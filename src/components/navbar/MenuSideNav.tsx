@@ -54,7 +54,7 @@ export default function MenuSideNav() {
         </div>
         <aside
           className={clsx(
-            "w-full xs:min-w-[300px]  h-screen overflow-y-auto p-2 xs:p-4 py-8 bg-white"
+            "w-full xs:min-w-[320px]  h-screen overflow-y-auto p-2 xs:p-4 py-8 bg-white"
           )}
         >
           <div className="space-y-10 px-2 w-full">
