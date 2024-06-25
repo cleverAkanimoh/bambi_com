@@ -8,12 +8,8 @@ import { FaUser } from "react-icons/fa";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import NavLink from "@/components/navbar/NavLink";
 import LogoutButton from "@/components/LogoutButton";
-import { getCurrentUser } from "@/lib/prismaHelpers";
-import { redirect } from "next/navigation";
 
 const Layout = async ({ children }: { children: React.ReactNode }) => {
-  const user = await getCurrentUser();
-  if (user) redirect("/auth/login");
   const navLinks = [
     {
       title: "Dashboard",
