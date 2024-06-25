@@ -1,130 +1,14 @@
-"use client";
 import React, { useState, useEffect, FormEvent } from "react";
-import { auth, db } from "@/config/firebase-config";
-import {
-  updateEmail,
-  updatePassword,
-  reauthenticateWithCredential,
-  EmailAuthProvider,
-} from "firebase/auth";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { useAuth } from '@/context/auth-context';
-import { useQuery, useMutation, useQueryClient } from 'react-query';
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Loading from "@/app/loading";
+import { getCurrentUser } from "@/lib/prismaHelpers";
 
-const fetchUserData = async (userId: string) => {
-  const docRef = doc(db, "users", userId);
-  const docSnap = await getDoc(docRef);
-  if (!docSnap.exists()) {
-    throw new Error("No such document!");
-  }
-  return docSnap.data();
-};
+const Page = async () => {
+  const user = await getCurrentUser();
 
-const Page = () => {
-  const { user } = useAuth();
-  const queryClient = useQueryClient();
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    displayName: "",
-    email: "",
-    password: "",
-    newPassword: "",
-    confirmPassword: "",
-  });
-
-  const { data: userData, isLoading } = useQuery(
-    ['userData', user?.uid],
-    () => fetchUserData(user?.uid ?? ''),
-    {
-      enabled: !!user,
-    }
-  );
-
-  useEffect(() => {
-    if (userData) {
-      setFormData((prevData) => ({
-        ...prevData,
-        firstName: userData.firstName || "",
-        lastName: userData.lastName || "",
-        displayName: userData.displayName || "",
-        email: userData.email || "",
-      }));
-    }
-  }, [userData]);
-
-  const updateUserData = useMutation(
-    async (updatedData: any) => {
-      if (!user){
-        throw new Error("User is not authenticated");
-        toast.error("Please sign in to update your data")
-      } 
-      const userRef = doc(db, "users", user.uid);
-      await updateDoc(userRef, updatedData);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('userData');
-        toast.success("Profile updated successfully");
-      },
-      onError: (error: any) => {
-        toast.error(error.message);
-      }
-    }
-  );
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitted(true);
-    try {
-      if (!user) throw new Error("User is not authenticated");
-
-      const updatedData: any = {};
-      if (formData.firstName) updatedData.firstName = formData.firstName;
-      if (formData.lastName) updatedData.lastName = formData.lastName;
-      if (formData.displayName) updatedData.displayName = formData.displayName;
-      if (formData.email && user.email !== formData.email) updatedData.email = formData.email;
-
-      updateUserData.mutate(updatedData);
-
-      if (user.email && formData.email && user.email !== formData.email) {
-        if (!formData.password) throw new Error("Password is required to update email");
-        const credential = EmailAuthProvider.credential(user.email, formData.password);
-        await reauthenticateWithCredential(user, credential);
-        await updateEmail(user, formData.email);
-      }
-
-      if (formData.newPassword && formData.newPassword === formData.confirmPassword) {
-        await updatePassword(user, formData.newPassword);
-      }
-
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        console.log(error.message);
-        toast.error(error.message);
-      } else {
-        toast.error("An error occurred");
-      }
-    } finally {
-      setIsSubmitted(false);
-    }
-  };
-
-  if (isLoading) {
-    return <Loading />;
-  }
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {};
 
   return (
     <div className="p-2">
@@ -147,8 +31,8 @@ const Page = () => {
                 placeholder="First name"
                 id="firstName"
                 name="firstName"
-                value={formData.firstName}
-                onChange={handleChange}
+                value={user?.name ?? ""}
+                required
               />
             </div>
             <div>
@@ -161,8 +45,8 @@ const Page = () => {
                 placeholder="Last name"
                 id="lastName"
                 name="lastName"
-                value={formData.lastName}
-                onChange={handleChange}
+                value={user?.name ?? ""}
+                required
               />
             </div>
           </div>
@@ -176,8 +60,8 @@ const Page = () => {
               placeholder="Display Name"
               id="displayName"
               name="displayName"
-              value={formData.displayName}
-              onChange={handleChange}
+              value={user?.name ?? ""}
+              required
             />
           </div>
           <div>
@@ -190,8 +74,8 @@ const Page = () => {
               placeholder="Email Address"
               id="email"
               name="email"
-              value={formData.email}
-              onChange={handleChange}
+              value={user?.email ?? ""}
+              required
             />
           </div>
           <div className="grid grid-cols-1 gap-4">
@@ -208,8 +92,7 @@ const Page = () => {
                 placeholder="Current Password"
                 id="password"
                 name="password"
-                value={formData.password}
-                onChange={handleChange}
+                required
               />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -223,8 +106,7 @@ const Page = () => {
                   placeholder="New Password"
                   id="newPassword"
                   name="newPassword"
-                  value={formData.newPassword}
-                  onChange={handleChange}
+                  required
                 />
               </div>
               <div>
@@ -237,8 +119,7 @@ const Page = () => {
                   id="confirmPassword"
                   placeholder="Confirm Password"
                   name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
+                  required
                 />
               </div>
             </div>
@@ -246,11 +127,11 @@ const Page = () => {
           <button
             type="submit"
             className={`self-start text-white w-full md:w-[40%] lg:w-[30%] text-center font-bold bg-black p-3 hover:bg-primary hover:text-white transition-all ease-in-out duration-200 ${
-              isSubmitted ? "opacity-70" : "opacity-100"
+              false ? "opacity-70" : "opacity-100"
             }`}
-            disabled={isSubmitted}
+            disabled={false}
           >
-            {isSubmitted ? "Saving..." : "Save Changes"}
+            {false ? "Saving..." : "Save Changes"}
           </button>
         </form>
       </div>

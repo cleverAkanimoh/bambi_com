@@ -2,9 +2,9 @@
 
 import React, { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ToastContainer, toast } from "react-toastify";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { registerUserAction } from "@/actions/authenticate";
+import { toast } from "react-toastify";
 
 const Page = () => {
   const router = useRouter();
@@ -18,6 +18,8 @@ const Page = () => {
     const lastName = formData.get("lastName") as string;
     const password = formData.get("password") as string;
     try {
+      console.log("Started registration");
+
       await registerUserAction({ email, firstName, lastName, password });
       toast.success("Registration successful");
       router.push("/auth/login");

@@ -37,9 +37,6 @@ export const registerUserAction = async ({
     },
   });
 
-  console.log("sign up was a success");
-  console.log(user.emailToken);
-
   return { user };
 };
 
