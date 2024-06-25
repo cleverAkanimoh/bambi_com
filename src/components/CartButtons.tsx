@@ -74,12 +74,10 @@ export function AddToWishlistButton({
   className?: string;
 }) {
   const { user } = useAuth();
-  const [isLoading, setIsLoading] = useState(false)
-  const [isLiked, setIsLiked] = useState(false)
 
-  // const { toggleWishlistItemMutation, isLoading } = useToggleWishlistItem(
-  //   wishlistItem.id
-  // );
+  const { toggleWishlistItemMutation, isLoading } = useToggleWishlistItem(
+    wishlistItem.id
+  );
 
   const handleAddToWishlist = () => {
     if (!user) {
@@ -89,10 +87,10 @@ export function AddToWishlistButton({
       return;
     }
 
-    // toggleWishlistItemMutation.mutate(); // Toggle the item in the wishlist
+    toggleWishlistItemMutation.mutate(); // Toggle the item in the wishlist
   };
 
-  // const isLiked = toggleWishlistItemMutation.data?.isInWishlist ?? false;
+  const isLiked = toggleWishlistItemMutation.data?.isInWishlist ?? false;
 
   const styles = className;
 

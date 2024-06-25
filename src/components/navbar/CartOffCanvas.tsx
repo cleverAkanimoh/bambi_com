@@ -99,7 +99,7 @@ export default function CartOffCanvas() {
                     </Link>
                     <DeleteAllCartItemsButton />
                   </div>
-                  {cartItems.splice(0, 6).map((item, index) => (
+                  {cartItems.slice(0, 6).map((item, index) => (
                     <CartTile
                       key={index}
                       src={item.src}
@@ -126,7 +126,9 @@ export default function CartOffCanvas() {
                       className="p-3 flex gap-2 bg-gray-100 border border-gray-300 hover:bg-gray-50  rounded-full !text-black justify-center items-center"
                     >
                       <BamIcon Icon={ShoppingCartIcon} size="med" /> View cart{" "}
-                      <small>{cartItems.length}</small>
+                      <small className="text-white bg-primary rounded-full size-5 grid place-items-center">
+                        {cartItems.length}
+                      </small>
                     </BamLink>
                     <BamLink
                       variant="ghost"

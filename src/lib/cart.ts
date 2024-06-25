@@ -14,6 +14,7 @@ import {
   doc,
   deleteDoc,
   getDoc,
+  setDoc,
 } from "firebase/firestore";
 import { useState } from "react";
 import { shopProducts } from "./products";
@@ -21,7 +22,6 @@ import { shopProducts } from "./products";
 const collectionName = "cartItems";
 export const cartItemRef = collection(db, collectionName);
 export const shopProductRef = collection(db, "products");
-
 const wishlistRef = collection(db, "wishlist");
 
 export const addProducts = () => {
