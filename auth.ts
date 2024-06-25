@@ -1,12 +1,12 @@
-import { getDbUser, getDbUserProfile } from "./lib/prismaHelpers";
 import Credentials from "next-auth/providers/credentials";
 
 import NextAuth from "next-auth";
 import { authConfig } from "./auth.config";
 
 import GoogleProvider from "next-auth/providers/google";
-import bcrypt from "bcryptjs";
-import { prisma } from "./lib/prisma";
+
+import { getDbUser } from "@/lib/prismaHelpers";
+import { prisma } from "@/lib/prisma";
 
 export const { auth, signIn, signOut } = NextAuth({
   ...authConfig,

@@ -2,24 +2,19 @@
 
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
-import { SignUpType } from "@/types/signUpType";
-import { signIn, signOut } from "@/auth";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getDbUser } from "@/lib/prismaHelpers";
+import { SignUp } from "@/types";
 import { generateUniqueString } from "@/lib/utils";
+import { signIn, signOut } from "../../auth";
 
 export const registerUserAction = async ({
-  companyName,
-  name,
-  jobTitle,
-  dateOfHire,
-  country,
-  state,
   email,
+  firstName,
+  lastName,
   password,
-  cv,
-}: SignUpType) => {
+}: SignUp) => {
   const userAlreadyExist = await prisma.user.findUnique({ where: { email } });
 
   if (userAlreadyExist) throw new Error("User with email already exist");
@@ -35,30 +30,17 @@ export const registerUserAction = async ({
 
   const user = await prisma.user.create({
     data: {
-      name: lower(name),
+      name: lower(firstName + " " + lastName),
       email: lowerEmail,
       password: hashedPassword,
       emailToken,
     },
   });
 
-  const userProfile = await prisma.userProfile.create({
-    data: {
-      userId: user.id,
-      companyName: lower(companyName),
-      jobTitle: lower(jobTitle),
-      dateOfHire: dateOfHire.toString(),
-      country: lower(country),
-      state: lower(state),
-      email: lowerEmail,
-      cv,
-    },
-  });
-
   console.log("sign up was a success");
   console.log(user.emailToken);
 
-  return { user, userProfile };
+  return { user };
 };
 
 export const loginUserAction = async ({

@@ -10,9 +10,6 @@ import Search from "../Search";
 import Logo from "../../../public/assets/images/logo/logo.png";
 import clsx from "clsx";
 import { useGlobalContext } from "@/context/store";
-import { CartType } from "@/types";
-import { useCartItems } from "@/lib/cart";
-import { useAuth } from "@/context/auth-context";
 import BamIcon from "../Icon";
 import {
   HeartIcon,
@@ -25,16 +22,8 @@ import BamLink from "../BamLink";
 export default function MainNav() {
   const { setIsMenuClicked, setIsCartClicked } = useGlobalContext();
   const [isFixedNav, setIsFixedNav] = useState(false);
-  const { user } = useAuth();
-  const { data: cartItems, isLoading, error } = useCartItems(user);
-  const [totalItems, setTotalItems] = useState<number>(0);
 
-  useEffect(() => {
-    if (cartItems) {
-      const total = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-      setTotalItems(total);
-    }
-  }, [cartItems]);
+  const totalItems = 0;
 
   useEffect(() => {
     window.onscroll = () =>

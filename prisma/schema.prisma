@@ -1,14 +1,45 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mongodb"
-  url      = env("DATABASE_URL")
+  provider     = "mongodb"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model User {
+  id            String    @id @default(uuid()) @map("_id")
+  email         String    @unique
+  emailVerified DateTime?
+  emailToken    String
+  name          String
+  image         String?   @default("")
+  password      String
+  address       String?   @default("")
+  state         String?   @default("")
+  city          String?
+  country       String?   @default("")
+  phone         String?   @default("")
+  role          String?   @default("user")
+
+  last_signed_in DateTime   @default(now()) @map(name: "last_signed_in")
+  createdAt      DateTime   @default(now()) @map(name: "created_at")
+  updatedAt      DateTime   @updatedAt @map(name: "updated_at")
+  CartItems      CartItems?
+  Wishlist       Wishlist?
+}
+
+model CartItems {
+  id     String @id @default(uuid()) @map("_id")
+  // add more here
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique
+}
+
+model Wishlist {
+  id     String @id @default(uuid()) @map("_id")
+  // add more here
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique
 }

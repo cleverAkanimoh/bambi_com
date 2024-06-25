@@ -23,3 +23,14 @@ export type CartType = {
   price: number;
   quantity: number;
 };
+
+export type SignUp = {
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+  country?: string;
+  city?: string;
+  phone?: string;
+  address?: string;
+};
