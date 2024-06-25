@@ -65,7 +65,7 @@ export default function CartOffCanvas() {
       )}
     >
       <div
-        className="h-screen sm:w-full"
+        className="h-screen xs:w-full"
         onClick={() => setIsCartClicked(false)}
       />
 
