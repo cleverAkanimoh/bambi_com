@@ -1,11 +1,10 @@
-// next.config.js
-const { getAuth } = require('firebase/auth');
-const { initFirebase } = require('./path/to/firebase-config'); // Update path to your Firebase config
+/** @type {import('next').NextConfig} */
+import {auth} from "firebase/auth"
+import {initFirebase} from "./src/config/firebase-config"
 
-// Initialize Firebase
+
 initFirebase(); // Ensure Firebase is initialized correctly
-
-module.exports = {
+const nextConfig = {
   async redirects() {
     const auth = getAuth();
     const { currentUser } = auth;
@@ -31,4 +30,7 @@ module.exports = {
       ];
     }
   },
+
 };
+
+export default nextConfig;
