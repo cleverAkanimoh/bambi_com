@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 import {auth} from "firebase/auth"
-import {initFirebase} from "./src/config/firebase-config"
+import {initFirebase} from "./src/config/firebase-config.ts"
 
 
 initFirebase(); // Ensure Firebase is initialized correctly
