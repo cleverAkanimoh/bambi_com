@@ -143,9 +143,7 @@ export default function CartOffCanvas() {
                 <section className="h-full flex flex-col gap-5 items-center justify-center">
                   <CiShoppingCart size={130} className="opacity-60" />
                   <h3>Nothing in cart</h3>
-                  <Link href="/shop" className="hover:text-primary">
-                    Go to shop
-                  </Link>
+                  <BamLink href="/shop">Go to shop</BamLink>
                 </section>
               )}
             </>

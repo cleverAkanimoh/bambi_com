@@ -14,7 +14,6 @@ import {
   doc,
   deleteDoc,
   getDoc,
-  setDoc,
 } from "firebase/firestore";
 import { useState } from "react";
 import { shopProducts } from "./products";
