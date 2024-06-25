@@ -130,7 +130,7 @@ const Page = () => {
             </tbody>
           </table>
 
-          <section className="flex items-center justify-center gap-6">
+          <section className="flex flex-col md:flex-row items-center justify-center gap-6">
             <Link className="p-2 text-white rounded-md text-center font-semibold bg-primary" href="/checkout">Checkout</Link>
             <Link className="p-2 text-white rounded-md text-center font-semibold bg-primary" href="/shop">Continue Shopping</Link>
             <button
