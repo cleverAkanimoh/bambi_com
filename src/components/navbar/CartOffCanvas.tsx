@@ -65,12 +65,12 @@ export default function CartOffCanvas() {
       )}
     >
       <div
-        className="h-screen xs:w-full"
+        className="h-screen sm:w-full bg-red-800"
         onClick={() => setIsCartClicked(false)}
       />
 
       <div
-        className={clsx("w-full flex transition-all duration-500", {
+        className={clsx("w-full xs:w-fit flex transition-all duration-500", {
           "translate-x-0 opacity-100 visible": isCartClicked,
           "translate-x-full opacity-0 invisible": !isCartClicked,
         })}
