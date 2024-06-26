@@ -48,14 +48,11 @@ export default async function CartOffCanvas() {
                 />
               ))}
 
-              {/* <!-- Cart Product Total Start --> */}
-              <div className="cart-product-total mb-4 pb-4 border-bottom">
-                <span className="value">Total</span>
-                <span className="price">${cartTotal}</span>
+              <div className="flex justify-between mb-6 mx-2">
+                <span className="font-bold text-xl">Total:</span>
+                <span className="text-primary">${cartTotal}</span>
               </div>
-              {/* <!-- Cart Product Total End --> */}
 
-              {/* <!-- Cart Product Button Start --> */}
               <div className="text-white space-y-2">
                 <BamLink
                   variant="ghost"
