@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { getCompleteUserMetadata, getCurrentUser } from "@/lib/prismaHelpers";
 import { CartType } from "@/types";
+import { revalidatePath } from "next/cache";
 
 // CRUD
 
@@ -66,7 +67,7 @@ export const removeSingleCartItem = async (id: string) => {
         quantity: thisCartItem.quantity - 1,
       },
     });
-    if (thisCartItem.quantity === 0) {
+    if (thisCartItem.quantity < 1) {
       await prisma.cartItems.delete({ where: { id: thisCartItem.id } });
       return {
         message: "Item has been removed",
@@ -84,4 +85,5 @@ export const deleteAllCartItems = async () => {
   const user = await getCurrentUser();
 
   await prisma.cartItems.deleteMany({ where: { userId: user?.id } });
+  revalidatePath("", "page");
 };

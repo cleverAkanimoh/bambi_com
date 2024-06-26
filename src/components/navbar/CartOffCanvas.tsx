@@ -17,8 +17,7 @@ import CartOffCanvasClient from "./CartOffCanvasClient";
 import { getCurrentUserCartItems } from "@/helpers/cart";
 
 export default async function CartOffCanvas() {
-  const user = await getCurrentUserCartItems();
-  const cartItems: any[] = [];
+  const cartItems = await getCurrentUserCartItems();
 
   const cartTotal = cartItems?.reduce(
     (prev, curr) => prev + curr?.price * curr?.quantity,
@@ -29,7 +28,7 @@ export default async function CartOffCanvas() {
     <CartOffCanvasClient>
       {(await getCurrentUser()) ? (
         <>
-          {cartItems.length > 0 ? (
+          {cartItems?.length ? (
             <div className="pb-16">
               <div className="w-full flex items-center justify-between mb-3">
                 <Link href="/shop" className="hover:underline text-primary">
@@ -45,7 +44,7 @@ export default async function CartOffCanvas() {
                   title={item.title}
                   price={item.price}
                   quantity={item.quantity}
-                  id={`${item.uid}`}
+                  id={`${item.id}`}
                 />
               ))}
 

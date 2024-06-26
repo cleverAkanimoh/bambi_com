@@ -28,10 +28,15 @@ export function AddToCartButton({
     try {
       setLoading(true);
       const response = await addToCart(cart);
-      toast.warning(response?.message);
-      setLoading(false);
+      if (response) {
+        toast.warning(response?.message);
+        return;
+      }
+      toast.success(`${cart.title} has been added to cart`);
     } catch (error) {
       toast.error(`${error}`);
+    } finally {
+      setLoading(false);
     }
   };
 
