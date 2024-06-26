@@ -1,20 +1,19 @@
+
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Button from "@/components/Button";
 import clsx from "clsx";
-import React, { useState } from "react";
 import { PaystackButton } from "react-paystack";
 import { toast } from "react-toastify";
-import Loading from "@/app/loading";
 import { prisma } from "@/lib/prisma";
-import { getCurrentUser, getCurrentUserCartItems } from "@/lib/prismaHelpers";
+import { getCurrentUser } from "@/lib/prismaHelpers";
+import { getCurrentUserCartItems } from "@/helpers/cart";
 
 const orderStyle = clsx("p-2 flex justify-between");
 
 const publicKey = "pk_test_ef5e04574fd9f51d757806866fce40f5ebfd6b26";
 
 export default async function CheckoutPage() {
-  const [paymentMethod, setPaymentMethod] = useState("");
-  const cartItems: any[] = [];
+  const cartItems = await getCurrentUserCartItems()
   const user = await getCurrentUser();
 
   const cartTotal = cartItems?.reduce(
@@ -23,7 +22,6 @@ export default async function CheckoutPage() {
   );
 
   const handlePaymentMethod = (x: string) => {
-    setPaymentMethod(x);
     document?.getElementById("update-billing")?.click();
   };
 
@@ -60,7 +58,7 @@ export default async function CheckoutPage() {
 
   const componentProps = {
     email: user?.email || "",
-    amount: cartTotal * 100, // Paystack expects amount in kobo
+    amount: cartTotal ?? 0 * 100, // Paystack expects amount in kobo
     metadata: {
       custom_fields: [
         {
@@ -196,7 +194,7 @@ export default async function CheckoutPage() {
                   <PaymentMethod
                     id="bank"
                     name="payment method"
-                    value={paymentMethod}
+                    value={""}
                     label="Direct Bank Transfer"
                     onChange={(e) => handlePaymentMethod("bank")}
                   />
@@ -204,8 +202,8 @@ export default async function CheckoutPage() {
                     className={clsx(
                       "px-4 rounded-b-md transition-all duration-300",
                       {
-                        "border h-full mt-1 py-3": paymentMethod === "bank",
-                        " h-0 overflow-hidden": paymentMethod !== "bank",
+                        "border h-full mt-1 py-3": true,
+                        " h-0 overflow-hidden": true,
                       }
                     )}
                   >
@@ -233,7 +231,7 @@ export default async function CheckoutPage() {
                     id="paystack"
                     label="Continue with Paystack"
                     name="payment method"
-                    value={paymentMethod}
+                    value={"paystack"}
                     onChange={() => {
                       handlePaymentMethod("paystack");
                     }}
