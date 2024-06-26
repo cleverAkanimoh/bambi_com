@@ -71,7 +71,7 @@ const ShopProductCard = ({
           <span className="absolute top-2 left-2 bg-black p-1 !text-sm min-w-14 grid place-items-center rounded-md   text-white ">
             <span className="text-center">{category ?? "-18%"}</span>
           </span>
-          <div className="!overflw-hidden flex flex-col gap-6 absolute top-4 group-hover:top-2 right-4 text-xl p-3 text-[#555] opacity-0 group-hover:opacity-100 transition-all ease-linear duration-[400ms]">
+          <div className="!overflow-hidden flex flex-col gap-6 absolute top-4 group-hover:top-2 right-4 text-xl p-3 text-[#555] opacity-0 group-hover:opacity-100 transition-all ease-linear duration-[400ms]">
            <AddToWishlistButton
            wishlistItem={{
             src: src1,

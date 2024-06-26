@@ -29,7 +29,7 @@ export const HomeProductCard = ({
       whileInView={fadeUp.whileInView}
       transition={fadeUp.transition}
     >
-      <div className="relative group">
+      <div className="!overflow-hidden relative group">
         <Link href={href} className="overflow-hidden block">
           <Image
             width={50}
