@@ -21,6 +21,7 @@ export const addWishListItems = async ({
 }: WishListType) => {
   const user = await getCurrentUser();
   if (!user) throw new Error("Please login to add to wishlist");
+  
   const wishItem = await prisma.wishlist.findFirst({
     where: { productId },
   });

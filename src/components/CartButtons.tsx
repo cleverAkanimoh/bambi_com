@@ -8,7 +8,6 @@ import { CartType, WishListType } from "@/types";
 import Button from "./Button";
 import { FcLike } from "react-icons/fc";
 import { CiHeart } from "react-icons/ci";
-import { getCurrentUser } from "@/lib/prismaHelpers";
 import {
   addToCart,
   deleteAllCartItems,

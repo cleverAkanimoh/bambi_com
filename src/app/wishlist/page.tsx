@@ -9,7 +9,6 @@ import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { toast } from "react-toastify";
-import { IoCloseCircleSharp } from "react-icons/io5";
 import { getCurrentUserWishlist } from "@/helpers/wishlist";
 import { AddToCartButton, DeleteCartItemById } from "@/components/CartButtons"; 
 
@@ -88,7 +87,7 @@ const WishList = () => {
   return (
     <div className="flex flex-col gap-10 md:gap-14">
       <Breadcrumbs active="Wishlist" />
-      {wishlist && wishlist.length === 0 ? (
+      {wishlist?.length??0 < 1 ? (
         <section className="h-full flex flex-col gap-5 items-center justify-center">
           <CiShoppingCart size={90} className="opacity-60" />
           <h5>No items in wishlist</h5>

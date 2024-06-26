@@ -88,7 +88,7 @@ const Page = () => {
   return (
     <div className="flex flex-col gap-10 md:gap-14">
       <Breadcrumbs active="Cart" />
-      {cartItems && cartItems.length === 0 ? (
+      {cartItems?.length??0 < 1 ? (
         <section className="h-full flex flex-col gap-5 items-center justify-center">
           <CiShoppingCart size={90} className="opacity-60" />
           <h5>Nothing in cart</h5>
