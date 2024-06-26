@@ -1,20 +1,19 @@
 "use client";
 import { toast } from "react-toastify";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import { BiRefresh, BiTrash } from "react-icons/bi";
 import { IoCloseCircleSharp } from "react-icons/io5";
 import { CartType } from "@/types";
 import Button from "./Button";
-// import {
-//   useAddToCart,
-//   useRemoveSingleCartItem,
-//   useClearAllItemsFromCart,
-//   useToggleWishlistItem,
-// } from "@/lib/cart";
 import { FcLike } from "react-icons/fc";
 import { CiHeart } from "react-icons/ci";
 import { getCurrentUser } from "@/lib/prismaHelpers";
+import {
+  addToCart,
+  deleteAllCartItems,
+  removeSingleCartItem,
+} from "@/helpers/cart";
 
 export function AddToCartButton({
   cart,
@@ -23,24 +22,17 @@ export function AddToCartButton({
   cart: CartType;
   className?: string;
 }) {
-  // const { user } = useAuth();
-  // const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
-  // const addToCartMutation = useAddToCart();
 
   const handleAddToCart = async () => {
-    const user = await getCurrentUser();
-    if (!user) {
-      toast.warning("You have to log in before you can add items to cart", {
-        position: "top-center",
-      });
-      return;
-    }
-
     try {
-      // const await
       setLoading(true);
-    } catch (error) {}
+      const response = await addToCart(cart);
+      toast.warning(response?.message);
+      setLoading(false);
+    } catch (error) {
+      toast.error(`${error}`);
+    }
   };
 
   const styles = clsx(
@@ -95,30 +87,50 @@ export const DeleteCartItemById = ({
   id: string | number;
   item: string;
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const handleDelete = async () => {
-    const user = await getCurrentUser();
-    // setLoading(true);
+    try {
+      setIsLoading(true);
+      const response = await removeSingleCartItem(id.toString());
+      toast.warning(response?.message);
+
+      setIsLoading(false);
+    } catch (error) {
+      toast.error(`${error}`);
+    }
   };
 
   return (
     <button
-      className="cart-product-remove text-xl text-red-600"
+      className="cart-product-remove text-xl text-red-600 disabled:pointer-events-none"
       onClick={handleDelete}
+      disabled={isLoading}
     >
-      {false ? <BiRefresh className="animate-spin" /> : <IoCloseCircleSharp />}
+      {isLoading ? (
+        <BiRefresh className="animate-spin" />
+      ) : (
+        <IoCloseCircleSharp />
+      )}
     </button>
   );
 };
 
 export const DeleteAllCartItemsButton = () => {
+  const [loading, setLoading] = useState(false);
   const handleDelete = async () => {
-    const user = getCurrentUser();
-    // setLoading(true);
+    try {
+      setLoading(true);
+      await deleteAllCartItems();
+      toast.info("Your cart has been cleared");
+      setLoading(false);
+    } catch (error) {
+      toast.error(`${error}`);
+    }
   };
 
   return (
-    <Button title="Clear cart" onClick={handleDelete} disabled={false}>
-      {false ? <BiRefresh className="animate-spin w-4" /> : <BiTrash />}
+    <Button title="Clear cart" onClick={handleDelete} disabled={loading}>
+      {loading ? <BiRefresh className="animate-spin w-4" /> : <BiTrash />}
     </Button>
   );
 };

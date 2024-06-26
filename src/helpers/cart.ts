@@ -6,6 +6,7 @@ import { CartType } from "@/types";
 
 // Create
 export const addToCart = async ({
+  id,
   src,
   href,
   title,
@@ -14,6 +15,23 @@ export const addToCart = async ({
 }: CartType) => {
   const user = await getCurrentUser();
   if (!user) throw new Error("Please login to add to cart");
+
+  const cartItemAlreadyExist = await prisma.cartItems.findFirst({
+    where: { id: id.toString() },
+  });
+
+  if (cartItemAlreadyExist) {
+    await prisma.cartItems.update({
+      where: { id: cartItemAlreadyExist.id },
+      data: {
+        quantity: cartItemAlreadyExist.quantity + 1,
+      },
+    });
+
+    return {
+      message: "Item already exist. It's quantity will be incremented in cart",
+    };
+  }
 
   await prisma.cartItems.create({
     data: {
@@ -35,5 +53,33 @@ export const getCurrentUserCartItems = async () => {
 };
 
 // Update
+export const removeSingleCartItem = async (id: string) => {
+  const thisCartItem = await prisma.cartItems.findFirst({ where: { id } });
+
+  //   reduce the cart item quantity if 0 delete it
+  if (thisCartItem) {
+    await prisma.cartItems.update({
+      where: { id: thisCartItem.id },
+      data: {
+        quantity: thisCartItem.quantity - 1,
+      },
+    });
+    if (thisCartItem.quantity === 0) {
+      await prisma.cartItems.delete({ where: { id: thisCartItem.id } });
+      return {
+        message: "Item has been removed",
+      };
+    }
+
+    return {
+      message: "Item quantity has been decremented",
+    };
+  }
+};
 
 // Delete All
+export const deleteAllCartItems = async () => {
+  const user = await getCurrentUser();
+
+  await prisma.cartItems.delete({ where: { userId: user?.id } });
+};

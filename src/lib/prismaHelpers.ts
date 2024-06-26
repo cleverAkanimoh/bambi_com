@@ -38,9 +38,3 @@ export const getCompleteUserMetadata = async () => {
   return completeUserMetadata;
 };
 
-
-export const getCurrentUserWishlist = async () => {
-  const user = await getCompleteUserMetadata();
-
-  return user?.Wishlist;
-};
