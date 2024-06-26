@@ -4,19 +4,22 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "npx prisma generate && next dev",
+    "build": "npx prisma generate && next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.4",
+    "@prisma/client": "^5.16.0",
     "@react-email/components": "^0.0.19",
     "@react-email/tailwind": "^0.0.18",
     "@tanstack/react-table": "^8.17.3",
+    "bcryptjs": "^2.4.3",
     "clsx": "^2.1.1",
-    "firebase": "^10.12.2",
     "next": "^14.2.4",
+    "next-auth": "^5.0.0-beta.9",
+    "prisma": "^5.16.0",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.2.1",
@@ -30,6 +33,7 @@
     "use-debounce": "^10.0.1"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/next": "^9.0.0",
     "@types/node": "^20",
     "@types/react": "^18",

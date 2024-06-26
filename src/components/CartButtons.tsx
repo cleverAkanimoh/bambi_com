@@ -1,21 +1,19 @@
 "use client";
 import { toast } from "react-toastify";
-import React, { useEffect, useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
+import React, { useState } from "react";
 import clsx from "clsx";
 import { BiRefresh, BiTrash } from "react-icons/bi";
 import { IoCloseCircleSharp } from "react-icons/io5";
-import { useAuth } from "@/context/auth-context";
 import { CartType } from "@/types";
 import Button from "./Button";
-import {
-  useAddToCart,
-  useRemoveSingleCartItem,
-  useClearAllItemsFromCart,
-  useToggleWishlistItem,
-} from "@/lib/cart";
 import { FcLike } from "react-icons/fc";
 import { CiHeart } from "react-icons/ci";
+import { getCurrentUser } from "@/lib/prismaHelpers";
+import {
+  addToCart,
+  deleteAllCartItems,
+  removeSingleCartItem,
+} from "@/helpers/cart";
 
 export function AddToCartButton({
   cart,
@@ -24,34 +22,22 @@ export function AddToCartButton({
   cart: CartType;
   className?: string;
 }) {
-  const { user } = useAuth();
-  const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
-  const addToCartMutation = useAddToCart();
 
-  const handleAddToCart = () => {
-    if (!user) {
-      toast.warning("You have to log in before you can add items to cart", {
-        position: "top-center",
-      });
-      return;
+  const handleAddToCart = async () => {
+    try {
+      setLoading(true);
+      const response = await addToCart(cart);
+      if (response) {
+        toast.warning(response?.message);
+        return;
+      }
+      toast.success(`${cart.title} has been added to cart`);
+    } catch (error) {
+      toast.error(`${error}`);
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(true);
-    addToCartMutation.mutate(cart, {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["cartItems", user?.uid]);
-        toast.success(`${cart.title} has been added to cart`);
-
-        setLoading(false);
-      },
-      onError: (error: unknown) => {
-        if (error instanceof Error) {
-          toast.error(error.message);
-        }
-        setLoading(false);
-      },
-    });
   };
 
   const styles = clsx(
@@ -73,26 +59,18 @@ export function AddToWishlistButton({
   wishlistItem: CartType;
   className?: string;
 }) {
-  const { user } = useAuth();
-  const [isLoading, setIsLoading] = useState(false)
-  const [isLiked, setIsLiked] = useState(false)
-
-  // const { toggleWishlistItemMutation, isLoading } = useToggleWishlistItem(
-  //   wishlistItem.id
-  // );
-
-  const handleAddToWishlist = () => {
+  const handleAddToWishlist = async () => {
+    const user = await getCurrentUser();
     if (!user) {
       toast.warning("You have to log in before you can add items to wishlist", {
         position: "top-center",
       });
       return;
     }
-
-    // toggleWishlistItemMutation.mutate(); // Toggle the item in the wishlist
   };
 
-  // const isLiked = toggleWishlistItemMutation.data?.isInWishlist ?? false;
+  const isLiked = false;
+  const isLoading = false;
 
   const styles = className;
 
@@ -114,35 +92,26 @@ export const DeleteCartItemById = ({
   id: string | number;
   item: string;
 }) => {
-  const { user } = useAuth();
-  const queryClient = useQueryClient();
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const handleDelete = async () => {
+    try {
+      setIsLoading(true);
+      const response = await removeSingleCartItem(id.toString());
+      toast.warning(response?.message);
 
-  const removeSingleCartItemMutation = useRemoveSingleCartItem();
-
-  const handleDelete = () => {
-    setLoading(true);
-    removeSingleCartItemMutation.mutate(id, {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["cartItems", user?.uid]);
-        toast.success(`${item} has been deleted from cart`);
-        setLoading(false);
-      },
-      onError: (error: unknown) => {
-        if (error instanceof Error) {
-          toast.error(error.message);
-        }
-        setLoading(false);
-      },
-    });
+      setIsLoading(false);
+    } catch (error) {
+      toast.error(`${error}`);
+    }
   };
 
   return (
     <button
-      className="cart-product-remove text-xl text-red-600"
+      className="cart-product-remove text-xl text-red-600 disabled:pointer-events-none"
       onClick={handleDelete}
+      disabled={isLoading}
     >
-      {loading ? (
+      {isLoading ? (
         <BiRefresh className="animate-spin" />
       ) : (
         <IoCloseCircleSharp />
@@ -152,27 +121,16 @@ export const DeleteCartItemById = ({
 };
 
 export const DeleteAllCartItemsButton = () => {
-  const { user } = useAuth();
-  const queryClient = useQueryClient();
   const [loading, setLoading] = useState(false);
-
-  const clearAllItemsFromCartMutation = useClearAllItemsFromCart();
-
-  const handleDelete = () => {
-    setLoading(true);
-    clearAllItemsFromCartMutation.mutate(undefined, {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["cartItems", user?.uid]);
-        toast.success("All items have been deleted from the cart");
-        setLoading(false);
-      },
-      onError: (error: unknown) => {
-        if (error instanceof Error) {
-          toast.error(error.message);
-        }
-        setLoading(false);
-      },
-    });
+  const handleDelete = async () => {
+    try {
+      setLoading(true);
+      await deleteAllCartItems();
+      toast.info("Your cart has been cleared");
+      setLoading(false);
+    } catch (error) {
+      toast.error(`${error}`);
+    }
   };
 
   return (

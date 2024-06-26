@@ -1,7 +1,6 @@
 "use client";
 
 import { GlobalContextProvider } from "@/context/store";
-import { AuthProvider } from "./auth-context";
 import { useEffect, useState } from "react";
 
 export function Providers({ children }: { children: React.ReactNode }) {
@@ -9,9 +8,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   useEffect(() => setLoaded(true), [loaded]);
 
-  return (
-    <GlobalContextProvider>
-      <AuthProvider>{children}</AuthProvider>
-    </GlobalContextProvider>
-  );
+  if (!loaded) return null;
+
+  return <GlobalContextProvider>{children}</GlobalContextProvider>;
 }
