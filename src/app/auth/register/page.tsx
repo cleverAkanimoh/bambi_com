@@ -3,12 +3,17 @@
 import React, { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { registerUserAction } from "@/actions/authenticate";
+import { loginUserAction, registerUserAction } from "@/actions/authenticate";
 import { toast } from "react-toastify";
 
-const Page = () => {
+const Page = ({
+  searchParams: { callbackUrl = "/" },
+}: {
+  searchParams: { callbackUrl: string };
+}) => {
   const router = useRouter();
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false);
 
   const signIn = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,11 +27,13 @@ const Page = () => {
       setIsSubmitted(true);
       await registerUserAction({ email, firstName, lastName, password });
       toast.success("Registration successful");
-      router.push("/auth/login");
+      setIsLoggingIn(true);
+      await loginUserAction({ email, password, callbackUrl });
     } catch (error) {
       toast.error(`${error}`); // Display the correct error message from Firestore
     } finally {
       setIsSubmitted(false);
+      setIsLoggingIn(false);
     }
   };
 
@@ -84,11 +91,9 @@ const Page = () => {
           <button
             disabled={isSubmitted}
             type="submit"
-            className={`self-start text-white w-full md:w-[40%] lg:w-[30%] text-center font-bold bg-black p-4 hover:bg-primary hover:text-white transition-all ease-in-out duration-200 ${
-              isSubmitted ? "opacity-70" : "opacity-100"
-            }`}
+            className={`self-start text-white w-full md:w-[40%] lg:w-[30%] text-center font-bold bg-black p-4 hover:bg-primary hover:text-white transition-all ease-in-out duration-200 disabled:opacity-70 disabled:pointer-events-none`}
           >
-            {isSubmitted ? "Registering..." : "Register"}
+            {isSubmitted ? "Registering..." : isLoggingIn ? "" : "Register"}
           </button>
         </form>
       </div>

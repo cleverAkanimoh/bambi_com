@@ -82,9 +82,7 @@ const Page = ({
           </div>
           <button
             type="submit"
-            className={`self-start text-white w-full md:w-[40%] lg:w-[30%] text-center font-bold bg-black p-3 hover:bg-primary hover:text-white transition-all ease-in-out duration-200 ${
-              isSubmitted ? "opacity-70" : "opacity-100"
-            }`}
+            className={`self-start text-white w-full md:w-[40%] lg:w-[30%] text-center font-bold bg-black p-3 hover:bg-primary hover:text-white transition-all ease-in-out duration-200 disabled:opacity-70 disabled:pointer-events-none`}
             disabled={isSubmitted}
           >
             {isSubmitted ? "Logging in..." : "Login"}
