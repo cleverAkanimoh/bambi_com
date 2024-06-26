@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import { IoCloseCircleSharp } from "react-icons/io5";
 import { DeleteCartItemById } from "@/components/CartButtons";
 import { getCurrentUser } from "@/lib/prismaHelpers";
-import { deleteAllCartItems } from "@/helpers/cart";
+import { deleteAllCartItems, getCurrentUserCartItems } from "@/helpers/cart";
 
 const Page = () => {
   const [cartItems, setCartItems] = useState<CartType[] | undefined>([]);
@@ -21,7 +21,7 @@ const Page = () => {
   useEffect(() => {
     const fetchWishlistItems = async () => {
       try {
-        const items = await getCurrentUser();
+        const items = await getCurrentUserCartItems();
         setCartItems(items);
       } catch (error) {
         toast.error("Failed to load cart items");

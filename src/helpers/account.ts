@@ -29,3 +29,12 @@ export const updateAccountInfo = async({firstName, lastName, email, password, di
         }
     })
 }
+
+export const getUserAddress = async () => {
+    const user = await getCurrentUser();
+    if (!user) return null;
+  
+    const address = user.address ? {...user} : null; 
+    return address;
+  }
+  
