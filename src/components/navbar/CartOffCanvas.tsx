@@ -15,10 +15,9 @@ import { formatCurrency } from "@/lib/utils";
 export default async function CartOffCanvas() {
   const cartItems = await getCurrentUserCartItems();
 
-  const cartTotal = cartItems?.reduce(
-    (prev, curr) => prev + curr?.price * curr?.quantity,
-    0
-  );
+  const cartTotal =
+    cartItems?.reduce((prev, curr) => prev + curr?.price * curr?.quantity, 0) ??
+    0;
 
   return (
     <CartOffCanvasClient>
@@ -46,7 +45,9 @@ export default async function CartOffCanvas() {
 
               <div className="flex justify-between mb-6 mx-2">
                 <span className="font-bold text-xl">Total:</span>
-                <span className="text-primary">${cartTotal}</span>
+                <span className="text-primary">
+                  {formatCurrency(cartTotal * 100)}
+                </span>
               </div>
 
               <div className="text-white space-y-2">
@@ -110,16 +111,16 @@ const CartTile = ({
           <Image width={100} height={100} src={src} alt="Cart Product" />
         </Link>
       </div>
-      <div className="cart-product-content">
-        <h3 className="title">
+      <div className="">
+        <h3 className="">
           <Link href={href}>{title}</Link>
         </h3>
-        <div className="product-quty-price">
+        <div className="">
           <span className="cart-quantity">
             {quantity} <strong> * </strong>
           </span>
           <span className="price">
-            <span className="new">{formatCurrency(price * 100)}</span>
+            <span className="text-primary">{formatCurrency(price * 100)}</span>
           </span>
         </div>
       </div>
