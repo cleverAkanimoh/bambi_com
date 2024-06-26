@@ -3,7 +3,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import Button from "@/components/Button";
 import clsx from "clsx";
 import { PaystackButton } from "react-paystack";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/prismaHelpers";
 import { getCurrentUserCartItems } from "@/helpers/cart";
@@ -46,12 +46,13 @@ export default async function CheckoutPage() {
           address,
         },
       });
-      toast.success("Billing details updated successfully");
+      // toast.success("Billing details updated successfully");
+      alert("Billing details updated successfully");
     } catch (error) {
       if (error instanceof Error) {
-        toast.error(error.message);
+      console.error(error.message);
       } else {
-        toast.error("Something went wrong!");
+       console.error("Something went wrong!");
       }
     }
   };
@@ -76,8 +77,8 @@ export default async function CheckoutPage() {
     publicKey,
     text: "Pay Now",
     onSuccess: () =>
-      toast.success("Thanks for doing business with us! Come back soon!!"),
-    onClose: () => toast.info("User cancelled payment action"),
+      alert("Payment Successfull! Thank you for doing business with us"),
+    onClose: () => alert("User cancelled payment action"),
   };
 
   return (
