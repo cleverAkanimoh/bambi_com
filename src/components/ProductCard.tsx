@@ -123,7 +123,7 @@ const ShopProductCard = ({
             </span>
             {old_price && (
               <del className="text-red-400">
-                ${formatCurrency(old_price * 100)}
+                {formatCurrency(old_price * 100)}
               </del>
             )}
           </span>

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { AddToCartButton, AddToWishlistButton } from "@/components/CartButtons";
 import { motion } from "framer-motion";
 import { fadeUp } from "@/lib/framer";
+import { formatCurrency } from "@/lib/utils";
 
 export const HomeProductCard = ({
   src,
@@ -94,7 +95,7 @@ export const HomeProductCard = ({
           {heading}
         </Link>
         <span className="price">
-          <span className="new">${price}</span>
+          <span className="new">{formatCurrency(price * 100)}</span>
         </span>
       </div>
     </motion.div>

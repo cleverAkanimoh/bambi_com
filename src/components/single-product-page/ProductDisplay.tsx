@@ -11,6 +11,7 @@ import BamIcon from "../Icon";
 import { HeartIcon, ShareIcon, TruckIcon } from "@heroicons/react/24/outline";
 import { BsTwitter } from "react-icons/bs";
 import { BiCheckSquare, BiRefresh, BiSave } from "react-icons/bi";
+import { formatCurrency } from "@/lib/utils";
 
 const Images = [
   "/assets/images/products/large-product/1.jpg",
@@ -40,8 +41,13 @@ export default function ProductDisplay({
 
         {/* <!-- Price Box Start --> */}
         <div className="flex gap-2 mb-2">
-          <span className="">${singleProduct.new_price}</span>
-          <del className="text-red-500">${singleProduct.old_price}</del>
+          <span className="">
+            {formatCurrency(singleProduct.new_price * 100)}
+          </span>
+          <del className="text-red-500">
+            {" "}
+            {formatCurrency((singleProduct.old_price ?? 0) * 100)}
+          </del>
         </div>
 
         {/* <!-- Description Start --> */}
