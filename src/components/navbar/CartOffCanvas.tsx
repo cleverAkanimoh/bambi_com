@@ -4,11 +4,9 @@ import React from "react";
 import { CiShoppingCart } from "react-icons/ci";
 
 import { DeleteAllCartItemsButton, DeleteCartItemById } from "../CartButtons";
-import clsx from "clsx";
 import {
   ShareIcon,
   ShoppingCartIcon,
-  XMarkIcon,
 } from "@heroicons/react/24/outline";
 import BamIcon from "../Icon";
 import BamLink from "../BamLink";
