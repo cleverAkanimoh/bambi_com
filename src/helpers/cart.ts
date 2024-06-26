@@ -39,7 +39,7 @@ export const addToCart = async ({
   await prisma.cartItems.create({
     data: {
       userId: user?.id,
-      productId: id.toString(),
+      productId,
       href,
       src,
       price,

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useMemo, useState, useEffect } from "react";
 import { useReactTable, getCoreRowModel, flexRender, ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
@@ -11,25 +11,31 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import { toast } from "react-toastify";
 import { IoCloseCircleSharp } from "react-icons/io5";
 import { getCurrentUserWishlist } from "@/helpers/wishlist";
-
-
+import { AddToCartButton, DeleteCartItemById } from "@/components/CartButtons"; 
 
 const WishList = () => {
-const [wishlist, setWishList] = useState<WishListType[] | undefined>()
-  useEffect(()=>{
-const wishListItems = async ()=>{
-  const items = await getCurrentUserWishlist()
-  setWishList(items)
-}
-wishListItems()
-  }, [items])
+  const [wishlist, setWishlist] = useState<WishListType[] | undefined>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-const wishListItems = getCurrentUserWishlist()
+  useEffect(() => {
+    const fetchWishlistItems = async () => {
+      try {
+        const items = await getCurrentUserWishlist();
+        setWishlist(items);
+      } catch (error) {
+        setError("Failed to load wishlist items");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchWishlistItems();
+  }, []);
 
-  const columns: ColumnDef<CartType>[] = useMemo(() => [
+  const columns: ColumnDef<WishListType>[] = useMemo(() => [
     {
       header: 'Product Image',
-      accessorKey: 'src', // Ensure this matches the property name in CartType
+      accessorKey: 'src', 
       cell: (info) => (
         <Image
           src={info.getValue() as string}
@@ -38,20 +44,20 @@ const wishListItems = getCurrentUserWishlist()
           width={100}
           className="w-32 h-32"
         />
-      )
+      ),
     },
     {
       header: 'Product Name',
-      accessorKey: 'title', // Ensure this matches the property name in CartType
+      accessorKey: 'title', 
     },
     {
       header: 'Price',
-      accessorKey: 'price', // Ensure this matches the property name in CartType
+      accessorKey: 'price', 
       cell: (info) => `$${info.getValue()}`,
     },
     {
       header: 'Stock Status',
-      cell: () => <p>In stock</p>, // Updated to render JSX directly
+      cell: () => <p>In stock</p>, 
     },
     {
       header: 'Add to cart',
@@ -66,23 +72,23 @@ const wishListItems = getCurrentUserWishlist()
   ], []);
 
   const table = useReactTable({
-    data: wishListItems,
+    data: wishlist || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
-  if (isLoading) {
+  if (loading) {
     return <Loading />;
   }
 
   if (error) {
-    toast.error("Failed to load wishlist items");
+    toast.error(error);
   }
 
   return (
     <div className="flex flex-col gap-10 md:gap-14">
       <Breadcrumbs active="Wishlist" />
-      {wishlistItems.length === 0 ? (
+      {wishlist && wishlist.length === 0 ? (
         <section className="h-full flex flex-col gap-5 items-center justify-center">
           <CiShoppingCart size={90} className="opacity-60" />
           <h5>No items in wishlist</h5>
