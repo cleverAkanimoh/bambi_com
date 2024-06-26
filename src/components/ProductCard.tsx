@@ -2,15 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import Button from "./Button";
 import { AddToCartButton, AddToWishlistButton } from "./CartButtons";
 import { motion } from "framer-motion";
 import { fadeUp } from "@/lib/framer";
 import { CiSearch } from "react-icons/ci";
 import { SlRefresh } from "react-icons/sl";
-import { CiHeart } from "react-icons/ci";
 import { useState } from "react";
-import { FcLike } from "react-icons/fc";
 
 const ShopProductCard = ({
   src1,
@@ -29,7 +26,7 @@ const ShopProductCard = ({
   description?: string;
   heading: string;
   category?: string;
-  id: string | number;
+  id: string;
 }) => {
   const [isLiked, setIsLiked] = useState(false);
   const quickViewClicked = () => {
@@ -81,7 +78,8 @@ const ShopProductCard = ({
             title: heading,
             price: new_price,
             quantity: 1,
-            id,
+            productId: id,
+            availability: 1
           }}
            />
             <Link
@@ -107,7 +105,7 @@ const ShopProductCard = ({
                 title: heading,
                 price: new_price,
                 quantity: 1,
-                id,
+                productId: id,
               }}
             />
           </div>

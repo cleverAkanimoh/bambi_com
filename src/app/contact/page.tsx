@@ -7,6 +7,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import { sendEmail } from "@/components/email/Email";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Loading from "../loading";
 
 const ContactPage = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,7 +30,7 @@ const ContactPage = () => {
     };
 
     return (
-        <React.Suspense fallback={<div>Loading...</div>}>
+        <React.Suspense fallback={<Loading />}>
             <div className='w-full pb-10'>
                 <ToastContainer 
                     position="top-right"

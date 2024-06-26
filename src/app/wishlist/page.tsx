@@ -1,8 +1,8 @@
 "use client"
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useReactTable, getCoreRowModel, flexRender, ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
-import { CartType } from "@/types";
+import { CartType, WishListType } from "@/types";
 import Loading from "../loading";
 import { CiShoppingCart } from "react-icons/ci";
 import Link from "next/link";
@@ -10,12 +10,21 @@ import { FaArrowRight } from "react-icons/fa";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { toast } from "react-toastify";
 import { IoCloseCircleSharp } from "react-icons/io5";
-import { AddToCartButton, DeleteCartItemById } from "@/components/CartButtons"; // Ensure DeleteCartItemById is imported
-import { useWishlistItems, useRemoveFromWishlist } from "@/lib/cart";
+import { getCurrentUserWishlist } from "@/helpers/wishlist";
+
+
 
 const WishList = () => {
-  const { data: wishlistItems, isLoading, error } = useWishlistItems();
-  const { handleRemoveFromWishlist, loading: removeLoading } = useRemoveFromWishlist(); // Hook for removing from wishlist
+const [wishlist, setWishList] = useState<WishListType[] | undefined>()
+  useEffect(()=>{
+const wishListItems = async ()=>{
+  const items = await getCurrentUserWishlist()
+  setWishList(items)
+}
+wishListItems()
+  }, [items])
+
+const wishListItems = getCurrentUserWishlist()
 
   const columns: ColumnDef<CartType>[] = useMemo(() => [
     {
@@ -37,7 +46,7 @@ const WishList = () => {
     },
     {
       header: 'Price',
-      accessorKey: 'new_price', // Ensure this matches the property name in CartType
+      accessorKey: 'price', // Ensure this matches the property name in CartType
       cell: (info) => `$${info.getValue()}`,
     },
     {
@@ -57,7 +66,7 @@ const WishList = () => {
   ], []);
 
   const table = useReactTable({
-    data: wishlistItems || [],
+    data: wishListItems,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -73,7 +82,7 @@ const WishList = () => {
   return (
     <div className="flex flex-col gap-10 md:gap-14">
       <Breadcrumbs active="Wishlist" />
-      {wishlistItems && wishlistItems.length === 0 ? (
+      {wishlistItems.length === 0 ? (
         <section className="h-full flex flex-col gap-5 items-center justify-center">
           <CiShoppingCart size={90} className="opacity-60" />
           <h5>No items in wishlist</h5>
@@ -114,6 +123,6 @@ const WishList = () => {
       )}
     </div>
   );
-}
+};
 
 export default WishList;

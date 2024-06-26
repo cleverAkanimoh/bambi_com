@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import clsx from "clsx";
 import { BiRefresh, BiTrash } from "react-icons/bi";
 import { IoCloseCircleSharp } from "react-icons/io5";
-import { CartType } from "@/types";
+import { CartType, WishListType } from "@/types";
 import Button from "./Button";
 import { FcLike } from "react-icons/fc";
 import { CiHeart } from "react-icons/ci";
@@ -14,6 +14,7 @@ import {
   deleteAllCartItems,
   removeSingleCartItem,
 } from "@/helpers/cart";
+import { addWishListItems } from "@/helpers/wishlist"
 
 export function AddToCartButton({
   cart,
@@ -56,21 +57,23 @@ export function AddToWishlistButton({
   wishlistItem,
   className = "bg-white p-2 hover:bg-primary hover:text-white transition-all ease-linear duration-150 rounded",
 }: {
-  wishlistItem: CartType;
+  wishlistItem: WishListType;
   className?: string;
 }) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
   const handleAddToWishlist = async () => {
-    const user = await getCurrentUser();
-    if (!user) {
-      toast.warning("You have to log in before you can add items to wishlist", {
-        position: "top-center",
-      });
-      return;
+    try {
+      setIsLoading(true)
+      await addWishListItems(wishlistItem)
+      toast.success(`${wishlistItem.title} has been added to wishlist`);
+      setIsLiked(prevState => !prevState)
+    } catch (e) {
+      toast.error(`${e}`);
+    } finally {
+      setIsLoading(false);
     }
   };
-
-  const isLiked = false;
-  const isLoading = false;
 
   const styles = className;
 
@@ -80,7 +83,7 @@ export function AddToWishlistButton({
       className={styles}
       disabled={isLoading}
     >
-      {isLoading ? "Loading..." : isLiked ? <FcLike /> : <CiHeart />}
+      {isLoading ? <BiRefresh className="animate-spin" /> : isLiked ? <FcLike /> : <CiHeart />}
     </button>
   );
 }

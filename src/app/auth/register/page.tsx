@@ -19,7 +19,7 @@ const Page = () => {
     const password = formData.get("password") as string;
     try {
       console.log("Started registration");
-
+      setIsSubmitted(true);
       await registerUserAction({ email, firstName, lastName, password });
       toast.success("Registration successful");
       router.push("/auth/login");

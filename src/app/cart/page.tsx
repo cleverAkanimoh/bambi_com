@@ -1,7 +1,7 @@
 "use client";
 import { useState, useMemo } from "react";
 import { useClearAllItemsFromCart, useCartItems, useRemoveSingleCartItem } from "@/lib/cart";
-import { useAuth } from "@/context/auth-context";
+
 import { useReactTable, getCoreRowModel, flexRender, ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
 import { CartType } from "@/types";
@@ -13,11 +13,12 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import { toast } from "react-toastify";
 import { IoCloseCircleSharp } from "react-icons/io5";
 import { DeleteCartItemById } from "@/components/CartButtons";
+import { getCurrentUser } from "@/lib/prismaHelpers";
 
 const Page = () => {
-  const { user, loading } = useAuth();
+  
   const [clearCart, setClearCart] = useState(false);
-  const { data: cartItems = [], isLoading: isFetching } = useCartItems(user);
+  const carItems = getCurrentUser()
   const clearAllItemsFromCartMutation = useClearAllItemsFromCart();
 
   const handleClearCart = () => {

@@ -49,7 +49,7 @@ export default function ProductCardWrapper({
               .map((x, i) => (
                 <ShopProductCard
                   key={i}
-                  id={i + 1}
+                  id={`${i + 1}`}
                   src1="/assets/images/products/medium-product/2.jpg"
                   new_price={x.new_price}
                   old_price={x.old_price}

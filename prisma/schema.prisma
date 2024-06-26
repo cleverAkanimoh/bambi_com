@@ -37,19 +37,20 @@ model CartItems {
   title    String
   price    Int
   quantity Int
-
+productId String @unique()
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 }
 
 model Wishlist {
   id String @id @default(uuid()) @map("_id")
-
+productId String @unique()
   src   String
   href  String
   title String
   price Int
-
+quantity Int
+availability Int @default(0)
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 }

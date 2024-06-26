@@ -1,5 +1,5 @@
 export type Products = {
-  id: string | number;
+  id: string;
   src1: string;
   src2?: string;
   href: string;
@@ -15,12 +15,13 @@ export type Products = {
 export type ProductsType = Products[];
 
 export type CartType = {
-  id: string | number;
+  id?: string;
   src: string;
   href: string;
   title: string;
   price: number;
   quantity: number;
+  productId: string
 };
 
 export type SignUp = {
@@ -32,4 +33,15 @@ export type SignUp = {
   city?: string;
   phone?: string;
   address?: string;
+};
+
+export type WishListType = {
+  id?: string;
+  src: string;
+  href: string;
+  title: string;
+  price: number;
+  quantity: number;
+  productId: string
+  availability: number;
 };

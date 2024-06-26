@@ -63,7 +63,7 @@ export default function ProductDisplay({
         <div className="flex gap-4 pb-3">
           <AddToCartButton
             cart={{
-              id: singleProduct.id,
+              productId: singleProduct.id,
               src: singleProduct.src1,
               href: singleProduct.href,
               title: singleProduct.heading,
