@@ -9,7 +9,7 @@ export const getDbUser = async ({ email }: { email: string }) => {
   return dbUser;
 };
 
-export const getCurrentUser = async () => { //returns all the cartItems of the current user
+export const getCurrentUser = async () => {
   const session = await auth();
 
   if (!session?.user) return null;
@@ -22,20 +22,21 @@ export const getCurrentUser = async () => { //returns all the cartItems of the c
   return currentUser;
 };
 
-export const getCompleteUserMetadata = async () => { //returns the entire information about the user
+export const getCompleteUserMetadata = async () => {
+  //returns the entire information about the user
   const currentUser = await getCurrentUser();
-  if (!currentUser) return null
+  if (!currentUser) return null;
+  
   const currentUserId = currentUser.id;
 
-  const completeUserMetadata = await prisma.user.findUnique({
+  const completeUserMetadata = await prisma.user.findFirst({
     where: { id: currentUserId },
     include: {
       CartItems: {},
       Wishlist: {},
-      Transactions: {}
+      Transactions: {},
     },
   });
 
   return completeUserMetadata;
 };
-
