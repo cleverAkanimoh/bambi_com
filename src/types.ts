@@ -45,3 +45,17 @@ export type WishListType = {
   productId: string
   availability: number;
 };
+
+export type UserType = {
+  id: string;
+  email: string;
+  emailVerified: Date | null;
+  emailToken: string;
+  name: string;
+  displayName: string | null;
+  image: string | null;
+  password: string;
+  address: string | null;
+
+  updatedAt: Date;
+} | null 
