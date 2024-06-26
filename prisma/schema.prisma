@@ -14,11 +14,13 @@ model User {
   emailVerified DateTime?
   emailToken    String
   name          String
+  displayName   String?   @default("")
   image         String?   @default("")
   password      String
   address       String?   @default("")
   state         String?   @default("")
   city          String?
+  zipCode       String?    
   country       String?   @default("")
   phone         String?   @default("")
   role          String?   @default("user")

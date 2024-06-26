@@ -2,7 +2,7 @@
 import { useMemo, useState, useEffect } from "react";
 import { useReactTable, getCoreRowModel, flexRender, ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
-import { CartType, WishListType } from "@/types";
+import { WishListType } from "@/types";
 import Loading from "../loading";
 import { CiShoppingCart } from "react-icons/ci";
 import Link from "next/link";
