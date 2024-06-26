@@ -1,6 +1,5 @@
 import { CiSearch } from "react-icons/ci";
 import { SlRefresh } from "react-icons/sl";
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AddToCartButton, AddToWishlistButton } from "@/components/CartButtons";
@@ -22,13 +21,7 @@ export const HomeProductCard = ({
   quantity?: number;
   id: string;
 }) => {
-  const [isLiked, setIsLiked] = useState(false);
-  const addToWishList = () => {
-    setIsLiked((prevState) => !prevState);
-  };
-  const quickViewClicked = () => {
-    return;
-  };
+ 
   return (
     <motion.div
       initial={fadeUp.initial}
@@ -72,8 +65,7 @@ export const HomeProductCard = ({
             className="bg-white p-2 hover:bg-primary hover:text-white transition-all ease-linear duration-150 rounded"
             data-bs-toggle="modal"
             data-bs-target="#quick-view"
-            onClick={() => quickViewClicked()}
-          >
+                >
             <CiSearch />
           </button>
         </div>
