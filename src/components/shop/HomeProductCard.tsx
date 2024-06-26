@@ -1,12 +1,9 @@
 import { CiSearch } from "react-icons/ci";
 import { SlRefresh } from "react-icons/sl";
-import { CiHeart } from "react-icons/ci";
 import { useState } from "react";
-import { FcLike } from "react-icons/fc";
 import Image from "next/image";
 import Link from "next/link";
-import Button from "@/components/Button";
-import { AddToCartButton, AddToWishlistButton } from "@/components/CartButtons"
+import { AddToCartButton, AddToWishlistButton } from "@/components/CartButtons";
 import { motion } from "framer-motion";
 import { fadeUp } from "@/lib/framer";
 
@@ -25,12 +22,12 @@ export const HomeProductCard = ({
   quantity?: number;
   id: string;
 }) => {
-  const [isLiked, setIsLiked] = useState(false)
+  const [isLiked, setIsLiked] = useState(false);
   const addToWishList = () => {
-    setIsLiked(prevState => !prevState)
-  }
+    setIsLiked((prevState) => !prevState);
+  };
   const quickViewClicked = () => {
-    return
+    return;
   };
   return (
     <motion.div
@@ -62,10 +59,13 @@ export const HomeProductCard = ({
               price,
               quantity,
               productId: id,
-              availability: 1
+              availability: 1,
             }}
           />
-          <Link href="/compare" className="bg-white p-2 hover:bg-primary hover:text-white transition-all ease-linear duration-150 rounded">
+          <Link
+            href="/compare"
+            className="bg-white p-2 hover:bg-primary hover:text-white transition-all ease-linear duration-150 rounded"
+          >
             <SlRefresh />
           </Link>
           <button
@@ -73,7 +73,6 @@ export const HomeProductCard = ({
             data-bs-toggle="modal"
             data-bs-target="#quick-view"
             onClick={() => quickViewClicked()}
-
           >
             <CiSearch />
           </button>
@@ -99,5 +98,5 @@ export const HomeProductCard = ({
         </span>
       </div>
     </motion.div>
-  )
-}
+  );
+};

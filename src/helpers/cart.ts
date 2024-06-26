@@ -1,5 +1,6 @@
 "use server";
 
+
 import { prisma } from "@/lib/prisma";
 import { getCompleteUserMetadata, getCurrentUser } from "@/lib/prismaHelpers";
 import { CartType } from "@/types";
@@ -30,7 +31,7 @@ export const addToCart = async ({
         quantity: cartItemAlreadyExist.quantity + 1,
       },
     });
-
+    revalidatePath("");
     return {
       message: "Item already exist. It's quantity will be incremented in cart",
     };
@@ -47,6 +48,7 @@ export const addToCart = async ({
       title,
     },
   });
+  revalidatePath("");
 };
 
 // Read
@@ -58,7 +60,9 @@ export const getCurrentUserCartItems = async () => {
 
 // Update
 export const removeSingleCartItem = async (id: string) => {
-  const thisCartItem = await prisma.cartItems.findFirst({ where: { productId:id } });
+  const thisCartItem = await prisma.cartItems.findFirst({
+    where: { productId: id },
+  });
 
   //   reduce the cart item quantity if 0 delete it
   if (thisCartItem) {
@@ -69,16 +73,20 @@ export const removeSingleCartItem = async (id: string) => {
       },
     });
     if (thisCartItem.quantity < 1) {
-      await prisma.cartItems.delete({ where: { productId: thisCartItem.productId } });
+      await prisma.cartItems.delete({
+        where: { productId: thisCartItem.productId },
+      });
+      revalidatePath("");
       return {
         message: "Item has been removed",
       };
     }
-
+    revalidatePath("");
     return {
       message: "Item quantity has been decremented",
     };
   }
+  revalidatePath("");
 };
 
 // Delete All
