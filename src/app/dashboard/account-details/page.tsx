@@ -1,11 +1,10 @@
 "use client"
-import React, { useState, useEffect, FormEvent } from "react";
+import React, { useState, FormEvent } from "react";
 import { toast } from "react-toastify";
-import bcrypt from "bcryptjs";
 import { updateAccountInfo } from "@/helpers/account";
 
 const Page = () => {
-  
+
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -18,25 +17,23 @@ const Page = () => {
     const lastName = formData.get("lastName") as string;
     const newPassword = formData.get("newPassword") as string;
     const confirmPassword = formData.get("confirmPassword") as string;
-    
-if(newPassword !== confirmPassword){
-    toast.error("New passwords do not match")
-    return
-}
 
-
+    if (newPassword !== confirmPassword) {
+      toast.error("New passwords do not match")
+      return
+    }
     try {
       console.log("Started registration");
       setIsSubmitted(true);
       await updateAccountInfo({ email, firstName, lastName, password: confirmPassword, displayName });
       toast.success("Details Updated successfully");
     } catch (error) {
-      toast.error(`${error}`); 
+      toast.error(`${error}`);
     } finally {
       setIsSubmitted(false);
     }
   };
-  
+
 
   return (
     <div className="p-2">
@@ -59,7 +56,7 @@ if(newPassword !== confirmPassword){
                 placeholder="First name"
                 id="firstName"
                 name="firstName"
-                       required
+                required
               />
             </div>
             <div>
@@ -72,7 +69,7 @@ if(newPassword !== confirmPassword){
                 placeholder="Last name"
                 id="lastName"
                 name="lastName"
-                       required
+                required
               />
             </div>
           </div>
@@ -86,7 +83,7 @@ if(newPassword !== confirmPassword){
               placeholder="Display Name"
               id="displayName"
               name="displayName"
-              
+
               required
             />
           </div>
@@ -151,12 +148,10 @@ if(newPassword !== confirmPassword){
           </div>
           <button
             type="submit"
-            className={`self-start text-white w-full md:w-[40%] lg:w-[30%] text-center font-bold bg-black p-3 hover:bg-primary hover:text-white transition-all ease-in-out duration-200 ${
-              false ? "opacity-70" : "opacity-100"
-            }`}
-            disabled={false}
+            className={`self-start text-white w-full md:w-[40%] lg:w-[30%] text-center font-bold bg-black p-3 hover:bg-primary hover:text-white transition-all ease-in-out duration-200 disabled:opacity-70`}
+            disabled={isSubmitted}
           >
-            {false ? "Saving..." : "Save Changes"}
+            {isSubmitted ? "Saving..." : "Save Changes"}
           </button>
         </form>
       </div>
