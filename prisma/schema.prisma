@@ -23,7 +23,7 @@ model User {
   country       String?   @default("")
   phone         String?   @default("")
   role          String?   @default("user")
-  paymentMethod String
+  paymentMethod String?
 
   last_signed_in DateTime    @default(now()) @map(name: "last_signed_in")
   createdAt      DateTime    @default(now()) @map(name: "created_at")
