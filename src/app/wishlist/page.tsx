@@ -66,7 +66,7 @@ const WishList = () => {
     {
       header: 'Remove',
       cell: (info) => (
-        <DeleteCartItemById id={`${info.row.original.id}`} item={info.row.original.title} />
+        <DeleteCartItemById id={`${info.row.original.productId}`} item={info.row.original.title} />
       ),
     },
   ], []);
