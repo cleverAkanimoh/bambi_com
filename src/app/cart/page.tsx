@@ -66,7 +66,7 @@ const Page = () => {
         header: 'Actions',
         cell: (info) => (
           <DeleteCartItemById
-            id={`${info.row.original.id}`}
+            id={`${info.row.original.productId}`}
             item={info.row.original.title}
           />
         ),
