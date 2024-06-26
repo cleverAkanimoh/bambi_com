@@ -8,6 +8,7 @@ import { fadeUp } from "@/lib/framer";
 import { CiSearch } from "react-icons/ci";
 import { SlRefresh } from "react-icons/sl";
 import { useState } from "react";
+import { formatCurrency } from "@/lib/utils";
 
 const ShopProductCard = ({
   src1,
@@ -71,17 +72,17 @@ const ShopProductCard = ({
             <span className="text-center">{category ?? "-18%"}</span>
           </span>
           <div className="flex flex-col gap-6 absolute top-4 group-hover:top-2 right-4 text-xl p-3 text-[#555] opacity-0 group-hover:opacity-100 transition-all ease-linear duration-[400ms]">
-           <AddToWishlistButton
-           wishlistItem={{
-            src: src1,
-            href,
-            title: heading,
-            price: new_price,
-            quantity: 1,
-            productId: id,
-            availability: 1
-          }}
-           />
+            <AddToWishlistButton
+              wishlistItem={{
+                src: src1,
+                href,
+                title: heading,
+                price: new_price,
+                quantity: 1,
+                productId: id,
+                availability: 1,
+              }}
+            />
             <Link
               href="/compare"
               className="bg-white p-2 hover:bg-primary hover:text-white transition-all ease-linear duration-150 rounded"
@@ -117,8 +118,14 @@ const ShopProductCard = ({
             </Link>
           </h5>
           <span className="flex items-center gap-2">
-            <span className="!text-primary">${new_price}</span>
-            {old_price && <del className="text-red-400">${old_price}</del>}
+            <span className="!text-primary">
+              {formatCurrency(new_price * 100)}
+            </span>
+            {old_price && (
+              <del className="text-red-400">
+                {formatCurrency(old_price * 100)}
+              </del>
+            )}
           </span>
           {/* <p>{description}</p> */}
         </div>

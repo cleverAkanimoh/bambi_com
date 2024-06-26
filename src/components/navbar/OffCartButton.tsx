@@ -19,7 +19,7 @@ export default function OffCartButton({ totalItems }: { totalItems: number }) {
           key={totalItems}
           className="absolute -top-1 -right-0.5 bg-primary text-white rounded-full size-4 text-xs grid place-items-center transition-all duration-500"
         >
-          {totalItems}
+          {totalItems < 10 ? totalItems : "9+"}
         </span>
       )}
     </button>

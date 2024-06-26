@@ -1,6 +1,5 @@
 "use server";
 
-
 import { prisma } from "@/lib/prisma";
 import { getCompleteUserMetadata, getCurrentUser } from "@/lib/prismaHelpers";
 import { CartType } from "@/types";
@@ -64,6 +63,16 @@ export const removeSingleCartItem = async (id: string) => {
     where: { productId: id },
   });
 
+  if (thisCartItem?.quantity ?? 1 < 1) {
+    await prisma.cartItems.delete({
+      where: { productId: thisCartItem?.productId },
+    });
+    revalidatePath("");
+    return {
+      message: "Item has been removed",
+    };
+  }
+
   //   reduce the cart item quantity if 0 delete it
   if (thisCartItem) {
     await prisma.cartItems.update({
@@ -72,15 +81,7 @@ export const removeSingleCartItem = async (id: string) => {
         quantity: thisCartItem.quantity - 1,
       },
     });
-    if (thisCartItem.quantity < 1) {
-      await prisma.cartItems.delete({
-        where: { productId: thisCartItem.productId },
-      });
-      revalidatePath("");
-      return {
-        message: "Item has been removed",
-      };
-    }
+
     revalidatePath("");
     return {
       message: "Item quantity has been decremented",
