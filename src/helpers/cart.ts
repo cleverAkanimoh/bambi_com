@@ -83,5 +83,5 @@ export const removeSingleCartItem = async (id: string) => {
 export const deleteAllCartItems = async () => {
   const user = await getCurrentUser();
 
-  await prisma.cartItems.delete({ where: { userId: user?.id } });
+  await prisma.cartItems.deleteMany({ where: { userId: user?.id } });
 };
