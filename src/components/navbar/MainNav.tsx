@@ -3,7 +3,6 @@ import Search from "../Search";
 
 import BamIcon from "../Icon";
 import { HeartIcon, UserCircleIcon } from "@heroicons/react/24/outline";
-import { BiMenu } from "react-icons/bi";
 import BamLink from "../BamLink";
 import MainNavClient from "./MainNavClient";
 import OffCartButton from "./OffCartButton";
@@ -26,10 +25,10 @@ export default async function MainNav() {
 
         <BamLink href="/wishlist" variant="ghost" className="" title="Wishlist">
           <BamIcon Icon={HeartIcon} size="med" />
-          <span className="sr-only">Wishlist</span>
+          <span className="max-lg:sr-only">Wishlist</span>
         </BamLink>
 
-        <OffCartButton totalItems={0} />
+        <OffCartButton totalItems={totalItems?.length ?? 0} />
 
         <MenuButton />
       </div>

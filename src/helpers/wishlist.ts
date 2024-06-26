@@ -1,3 +1,5 @@
+"use server";
+
 import { prisma } from "@/lib/prisma";
 import { getCompleteUserMetadata, getCurrentUser } from "@/lib/prismaHelpers";
 import { WishListType } from "@/types";
@@ -15,20 +17,18 @@ export const addWishListItems = async ({
   price,
   quantity,
   title,
-  availability }: WishListType) => {
+  availability,
+}: WishListType) => {
   const user = await getCurrentUser();
   if (!user) throw new Error("Please login to add to wishlist");
-  const wishItem = await prisma.wishlist.findFirst(
-    {
-      where: { productId }
-    }
-
-  )
+  const wishItem = await prisma.wishlist.findFirst({
+    where: { productId },
+  });
   if (wishItem) {
     await prisma.wishlist.delete({
-      where: { productId }
-    })
-    return
+      where: { productId },
+    });
+    return;
   } else {
     await prisma.wishlist.create({
       data: {
@@ -39,10 +39,8 @@ export const addWishListItems = async ({
         price,
         quantity,
         title,
-        availability
-      }
-    })
+        availability,
+      },
+    });
   }
-
-
-}
+};
