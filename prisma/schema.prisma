@@ -39,7 +39,7 @@ model CartItems {
   quantity Int
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String @unique
+  userId String
 }
 
 model Wishlist {
@@ -51,5 +51,5 @@ model Wishlist {
   price Int
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String @unique
+  userId String
 }

@@ -1,3 +1,5 @@
+"use server";
+
 import { prisma } from "@/lib/prisma";
 import { getCompleteUserMetadata, getCurrentUser } from "@/lib/prismaHelpers";
 import { CartType } from "@/types";
