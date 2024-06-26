@@ -4,15 +4,13 @@ import React from "react";
 import { CiShoppingCart } from "react-icons/ci";
 
 import { DeleteAllCartItemsButton, DeleteCartItemById } from "../CartButtons";
-import {
-  ShareIcon,
-  ShoppingCartIcon,
-} from "@heroicons/react/24/outline";
+import { ShareIcon, ShoppingCartIcon } from "@heroicons/react/24/outline";
 import BamIcon from "../Icon";
 import BamLink from "../BamLink";
 import { getCurrentUser } from "@/lib/prismaHelpers";
 import CartOffCanvasClient from "./CartOffCanvasClient";
 import { getCurrentUserCartItems } from "@/helpers/cart";
+import { formatCurrency } from "@/lib/utils";
 
 export default async function CartOffCanvas() {
   const cartItems = await getCurrentUserCartItems();
@@ -121,7 +119,7 @@ const CartTile = ({
             {quantity} <strong> * </strong>
           </span>
           <span className="price">
-            <span className="new">${price}</span>
+            <span className="new">{formatCurrency(price * 100)}</span>
           </span>
         </div>
       </div>
