@@ -32,6 +32,7 @@ export const getCompleteUserMetadata = async () => { //returns the entire inform
     include: {
       CartItems: {},
       Wishlist: {},
+      Transactions: {}
     },
   });
 
