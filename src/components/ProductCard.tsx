@@ -8,6 +8,7 @@ import { fadeUp } from "@/lib/framer";
 import { CiSearch } from "react-icons/ci";
 import { SlRefresh } from "react-icons/sl";
 import { useState } from "react";
+import { formatCurrency } from "@/lib/utils";
 
 const ShopProductCard = ({
   src1,
@@ -117,8 +118,14 @@ const ShopProductCard = ({
             </Link>
           </h5>
           <span className="flex items-center gap-2">
-            <span className="!text-primary">${new_price}</span>
-            {old_price && <del className="text-red-400">${old_price}</del>}
+            <span className="!text-primary">
+              {formatCurrency(new_price * 100)}
+            </span>
+            {old_price && (
+              <del className="text-red-400">
+                {formatCurrency(old_price * 100)}
+              </del>
+            )}
           </span>
           {/* <p>{description}</p> */}
         </div>
