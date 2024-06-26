@@ -12,8 +12,9 @@ import {
 } from "@heroicons/react/24/outline";
 import BamIcon from "../Icon";
 import BamLink from "../BamLink";
-import { getCurrentUser, getCurrentUserCartItems } from "@/lib/prismaHelpers";
+import { getCurrentUser } from "@/lib/prismaHelpers";
 import CartOffCanvasClient from "./CartOffCanvasClient";
+import { getCurrentUserCartItems } from "@/helpers/cart";
 
 export default async function CartOffCanvas() {
   const user = await getCurrentUserCartItems();

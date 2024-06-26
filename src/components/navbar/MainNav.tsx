@@ -2,17 +2,13 @@ import React from "react";
 import Search from "../Search";
 
 import BamIcon from "../Icon";
-import {
-  HeartIcon,
-  ShoppingCartIcon,
-  UserCircleIcon,
-} from "@heroicons/react/24/outline";
+import { HeartIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { BiMenu } from "react-icons/bi";
 import BamLink from "../BamLink";
 import MainNavClient from "./MainNavClient";
 import OffCartButton from "./OffCartButton";
 import MenuButton from "./MenuButton";
-import { getCurrentUserCartItems } from "@/lib/prismaHelpers";
+import { getCurrentUserCartItems } from "@/helpers/cart";
 
 export default async function MainNav() {
   const totalItems = await getCurrentUserCartItems();
