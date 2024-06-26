@@ -3,13 +3,17 @@
 import Image from "next/image";
 import Link from "next/link";
 import Button from "./Button";
-import { AddToCartButton } from "./CartButtons";
+import { AddToCartButton, AddToWishlistButton } from "./CartButtons";
 import { motion } from "framer-motion";
 import { fadeUp } from "@/lib/framer";
+import { CiSearch } from "react-icons/ci";
+import { SlRefresh } from "react-icons/sl";
+import { CiHeart } from "react-icons/ci";
+import { useState } from "react";
+import { FcLike } from "react-icons/fc";
 
 const ShopProductCard = ({
   src1,
-  src2,
   old_price,
   new_price,
   description,
@@ -19,7 +23,6 @@ const ShopProductCard = ({
   id,
 }: {
   src1: string;
-  src2?: string;
   href: string;
   old_price?: number;
   new_price: number;
@@ -28,12 +31,12 @@ const ShopProductCard = ({
   category?: string;
   id: string | number;
 }) => {
+  const [isLiked, setIsLiked] = useState(false);
   const quickViewClicked = () => {
     localStorage.setItem(
       "productInfo",
       JSON.stringify({
         src1,
-        src2,
         old_price,
         new_price,
         description,
@@ -44,52 +47,59 @@ const ShopProductCard = ({
       })
     );
   };
+  const addToWishList = () => {
+    setIsLiked((prevState) => !prevState);
+  };
+
   return (
     <motion.div
       initial={fadeUp.initial}
       whileInView={fadeUp.whileInView}
       transition={fadeUp.transition}
       viewport={{ once: true }}
-      className="col-xl-3 col-lg-4 col-md-4 col-sm-6 product"
+      className=""
     >
-      <div className="product-inner">
-        <div className="thumb">
+      <div className="group">
+        <div className="relative overflow-hidden">
           <Link href={href} className="image">
             <Image
-              className="first-image"
+              className="size-full"
               src={src1}
               alt="Product"
               width={100}
               height={100}
             />
-            <Image
-              className="second-image fit-image"
-              src={src2 ?? src1}
-              alt="Product"
-              width={100}
-              height={100}
-            />
           </Link>
-          <span className="badges">
-            <span className="sale">{category ?? "-18%"}</span>
+          <span className="absolute top-2 left-2 bg-black p-1 !text-sm min-w-14 grid place-items-center rounded-md   text-white ">
+            <span className="text-center">{category ?? "-18%"}</span>
           </span>
-          <div className="actions">
-            <Button className="action wishlist">
-              <i className="pe-7s-like"></i>
-            </Button>
-            <Link href="/compare" className="action compare">
-              <i className="pe-7s-refresh-2"></i>
+          <div className="flex flex-col gap-6 absolute top-4 group-hover:top-2 right-4 text-xl p-3 text-[#555] opacity-0 group-hover:opacity-100 transition-all ease-linear duration-[400ms]">
+           <AddToWishlistButton
+           wishlistItem={{
+            src: src1,
+            href,
+            title: heading,
+            price: new_price,
+            quantity: 1,
+            id,
+          }}
+           />
+            <Link
+              href="/compare"
+              className="bg-white p-2 hover:bg-primary hover:text-white transition-all ease-linear duration-150 rounded"
+            >
+              <SlRefresh />
             </Link>
             <button
-              className="action quickview"
+              className="bg-white p-2 hover:bg-primary hover:text-white transition-all ease-linear duration-150 rounded"
               data-bs-toggle="modal"
               data-bs-target="#quick-view"
               onClick={() => quickViewClicked()}
             >
-              <i className="pe-7s-search"></i>
+              <CiSearch />
             </button>
           </div>
-          <div className="add-cart-btn">
+          <div className="absolute -translate-y-[0rem] invisible !opacity-0 group-hover:!opacity-100 group-hover:-translate-y-[4.5rem] md: md:group-hover:-translate-y-[5rem] group-hover:visible left-1/2 -translate-x-1/2 w-1/2 md:w-3/4 mx-auto text-center rounded p-3 transition-all ease-linear duration-[400ms]">
             <AddToCartButton
               cart={{
                 src: src1,
@@ -102,15 +112,17 @@ const ShopProductCard = ({
             />
           </div>
         </div>
-        <div className="content">
-          <h5 className="title">
-            <Link href={href}>{heading}</Link>
+        <div className="flex flex-col items-center gap-2 mt-2">
+          <h5 className="">
+            <Link className="text-black hover:text-primary" href={href}>
+              {heading}
+            </Link>
           </h5>
-          <span className="price">
-            <span className="new">${new_price}</span>
-            {old_price && <span className="old">${old_price}</span>}
+          <span className="flex items-center gap-2">
+            <span className="!text-primary">${new_price}</span>
+            {old_price && <del className="text-red-400">${old_price}</del>}
           </span>
-          <p>{description}</p>
+          {/* <p>{description}</p> */}
         </div>
       </div>
     </motion.div>
@@ -118,76 +130,3 @@ const ShopProductCard = ({
 };
 
 export default ShopProductCard;
-
-export const ProductCard = ({
-  src,
-  href,
-  heading,
-  price,
-  quantity = 1,
-  id,
-}: {
-  src: string;
-  href: string;
-  heading: string;
-  price: number;
-  quantity?: number;
-  id: string | number;
-}) => (
-  <motion.div
-    initial={fadeUp.initial}
-    whileInView={fadeUp.whileInView}
-    transition={fadeUp.transition}
-  >
-    <div className="relative group">
-      <Link href={href} className="overflow-hidden block">
-        <Image
-          width={50}
-          height={50}
-          priority
-          className="w-full group-hover:scale-110 group-hover:!bg-opacity-75 -z-10"
-          src={src}
-          alt={heading}
-        />
-      </Link>
-      <span className="absolute top-2 left-2 bg-black p-1 !text-sm min-w-14 grid place-items-center rounded-md text-white">
-        -18%
-      </span>
-
-      <div
-        className="z-10 group-hover:fade-in opacity-0 group-hover:!opacity-100 absolute right-2 top-2 space-y-2"
-        data-aos="fade-in"
-        aos-delay="200"
-      >
-        <Button>
-          <i className="pe-7s-like"></i>
-        </Button>
-        <Button>
-          <i className="pe-7s-refresh-2"></i>
-        </Button>
-        {/* <Button>
-          <i className="pe-7s-search"></i>
-        </Button> */}
-      </div>
-      <AddToCartButton
-        className="btn btn-whited btn-hover-primary text-capitalize add-to-cart absolute bottom-4 left-1/2 -translate-x-1/2 w-8/12 !text-sm  opacity-0 group-hover:!opacity-100"
-        cart={{
-          src,
-          href,
-          title: heading,
-          price,
-          quantity,
-          id,
-        }}
-      />
-    </div>
-    <div className="flex flex-col items-center">
-      <Link href={href} className="hover:text-primary">
-        {heading}
-      </Link>
-      <span className="price">
-        <span className="new">${price}</span>
-      </span>
-    </div>
-  </motion.div>
-);

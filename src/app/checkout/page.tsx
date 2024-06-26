@@ -1,33 +1,21 @@
-"use client";
-
 import Breadcrumbs from "@/components/Breadcrumbs";
 import Button from "@/components/Button";
-import { fetchInRealtimeAndRenderPostsFromDB } from "@/components/navbar/CartOffCanvas";
-import { useAuth } from "@/context/auth-context";
-import { CartType } from "@/types";
 import clsx from "clsx";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { PaystackButton } from "react-paystack";
 import { toast } from "react-toastify";
-import { doc, updateDoc } from "firebase/firestore";
-import { db } from "@/config/firebase-config";
+import Loading from "@/app/loading";
+import { prisma } from "@/lib/prisma";
+import { getCurrentUser, getCurrentUserCartItems } from "@/lib/prismaHelpers";
 
 const orderStyle = clsx("p-2 flex justify-between");
 
 const publicKey = "pk_test_ef5e04574fd9f51d757806866fce40f5ebfd6b26";
 
-export default function CheckoutPage() {
-  const { user } = useAuth();
+export default async function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState("");
-  const [cartItems, setCartItems] = useState<CartType[]>([]);
-
-  useEffect(() => {
-    const fetchCartItems = async () => {
-      const data = await fetchInRealtimeAndRenderPostsFromDB();
-      setCartItems(data);
-    };
-    fetchCartItems();
-  }, [user]);
+  const cartItems: any[] = [];
+  const user = await getCurrentUser();
 
   const cartTotal = cartItems?.reduce(
     (prev, curr) => prev + curr?.price * curr?.quantity,
@@ -50,13 +38,15 @@ export default function CheckoutPage() {
     const message = formData.get("message") as string;
 
     try {
-      await updateDoc(doc(db, "users", user?.uid ?? ""), {
-        name,
-        email,
-        country,
-        city,
-        address,
-        message,
+      await prisma.user.update({
+        where: { email },
+        data: {
+          name,
+          email,
+          country,
+          city,
+          address,
+        },
       });
       toast.success("Billing details updated successfully");
     } catch (error) {
@@ -76,18 +66,19 @@ export default function CheckoutPage() {
         {
           display_name: "Name",
           variable_name: "name",
-          value: user?.displayName || "clever akanimoh",
+          value: user?.name || "Lorem Name",
         },
         {
           display_name: "Phone",
           variable_name: "phone",
-          value: "08113530038",
+          value: "",
         },
       ],
     },
     publicKey,
     text: "Pay Now",
-    onSuccess: () => toast.success("Thanks for doing business with us! Come back soon!!"),
+    onSuccess: () =>
+      toast.success("Thanks for doing business with us! Come back soon!!"),
     onClose: () => toast.info("User cancelled payment action"),
   };
 
@@ -95,7 +86,7 @@ export default function CheckoutPage() {
     <main className="flex flex-col gap-4">
       <Breadcrumbs active="Checkout" />
       <section className="w-11/12 h-16 bg-gray-300 mx-auto" />
-      <section className="p-2 md:w-10/12 w-full flex max-md:flex-col max-md:items-center justify-center gap-4 md:gap-10 mx-auto">
+      <section className="p-4 md:w-10/12 w-11/112 flex max-md:flex-col max-md:items-center justify-center gap-4 md:gap-10 mx-auto">
         <section className="w-full max-md:max-w-md">
           <h3 className="mb-4 text-2xl">Billing Details</h3>
           <form onSubmit={handleSubmit}>
@@ -104,11 +95,13 @@ export default function CheckoutPage() {
               name="name"
               id="name"
               placeholder="Full name"
+              defaultValue={user?.name ?? ""}
               required
             />
             <Input
               label="Country"
               name="country"
+              defaultValue={user?.country ?? ""}
               placeholder="Country"
               required
             />
@@ -116,12 +109,14 @@ export default function CheckoutPage() {
               label="Town/City"
               name="city"
               placeholder="Town/City"
+              defaultValue={user?.city ?? ""}
               required
             />
             <Input
               label="Address"
               placeholder="Address"
               name="address"
+              defaultValue={user?.address ?? ""}
               required
             />
             <Input
@@ -138,7 +133,7 @@ export default function CheckoutPage() {
               type="number"
               name="phone"
               id="phone"
-              defaultValue={user?.phoneNumber ?? ""}
+              defaultValue={user?.phone ?? ""}
               placeholder="Phone number"
               required
             />
@@ -154,7 +149,10 @@ export default function CheckoutPage() {
               name="message"
             />
 
-            <Button className="w-full !text-white text-sm my-2 !bg-primary hover:!bg-black" id="update-billing">
+            <Button
+              className="w-full !text-white text-sm my-2 !bg-primary hover:!bg-black"
+              id="update-billing"
+            >
               Submit
             </Button>
           </form>
@@ -288,12 +286,16 @@ const OrderTile = ({ title, price, quantity }: OrderTileProps) => (
   </li>
 );
 
-interface PaymentMethodProps
-  extends React.ComponentProps<"input"> {
+interface PaymentMethodProps extends React.ComponentProps<"input"> {
   label?: string;
 }
 
-const PaymentMethod = ({ label, id, required, ...rest }: PaymentMethodProps) => {
+const PaymentMethod = ({
+  label,
+  id,
+  required,
+  ...rest
+}: PaymentMethodProps) => {
   return (
     <div className="flex items-center gap-3 mt-6">
       <input id={id} type="radio" required={required} {...rest} />

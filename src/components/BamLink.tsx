@@ -18,7 +18,7 @@ export default function BamLink({
     <Link
       href={href}
       className={clsx(
-        "transition-all duration-300 p-2 hover:rounded text-sm",
+        "transition-all duration-300 p-2 hover:rounded text-sm shrink-0",
         className,
         {
           "hover:bg-black bg-primary text-white": variant === "solid",

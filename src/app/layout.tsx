@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import "react-toastify/dist/ReactToastify.min.css";
@@ -14,15 +13,7 @@ import "swiper/css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: {
-    template: "%s | Bambi",
-    default: "Welcome to Bambi",
-  },
-  description: "Bambi - Find your next adventure",
-};
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -31,22 +22,20 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body className={inter.className}>
         <Providers>
-          <React.Suspense>
-            <Navbar />
-            {children}
-            <Footer />
-            <ToastContainer
-              position="top-right"
-              autoClose={4000}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="colored"
-              hideProgressBar={false}
-            />
-          </React.Suspense>
+          <Navbar />
+          {children}
+          <Footer />
+          <ToastContainer
+            position="top-right"
+            autoClose={4000}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="colored"
+            hideProgressBar={false}
+          />
         </Providers>
       </body>
     </html>

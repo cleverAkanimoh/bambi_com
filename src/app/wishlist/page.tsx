@@ -1,53 +1,26 @@
-"use client";
-import { useState, useMemo } from "react";
-import { useClearAllItemsFromCart, useCartItems, useRemoveSingleCartItem } from "@/lib/cart";
-import { useAuth } from "@/context/auth-context";
+"use client"
+import { useMemo } from "react";
 import { useReactTable, getCoreRowModel, flexRender, ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
 import { CartType } from "@/types";
 import Loading from "../loading";
 import { CiShoppingCart } from "react-icons/ci";
 import Link from "next/link";
-import { FaArrowRight } from "react-icons/fa6";
+import { FaArrowRight } from "react-icons/fa";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { toast } from "react-toastify";
 import { IoCloseCircleSharp } from "react-icons/io5";
-import { DeleteCartItemById } from "@/components/CartButtons";
+import { AddToCartButton, DeleteCartItemById } from "@/components/CartButtons"; // Ensure DeleteCartItemById is imported
+import { useWishlistItems, useRemoveFromWishlist } from "@/lib/cart";
 
-const Page = () => {
-  const { user, loading } = useAuth();
-  const [clearCart, setClearCart] = useState(false);
-  const { data: cartItems = [], isLoading: isFetching } = useCartItems(user);
-  const clearAllItemsFromCartMutation = useClearAllItemsFromCart();
+const WishList = () => {
+  const { data: wishlistItems, isLoading, error } = useWishlistItems();
+  const { handleRemoveFromWishlist, loading: removeLoading } = useRemoveFromWishlist(); // Hook for removing from wishlist
 
-  const handleClearCart = () => {
-    try {
-      setClearCart(true);
-      clearAllItemsFromCartMutation.mutate(undefined, {
-        onSuccess: () => {
-          toast.success(`All items have been deleted from cart`);
-          setClearCart(false);
-        },
-        onError: (error: unknown) => {
-          if (error instanceof Error) {
-            toast.error(`${error.message}`);
-          }
-          setClearCart(false);
-        },
-      });
-    } catch (error) {
-      if (error instanceof Error) {
-        toast.error(`${error.message}`);
-      }
-      setClearCart(false);
-    }
-  };
-
-  const data = useMemo(() => cartItems, [cartItems]);
   const columns: ColumnDef<CartType>[] = useMemo(() => [
     {
       header: 'Product Image',
-      accessorKey: 'src',
+      accessorKey: 'src', // Ensure this matches the property name in CartType
       cell: (info) => (
         <Image
           src={info.getValue() as string}
@@ -60,42 +33,50 @@ const Page = () => {
     },
     {
       header: 'Product Name',
-      accessorKey: 'title',
-    },
-    {
-      header: 'Quantity',
-      accessorKey: 'quantity',
+      accessorKey: 'title', // Ensure this matches the property name in CartType
     },
     {
       header: 'Price',
-      accessorKey: 'price',
+      accessorKey: 'new_price', // Ensure this matches the property name in CartType
       cell: (info) => `$${info.getValue()}`,
     },
     {
-      header: "Actions",
+      header: 'Stock Status',
+      cell: () => <p>In stock</p>, // Updated to render JSX directly
+    },
+    {
+      header: 'Add to cart',
+      cell: (info) => <AddToCartButton cart={info.row.original} />,
+    },
+    {
+      header: 'Remove',
       cell: (info) => (
-        <DeleteCartItemById
-          id={`${info.row.original.id}`} 
-          item={info.row.original.title}
-          
-        />
+        <DeleteCartItemById id={`${info.row.original.id}`} item={info.row.original.title} />
       ),
     },
   ], []);
 
   const table = useReactTable({
-    data,
+    data: wishlistItems || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error) {
+    toast.error("Failed to load wishlist items");
+  }
+
   return (
     <div className="flex flex-col gap-10 md:gap-14">
-      <Breadcrumbs active="Cart" />
-      {cartItems.length === 0 ? (
+      <Breadcrumbs active="Wishlist" />
+      {wishlistItems && wishlistItems.length === 0 ? (
         <section className="h-full flex flex-col gap-5 items-center justify-center">
           <CiShoppingCart size={90} className="opacity-60" />
-          <h5>Nothing in cart</h5>
+          <h5>No items in wishlist</h5>
           <Link href="/shop" className="text-primary hover:underline flex items-center gap-1">
             Go to shop <FaArrowRight className="" />
           </Link>
@@ -129,22 +110,10 @@ const Page = () => {
               ))}
             </tbody>
           </table>
-
-          <section className="flex flex-col md:flex-row items-center justify-center gap-6">
-            <Link className="p-2 text-white rounded-md text-center font-semibold bg-primary" href="/checkout">Checkout</Link>
-            <Link className="p-2 text-white rounded-md text-center font-semibold bg-primary" href="/shop">Continue Shopping</Link>
-            <button
-              className={`p-2 text-white rounded-md text-center font-semibold bg-red-600 ${clearCart && "opacity-75"}`}
-              onClick={handleClearCart}
-              disabled={clearCart}
-            >
-              {clearCart ? "Clearing" : "Clear Cart"}
-            </button>
-          </section>
         </div>
       )}
     </div>
   );
-};
+}
 
-export default Page;
+export default WishList;

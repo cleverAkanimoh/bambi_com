@@ -16,10 +16,20 @@ export type ProductsType = Products[];
 
 export type CartType = {
   id: string | number;
-  uid?: string;
   src: string;
   href: string;
   title: string;
   price: number;
   quantity: number;
+};
+
+export type SignUp = {
+  email: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+  country?: string;
+  city?: string;
+  phone?: string;
+  address?: string;
 };

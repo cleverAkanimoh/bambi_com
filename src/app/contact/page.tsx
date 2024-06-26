@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React, { useState, FormEvent } from "react";
 import { motion } from "framer-motion";
 import { MdMailOutline, MdOutlinePhone } from "react-icons/md";

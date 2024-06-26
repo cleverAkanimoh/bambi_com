@@ -1,4 +1,5 @@
-import { metadata } from "@/app/layout";
+"use client"
+// import { metadata } from "@/app/layout";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import AdditionalInformationForProduct from "@/components/single-product-page/AdditionalInformationForProduct";
 import ProductDisplay from "@/components/single-product-page/ProductDisplay";
@@ -16,21 +17,19 @@ export default function SingleProductPage({
 
   if (!singleProduct) return notFound();
 
-  metadata.title = singleProduct.heading;
-  metadata.description = singleProduct.description;
+  // metadata.title = singleProduct.heading;
+  // metadata.description = singleProduct.description;
 
   return (
     <main className="flex flex-col">
       <Breadcrumbs active="Single Product Page" />
-      <section className="section-margin-top">
-        <div className="container">
-          {/* dynamic */}
-          <Suspense>
-            <ProductDisplay singleProduct={singleProduct} />
-          </Suspense>
+      <section className="mt-8 mb-3">
+        {/* dynamic */}
+        <Suspense>
+          <ProductDisplay singleProduct={singleProduct} />
+        </Suspense>
 
-          <AdditionalInformationForProduct />
-        </div>
+        {/* <AdditionalInformationForProduct /> */}
       </section>
     </main>
   );

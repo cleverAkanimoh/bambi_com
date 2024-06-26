@@ -25,7 +25,7 @@ export default function MenuSideNav() {
   return (
     <section
       className={clsx(
-        "lg:hidden fixed top-0 right-0 h-screen w-full flex transition-all duration-500",
+        "lg:hidden fixed top-0 right-0 h-screen w-full flex max-xs:flex-col transition-all duration-500",
         {
           "bg-black/35 z-[200] visible": isMenuClicked,
           "opacity-0 invisible -z-30": !isMenuClicked,
@@ -33,17 +33,17 @@ export default function MenuSideNav() {
       )}
     >
       <div
-        className="h-screen w-full"
+        className="h-screen xs:w-full"
         onClick={() => setIsMenuClicked(false)}
       />
 
       <div
-        className={clsx("relative w-full flex transition-all duration-500", {
+        className={clsx("w-full flex transition-all duration-500", {
           "translate-x-0 opacity-100 visible": isMenuClicked,
           "translate-x-full opacity-0 invisible": !isMenuClicked,
         })}
       >
-        <div onClick={() => setIsMenuClicked(false)}>
+        <div onClick={() => setIsMenuClicked(false)} className="">
           <button className="bg-primary size-10 text-white grid place-items-center">
             <BamIcon
               Icon={XMarkIcon}
@@ -54,7 +54,7 @@ export default function MenuSideNav() {
         </div>
         <aside
           className={clsx(
-            "w-11/12 xs:min-w-[300px] shrink-0 relative h-screen overflow-y-auto p-2 xs:p-4 py-10 bg-white"
+            "w-full xs:min-w-[320px]  h-screen overflow-y-auto p-2 xs:p-4 py-8 bg-white"
           )}
         >
           <div className="space-y-10 px-2 w-full">

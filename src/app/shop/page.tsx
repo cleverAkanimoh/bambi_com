@@ -1,10 +1,9 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
-import ModalQuickView from "@/components/shop/ModalQuickView";
 import ProductCardWrapper from "@/components/shop/ProductCardWrapper";
 import React from "react";
 import Loading from "../loading";
 
-export default function page({
+export default async function page({
   searchParams: { sort_by, search, currentPage },
 }: {
   searchParams: { sort_by: string; search: string; currentPage: string };
@@ -15,13 +14,11 @@ export default function page({
 
       <React.Suspense fallback={<Loading />}>
         <ProductCardWrapper
-          sortBy={sort_by ?? ""}
-          currentPage={Number(currentPage) ?? 1}
-          search={search ?? ""}
+          sortBy={sort_by || ""}
+          currentPage={Number(currentPage) || 1}
+          search={search || ""}
         />
       </React.Suspense>
-
-      <ModalQuickView />
     </main>
   );
 }

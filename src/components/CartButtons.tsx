@@ -1,43 +1,41 @@
 "use client";
 import { toast } from "react-toastify";
-
 import React, { useState } from "react";
-import {
-  addToCart,
-  clearAllItemsFromCart,
-  removeSingleCartItem,
-} from "@/lib/cart";
-import { CartType } from "@/types";
-
 import clsx from "clsx";
-
-import Button from "./Button";
 import { BiRefresh, BiTrash } from "react-icons/bi";
 import { IoCloseCircleSharp } from "react-icons/io5";
-import { useAuth } from "@/context/auth-context";
+import { CartType } from "@/types";
+import Button from "./Button";
+import { FcLike } from "react-icons/fc";
+import { CiHeart } from "react-icons/ci";
+import { getCurrentUser } from "@/lib/prismaHelpers";
+import {
+  addToCart,
+  deleteAllCartItems,
+  removeSingleCartItem,
+} from "@/helpers/cart";
 
 export function AddToCartButton({
   cart,
-  className = "btn btn-dark btn-hover-primary",
+  className = "px-6 py-3 bg-primary hover:bg-white hover:text-black rounded text-white transition-colors duration-300",
 }: {
   cart: CartType;
   className?: string;
 }) {
   const [loading, setLoading] = useState(false);
 
-  const { user } = useAuth();
-
   const handleAddToCart = async () => {
-    setLoading(true);
     try {
-      await addToCart(cart);
-
-      // toast.success(`${cart.title ?? "Item"} has been added to cart`);
-      setLoading(false);
-    } catch (error) {
-      if (error instanceof Error) {
-        toast.error(`${error.message}`);
+      setLoading(true);
+      const response = await addToCart(cart);
+      if (response) {
+        toast.warning(response?.message);
+        return;
       }
+      toast.success(`${cart.title} has been added to cart`);
+    } catch (error) {
+      toast.error(`${error}`);
+    } finally {
       setLoading(false);
     }
   };
@@ -46,32 +44,44 @@ export function AddToCartButton({
     "active:scale-90 disabled:pointer-events-none opacity-60",
     className
   );
+
   return (
-    <>
-      {user ? (
-        <button
-          className={styles}
-          onClick={() => handleAddToCart()}
-          disabled={loading}
-        >
-          {loading ? "Adding..." : "Add to cart"}
-        </button>
-      ) : (
-        <button
-          className={styles}
-          onClick={() =>
-            toast.warning(
-              "You have to log in before you can add item to cart",
-              {
-                position: "top-center",
-              }
-            )
-          }
-        >
-          Add to cart
-        </button>
-      )}
-    </>
+    <button className={styles} onClick={handleAddToCart} disabled={loading}>
+      {loading ? "Adding..." : "Add to cart"}
+    </button>
+  );
+}
+
+export function AddToWishlistButton({
+  wishlistItem,
+  className = "bg-white p-2 hover:bg-primary hover:text-white transition-all ease-linear duration-150 rounded",
+}: {
+  wishlistItem: CartType;
+  className?: string;
+}) {
+  const handleAddToWishlist = async () => {
+    const user = await getCurrentUser();
+    if (!user) {
+      toast.warning("You have to log in before you can add items to wishlist", {
+        position: "top-center",
+      });
+      return;
+    }
+  };
+
+  const isLiked = false;
+  const isLoading = false;
+
+  const styles = className;
+
+  return (
+    <button
+      onClick={handleAddToWishlist}
+      className={styles}
+      disabled={isLoading}
+    >
+      {isLoading ? "Loading..." : isLiked ? <FcLike /> : <CiHeart />}
+    </button>
   );
 }
 
@@ -82,26 +92,26 @@ export const DeleteCartItemById = ({
   id: string | number;
   item: string;
 }) => {
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const handleDelete = async () => {
     try {
-      await removeSingleCartItem(id);
-      toast.success(`${item} has been deleted from cart`);
+      setIsLoading(true);
+      const response = await removeSingleCartItem(id.toString());
+      toast.warning(response?.message);
 
-      setLoading(false);
+      setIsLoading(false);
     } catch (error) {
-      if (error instanceof Error) {
-        toast.error(`${error.message}`);
-      }
-      setLoading(false);
+      toast.error(`${error}`);
     }
   };
+
   return (
     <button
-      className="cart-product-remove text-xl text-red-600"
-      onClick={() => handleDelete()}
+      className="cart-product-remove text-xl text-red-600 disabled:pointer-events-none"
+      onClick={handleDelete}
+      disabled={isLoading}
     >
-      {loading ? (
+      {isLoading ? (
         <BiRefresh className="animate-spin" />
       ) : (
         <IoCloseCircleSharp />
@@ -112,27 +122,19 @@ export const DeleteCartItemById = ({
 
 export const DeleteAllCartItemsButton = () => {
   const [loading, setLoading] = useState(false);
-
   const handleDelete = async () => {
-    setLoading(true);
     try {
-      await clearAllItemsFromCart();
-      toast.success(`All Item has been deleted from cart`);
-
+      setLoading(true);
+      await deleteAllCartItems();
+      toast.info("Your cart has been cleared");
       setLoading(false);
     } catch (error) {
-      if (error instanceof Error) {
-        toast.error(`${error.message}`);
-      }
-      setLoading(false);
+      toast.error(`${error}`);
     }
   };
+
   return (
-    <Button
-      title="Clear cart"
-      onClick={() => handleDelete()}
-      disabled={loading}
-    >
+    <Button title="Clear cart" onClick={handleDelete} disabled={loading}>
       {loading ? <BiRefresh className="animate-spin w-4" /> : <BiTrash />}
     </Button>
   );

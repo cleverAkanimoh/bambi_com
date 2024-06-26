@@ -1,24 +1,17 @@
 "use client";
 import Link from "next/link";
-import React, { FormEvent, useState, useEffect } from "react";
-import { auth } from "@/config/firebase-config";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { useAuth } from "@/context/auth-context";
-import { useRouter } from "next/navigation";
+import React, { FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 
 import Breadcrumbs from "@/components/Breadcrumbs";
+import { loginUserAction } from "@/actions/authenticate";
 
-const Page = () => {
-  const { user } = useAuth();
-  const router = useRouter();
+const Page = ({
+  searchParams: { callbackUrl = "/" },
+}: {
+  searchParams: { callbackUrl: string };
+}) => {
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (!user) {
-      router.push("/auth/login");
-    }
-  }, [user, router]);
 
   const login = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,23 +19,21 @@ const Page = () => {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
 
-        try {
-            setIsSubmitted(true);
-            await signInWithEmailAndPassword(auth, email, password);
-            toast.success("Login successful");
-            router.push("/");
-        } catch (error) {
-            console.error(error);
-            toast.error("Login failed");
-        } finally {
-            setIsSubmitted(false);
-        }
-    };
+    try {
+      setIsSubmitted(true);
+      await loginUserAction({ email, password, callbackUrl });
+      toast.success("Login successful");
+    } catch (error) {
+      console.error(error);
+      toast.error(`${error}`);
+    } finally {
+      setIsSubmitted(false);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-6">
       <Breadcrumbs active="Login" />
-
       <div className="flex items-center justify-center p-4 md:p-10 mb-4">
         <form
           onSubmit={login}

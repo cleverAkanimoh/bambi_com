@@ -1,8 +1,6 @@
 import React, { Suspense } from "react";
 import { ProductsType } from "@/types";
-import Image from "next/image";
 import Link from "next/link";
-import Button from "../Button";
 import Pagination from "../Pagination";
 import { shopProducts } from "@/lib/products";
 import Header from "./Header";
@@ -30,33 +28,36 @@ export default function ProductCardWrapper({
       )
     : shopProducts;
 
-  const sortedFilteredProduct = sortBy
-    ? filteredProducts.sort()
-    : filteredProducts;
+  const sortedFilteredProduct =
+    sortBy === "price" ? filteredProducts.sort() : filteredProducts;
 
-  const totalPages = filteredProducts.length;
+  const totalPages = sortedFilteredProduct.length;
   const POST_PER_PAGE = 10;
+
+  const lastPostIndex = currentPage * POST_PER_PAGE;
+  const firstPostIndex = lastPostIndex - POST_PER_PAGE;
   return (
     <>
       <Suspense>
-        <Header postPerPage={10} totalPages={totalPages} />
+        <Header postPerPage={POST_PER_PAGE} totalPages={totalPages} />
       </Suspense>
-      <section className="space-y-4 my-8 p-4">
-        {filteredProducts.length ? (
-          <section className="row shop_wrapper grid_4">
-            {sortedFilteredProduct.map((x, i) => (
-              <ShopProductCard
-                key={i}
-                id={i + 1}
-                src1="/assets/images/products/medium-product/2.jpg"
-                src2="/assets/images/products/medium-product/3.jpg"
-                new_price={x.new_price}
-                old_price={x.old_price}
-                heading={x.heading}
-                description={`It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English.`}
-                href={`/shop/${i + 1}`}
-              />
-            ))}
+      <section className="">
+        {sortedFilteredProduct.length ? (
+          <section className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-12 p-6 md:p-12 items-center place-tems-center">
+            {sortedFilteredProduct
+              .slice(firstPostIndex, lastPostIndex)
+              .map((x, i) => (
+                <ShopProductCard
+                  key={i}
+                  id={i + 1}
+                  src1="/assets/images/products/medium-product/2.jpg"
+                  new_price={x.new_price}
+                  old_price={x.old_price}
+                  heading={x.heading}
+                  description={`It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English.`}
+                  href={`/shop/${i + 1}`}
+                />
+              ))}
           </section>
         ) : (
           <section
