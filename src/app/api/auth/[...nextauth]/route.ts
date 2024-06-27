@@ -50,7 +50,10 @@ export const { auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
-  secret: "wpWcpZBQs0nOON6wL9V3YSjLmsMgeQWXXfjZSThj7Lg=",
+  //   jwt: {
+  //     secret: process.env.NEXTAUTH_JWT_SECRET as string,
+  //   },
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     session: ({ session, token }) => ({
       ...session,
