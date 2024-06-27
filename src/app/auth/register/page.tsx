@@ -27,8 +27,8 @@ const Page = ({
       await registerUserAction({ email, firstName, lastName, password });
       toast.success("Registration successful");
       setIsSubmitted(false);
-      setIsLoggingIn(true);
-      await loginUserAction({ email, password, callbackUrl });
+      // setIsLoggingIn(true);
+      // await loginUserAction({ email, password, callbackUrl });
     } catch (error) {
       toast.error(`${error}`); // Display the correct error message from NextAuth
     } finally {
