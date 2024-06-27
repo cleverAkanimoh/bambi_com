@@ -20,6 +20,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
   return (
     <html lang="en" className="scroll-smooth">
       <body className={inter.className}>

@@ -64,7 +64,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
             </ul>
             <LogoutButton />
           </nav>
-          <aside className="p-2 md:p-6 border size-full">{children}</aside>
+          <aside className="p-2 md:p-3 border size-full">{children}</aside>
         </div>
       </div>
     </div>

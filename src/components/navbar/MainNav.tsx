@@ -11,8 +11,11 @@ import { getCurrentUserCartItems } from "@/helpers/cart";
 import { getCurrentUser } from "@/lib/prismaHelpers";
 
 export default async function MainNav() {
-  const totalItems = await getCurrentUserCartItems();
+  const cartItems = await getCurrentUserCartItems();
   const user = await getCurrentUser()
+
+  const totalItems = cartItems?.reduce((prev, curr) => prev + curr?.quantity, 0) ??
+    0;
 
   return (
     <MainNavClient>
@@ -31,7 +34,7 @@ export default async function MainNav() {
           <span className="max-lg:sr-only">Wishlist</span>
         </BamLink>
 
-        <OffCartButton totalItems={totalItems?.length ?? 0} />
+        <OffCartButton totalItems={totalItems} />
 
         <MenuButton />
       </div>

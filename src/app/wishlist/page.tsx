@@ -19,7 +19,7 @@ const WishList = () => {
 
   useEffect(() => {
     const fetchWishlistItems = async () => {
-      try {
+            try {
         const items = await getCurrentUserWishlist();
         setWishlist(items);
       } catch (error) {
@@ -65,7 +65,7 @@ const WishList = () => {
     {
       header: 'Remove',
       cell: (info) => (
-        <DeleteCartItemById id={`${info.row.original.productId}`} item={info.row.original.title} />
+        <DeleteCartItemById isWishList={true} id={`${info.row.original.productId}`} item={info.row.original.title} />
       ),
     },
   ], []);
@@ -87,7 +87,7 @@ const WishList = () => {
   return (
     <div className="flex flex-col gap-10 md:gap-14">
       <Breadcrumbs active="Wishlist" />
-      {wishlist?.length??0 < 1 ? (
+      {(wishlist?.length || 0) < 1 ? (
         <section className="h-full flex flex-col gap-5 items-center justify-center">
           <CiShoppingCart size={90} className="opacity-60" />
           <h5>No items in wishlist</h5>

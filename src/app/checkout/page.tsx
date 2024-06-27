@@ -7,6 +7,7 @@ import Paystack from "@/components/checkout/Paystack";
 import { getCurrentUser } from "@/lib/prismaHelpers";
 import { getCurrentUserCartItems } from "@/helpers/cart";
 import CheckoutForm from "@/components/checkout/CheckoutForm";
+import { formatCurrency } from "@/lib/utils";
 
 const orderStyle = clsx("p-2 flex justify-between");
 export default async function CheckoutPage() {
@@ -54,13 +55,13 @@ export default async function CheckoutPage() {
 
             <div className={orderStyle}>
               <strong className="">Cart subtotal</strong>
-              <span>${cartTotal}</span>
+              <span>{formatCurrency(cartTotal * 100)}</span>
             </div>
 
             <div className={orderStyle}>
               <b className="text-primary">Order Total</b>
               <big>
-                <b>${cartTotal}</b>
+                <b>{formatCurrency(cartTotal * 100)}</b>
               </big>
             </div>
           </aside>
@@ -88,7 +89,7 @@ export default async function CheckoutPage() {
                       Corrupti odio atque dicta cumque et beatae, repellat iusto
                       non
                     </p>
-                    <h5>Send ${cartTotal} to:</h5>
+                    <h5>Send {formatCurrency(cartTotal * 100)} to:</h5>
                     <ul>
                       <li>
                         <b>Account name:</b> Bambi Stores
@@ -131,7 +132,7 @@ const OrderTile = ({ title, price, quantity }: OrderTileProps) => (
     <p className="m-0">
       {title} x {quantity}
     </p>
-    <b>${price * quantity}</b>
+    <b>{formatCurrency((price * quantity) * 100)}</b>
   </li>
 );
 

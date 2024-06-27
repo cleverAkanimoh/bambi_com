@@ -1,5 +1,5 @@
 export type Products = {
-  id: string;
+  id?: string;
   src1: string;
   src2?: string;
   href: string;
@@ -11,6 +11,7 @@ export type Products = {
   availability?: number;
   sku?: number;
   ratings?: number;
+  storeId: string
 };
 export type ProductsType = Products[];
 

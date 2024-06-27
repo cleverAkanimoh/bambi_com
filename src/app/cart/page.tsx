@@ -9,10 +9,8 @@ import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa6";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { toast } from "react-toastify";
-import { IoCloseCircleSharp } from "react-icons/io5";
-import { DeleteCartItemById } from "@/components/CartButtons";
-import { getCurrentUser } from "@/lib/prismaHelpers";
-import { deleteAllCartItems, getCurrentUserCartItems } from "@/helpers/cart";
+import { DeleteAllCartItemsButton, DeleteCartItemById } from "@/components/CartButtons";
+import { getCurrentUserCartItems } from "@/helpers/cart";
 
 const Page = () => {
   const [cartItems, setCartItems] = useState<CartType[] | undefined>([]);
@@ -88,7 +86,7 @@ const Page = () => {
   return (
     <div className="flex flex-col gap-10 md:gap-14">
       <Breadcrumbs active="Cart" />
-      {cartItems?.length??0 < 1 ? (
+      {(cartItems?.length || 0) < 1 ? (
         <section className="h-full flex flex-col gap-5 items-center justify-center">
           <CiShoppingCart size={90} className="opacity-60" />
           <h5>Nothing in cart</h5>
@@ -130,13 +128,8 @@ const Page = () => {
             <Link className="p-2 text-white rounded-md text-center font-semibold bg-primary" href="/shop">
               Continue Shopping
             </Link>
-            <button
-              className="p-2 text-white rounded-md text-center font-semibold bg-red-600"
-              onClick={deleteAllCartItems}
-            >
-              Clear Cart
-            </button>
-          </section>
+           <DeleteAllCartItemsButton deleteText=" Clear Cart" />
+                    </section>
         </div>
       )}
     </div>

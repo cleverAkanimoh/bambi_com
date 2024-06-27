@@ -45,9 +45,7 @@ const ShopProductCard = ({
       })
     );
   };
-  const addToWishList = () => {
-    setIsLiked((prevState) => !prevState);
-  };
+
 
   return (
     <motion.div
@@ -72,17 +70,17 @@ const ShopProductCard = ({
             <span className="text-center">{category ?? "-18%"}</span>
           </span>
           <div className="!overflow-hidden flex flex-col gap-6 absolute top-4 group-hover:top-2 right-4 text-xl p-3 text-[#555] opacity-0 group-hover:opacity-100 transition-all ease-linear duration-[400ms]">
-           <AddToWishlistButton
-           wishlistItem={{
-            src: src1,
-            href,
-            title: heading,
-            price: new_price,
-            quantity: 1,
-            productId: id,
-            availability: 1
-          }}
-           />
+            <AddToWishlistButton
+              wishlistItem={{
+                src: src1,
+                href,
+                title: heading,
+                price: new_price,
+                quantity: 1,
+                productId: id,
+                availability: 1
+              }}
+            />
             <Link
               href="/compare"
               className="bg-white p-2 hover:bg-primary hover:text-white transition-all ease-linear duration-150 rounded"

@@ -6,8 +6,10 @@ import { shopProducts } from "@/lib/products";
 import Header from "./Header";
 import { BiShoppingBag } from "react-icons/bi";
 import ShopProductCard from "../ProductCard";
+import { generateUniqueString } from "@/lib/utils";
+import { getAllProductsInStore } from "@/helpers/products";
 
-export default function ProductCardWrapper({
+export default async function ProductCardWrapper({
   array,
   sortBy,
   search,
@@ -18,9 +20,10 @@ export default function ProductCardWrapper({
   search: string;
   currentPage: number;
 }) {
+  const shopProducts = await getAllProductsInStore()
   const searchValue = search.toLowerCase();
   const filteredProducts = search
-    ? shopProducts.filter(
+    ? shopProducts?.filter(
         (product) =>
           product.heading.toLowerCase().includes(searchValue) ||
           product.description?.toLowerCase().includes(searchValue) ||
@@ -29,9 +32,9 @@ export default function ProductCardWrapper({
     : shopProducts;
 
   const sortedFilteredProduct =
-    sortBy === "price" ? filteredProducts.sort() : filteredProducts;
+    sortBy === "price" ? filteredProducts?.sort() : filteredProducts;
 
-  const totalPages = sortedFilteredProduct.length;
+  const totalPages = sortedFilteredProduct?.length;
   const POST_PER_PAGE = 10;
 
   const lastPostIndex = currentPage * POST_PER_PAGE;
@@ -39,20 +42,20 @@ export default function ProductCardWrapper({
   return (
     <>
       <Suspense>
-        <Header postPerPage={POST_PER_PAGE} totalPages={totalPages} />
+        <Header postPerPage={POST_PER_PAGE} totalPages={totalPages || 0} />
       </Suspense>
       <section className="">
-        {sortedFilteredProduct.length ? (
+        {sortedFilteredProduct?.length ? (
           <section className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-12 p-6 md:p-12 items-center place-tems-center">
             {sortedFilteredProduct
               .slice(firstPostIndex, lastPostIndex)
               .map((x, i) => (
                 <ShopProductCard
                   key={i}
-                  id={`${i + 1}`}
+                  id={`${x.id}`}
                   src1="/assets/images/products/medium-product/2.jpg"
                   new_price={x.new_price}
-                  old_price={x.old_price}
+                  old_price={x.old_price || 0}
                   heading={x.heading}
                   description={`It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English.`}
                   href={`/shop/${i + 1}`}
@@ -73,10 +76,10 @@ export default function ProductCardWrapper({
             <Link href="?">clear search</Link>
           </section>
         )}
-        {filteredProducts.length > 0 && (
+        {(filteredProducts?.length || 0) > 0 && (
           <aside className="flex justify-center !mt-20">
             <Pagination
-              totalPosts={totalPages}
+              totalPosts={totalPages || 0}
               postPerPage={POST_PER_PAGE}
               currentPage={currentPage}
             />
