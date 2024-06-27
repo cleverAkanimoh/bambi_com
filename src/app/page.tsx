@@ -1,33 +1,19 @@
-"use client";
-
+import BannerSection from "@/components/home/BannerSection";
 import Brands from "@/components/home/Brands";
 import CtaSection from "@/components/home/CtaSection";
 import Header from "@/components/home/Header";
 import Products from "@/components/home/Products";
-import banner4 from "../../public/assets/images/banner/4.png";
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { fadeUp } from "@/lib/framer";
+import { getAllProductsInStore } from "@/helpers/products";
 
-export default function Home() {
+export default async function Home() {
+  const products = await getAllProductsInStore();
   return (
     <main className="overflow-hidden">
       <Header />
-      <Products />
-      {/* <BannerSection /> */}
+      <Products products={products} />
       <CtaSection />
-      <motion.div
-        initial={fadeUp.initial}
-        whileInView={fadeUp.whileInView}
-        transition={fadeUp.transition}
-        className="!overflow-hidden w-11/12 md:w-10/12 mx-auto"
-      >
-        <Image
-          className="size-full hover:scale-110 transition-all ease-in-out duration-200"
-          src={banner4}
-          alt="banner image"
-        />
-      </motion.div>
+      <BannerSection />
+
       <Brands />
     </main>
   );

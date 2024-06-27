@@ -1,5 +1,3 @@
-import { getSingleProduct } from "./helpers/products";
-
 export type Products = {
   id: string;
   src1: string;
@@ -14,9 +12,9 @@ export type Products = {
   storeId: string;
   sku: number | null;
   ratings: number | null;
-} | null;
+};
 
-export type ProductsType = Products[];
+export type ProductsType = Products[] | null;
 
 export type CartType = {
   id?: string;

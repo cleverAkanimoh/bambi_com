@@ -1,27 +1,23 @@
-import React from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { ItemType } from "./Header";
+"use client";
 
-import BannerImage1 from "../../../public/assets/images/banner/banner-1.jpg";
-import BannerImage4 from "../../../public/assets/images/banner/banner-4.jpg";
+import banner4 from "../../../public/assets/images/banner/4.png";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { fadeUp } from "@/lib/framer";
 
 export default function BannerSection() {
   return (
-    <section className="">
-      <div className="flex flex-wrap justify-center gap-6 p-2 xs:p-4">
-        <BannerCard src={BannerImage1} title="" />
-        <BannerCard src={BannerImage1} title="" />
-        <BannerCard src={BannerImage4} title="" />
-      </div>
-    </section>
+    <motion.div
+      initial={fadeUp.initial}
+      whileInView={fadeUp.whileInView}
+      transition={fadeUp.transition}
+      className="!overflow-hidden w-11/12 md:w-10/12 mx-auto"
+    >
+      <Image
+        className="size-full hover:scale-110 transition-all ease-in-out duration-200"
+        src={banner4}
+        alt="banner image"
+      />
+    </motion.div>
   );
 }
-
-const BannerCard = (props: ItemType) => (
-  <div className="w-full max-w-lg" data-aos="fade-up" data-aos-delay="200">
-    <Link href="/shop">
-      <Image className="w-full" src={props.src} alt="Banner Image" />
-    </Link>
-  </div>
-);
