@@ -11,7 +11,7 @@ const Page = ({
 }: {
   searchParams: { callbackUrl: string };
 }) => {
-  const router = useRouter();
+  // const router = useRouter();
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false);
 
@@ -94,7 +94,11 @@ const Page = ({
             type="submit"
             className={`self-start text-white w-full md:w-[40%] lg:w-[30%] text-center font-bold bg-black p-4 hover:bg-primary hover:text-white transition-all ease-in-out duration-200 disabled:opacity-70 disabled:pointer-events-none`}
           >
-            {isSubmitted ? "Registering..." : isLoggingIn ? "" : "Register"}
+            {isSubmitted
+              ? "Registering..."
+              : isLoggingIn
+              ? "Logging you in now"
+              : "Register"}
           </button>
         </form>
       </div>
