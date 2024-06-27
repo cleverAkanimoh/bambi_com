@@ -1,6 +1,21 @@
 import { getSingleProduct } from "./helpers/products";
 
-export type Products = typeof getSingleProduct;
+export type Products = {
+  id: string;
+  src1: string;
+  src2: string | null;
+  href: string;
+  old_price: number | null;
+  new_price: number;
+  heading: string;
+  sales_category: string | null;
+  description: string | null;
+  availability: number;
+  storeId: string;
+  sku: number | null;
+  ratings: number | null;
+} | null;
+
 export type ProductsType = Products[];
 
 export type CartType = {

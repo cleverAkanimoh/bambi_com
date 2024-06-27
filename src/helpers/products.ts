@@ -12,14 +12,13 @@ export const getAllProductsInStore = async () => {
   return store.products;
 };
 
-
-
 export const getSingleProduct = async ({
   productId,
 }: {
   productId: string;
 }) => {
-  return await prisma.products.findFirst({
+  const singleProduct = await prisma.products.findFirst({
     where: { id: productId },
   });
+  return singleProduct;
 };
