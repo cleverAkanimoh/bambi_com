@@ -24,8 +24,9 @@ const Page = ({
     try {
       console.log("Started registration");
       setIsSubmitted(true);
-      await registerUserAction({ email, firstName, lastName, password });
+      const user = await registerUserAction({ email, firstName, lastName, password });
       toast.success("Registration successful");
+      toast.info(`${user}`)
       setIsSubmitted(false);
       // setIsLoggingIn(true);
       // await loginUserAction({ email, password, callbackUrl });
