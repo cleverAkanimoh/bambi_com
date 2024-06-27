@@ -38,7 +38,7 @@ export const registerUserAction = async ({
     },
   });
 
-  return { user };
+  // return { user };
 };
 
 export const loginUserAction = async ({

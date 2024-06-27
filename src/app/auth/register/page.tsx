@@ -1,7 +1,6 @@
 "use client";
 
 import React, { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { loginUserAction, registerUserAction } from "@/actions/authenticate";
 import { toast } from "react-toastify";
@@ -12,8 +11,8 @@ const Page = ({
   searchParams: { callbackUrl: string };
 }) => {
   // const router = useRouter();
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-  const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   const signIn = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,7 +30,7 @@ const Page = ({
       setIsLoggingIn(true);
       await loginUserAction({ email, password, callbackUrl });
     } catch (error) {
-      toast.error(`${error}`); // Display the correct error message from Firestore
+      toast.error(`${error}`); // Display the correct error message from NextAuth
     } finally {
       setIsSubmitted(false);
       setIsLoggingIn(false);
@@ -97,8 +96,8 @@ const Page = ({
             {isSubmitted
               ? "Registering..."
               : isLoggingIn
-              ? "Logging you in now"
-              : "Register"}
+                ? "Logging you in now"
+                : "Register"}
           </button>
         </form>
       </div>

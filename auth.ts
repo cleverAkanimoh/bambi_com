@@ -1,3 +1,5 @@
+"use server"
+
 import Credentials from "next-auth/providers/credentials";
 
 import NextAuth from "next-auth";
