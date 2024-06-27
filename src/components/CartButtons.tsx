@@ -8,13 +8,12 @@ import { CartType, WishListType } from "@/types";
 import Button from "./Button";
 import { FcLike } from "react-icons/fc";
 import { CiHeart } from "react-icons/ci";
-import { getCurrentUser } from "@/lib/prismaHelpers";
 import {
   addToCart,
   deleteAllCartItems,
   removeSingleCartItem,
 } from "@/helpers/cart";
-import { addWishListItems } from "@/helpers/wishlist"
+import { addWishListItems, removeWishListItem } from "@/helpers/wishlist"
 
 export function AddToCartButton({
   cart,
@@ -88,23 +87,27 @@ export function AddToWishlistButton({
   );
 }
 
-export const DeleteCartItemById = ({
-  id,
-  item,
-}: {
+interface DeleteCartItemByIdProps {
   id: string | number;
   item: string;
-}) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const handleDelete = async () => {
-    try {
-      setIsLoading(true);
-      const response = await removeSingleCartItem(id.toString());
-      toast.warning(response?.message);
+  isWishList?: boolean;
+}
 
-      setIsLoading(false);
+export const DeleteCartItemById: React.FC<DeleteCartItemByIdProps> = ({ id, isWishList }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleDelete = async () => {
+    setIsLoading(true);
+    try {
+      const response = isWishList 
+        ? await removeWishListItem(id.toString()) 
+        : await removeSingleCartItem(id.toString());
+      
+      toast.warning(response?.message);
     } catch (error) {
       toast.error(`${error}`);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -123,7 +126,7 @@ export const DeleteCartItemById = ({
   );
 };
 
-export const DeleteAllCartItemsButton = () => {
+export const DeleteAllCartItemsButton = ({deleteText}: {deleteText?: string}) => {
   const [loading, setLoading] = useState(false);
   const handleDelete = async () => {
     try {
@@ -138,7 +141,7 @@ export const DeleteAllCartItemsButton = () => {
 
   return (
     <Button title="Clear cart" onClick={handleDelete} disabled={loading}>
-      {loading ? <BiRefresh className="animate-spin w-4" /> : <BiTrash />}
+      {loading ? <BiRefresh className="animate-spin w-4" /> : deleteText || <BiTrash />}
     </Button>
   );
 };

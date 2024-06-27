@@ -45,9 +45,7 @@ const ShopProductCard = ({
       })
     );
   };
-  const addToWishList = () => {
-    setIsLiked((prevState) => !prevState);
-  };
+
 
   return (
     <motion.div
@@ -71,7 +69,7 @@ const ShopProductCard = ({
           <span className="absolute top-2 left-2 bg-black p-1 !text-sm min-w-14 grid place-items-center rounded-md   text-white ">
             <span className="text-center">{category ?? "-18%"}</span>
           </span>
-          <div className="flex flex-col gap-6 absolute top-4 group-hover:top-2 right-4 text-xl p-3 text-[#555] opacity-0 group-hover:opacity-100 transition-all ease-linear duration-[400ms]">
+          <div className="!overflow-hidden flex flex-col gap-6 absolute top-4 group-hover:top-2 right-4 text-xl p-3 text-[#555] opacity-0 group-hover:opacity-100 transition-all ease-linear duration-[400ms]">
             <AddToWishlistButton
               wishlistItem={{
                 src: src1,
@@ -80,7 +78,7 @@ const ShopProductCard = ({
                 price: new_price,
                 quantity: 1,
                 productId: id,
-                availability: 1,
+                availability: 1
               }}
             />
             <Link
@@ -98,7 +96,7 @@ const ShopProductCard = ({
               <CiSearch />
             </button>
           </div>
-          <div className="absolute -translate-y-[0rem] invisible !opacity-0 group-hover:!opacity-100 group-hover:-translate-y-[4.5rem] md: md:group-hover:-translate-y-[5rem] group-hover:visible left-1/2 -translate-x-1/2 w-1/2 md:w-3/4 mx-auto text-center rounded p-3 transition-all ease-linear duration-[400ms]">
+          <div className="absolute -translate-y-[0rem] invisible !opacity-0 group-hover:!opacity-100 group-hover:-translate-y-[4.5rem] md: md:group-hover:-translate-y-[5rem] group-hover:visible left-1/2 -translate-x-1/2 w-1/2 lg:w-3/4 mx-auto text-center rounded p-3 transition-all ease-linear duration-[400ms]">
             <AddToCartButton
               cart={{
                 src: src1,

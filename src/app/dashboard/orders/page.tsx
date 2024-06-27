@@ -11,7 +11,8 @@ interface PaymentMethod {
 const Page = async () => {
 
     const user = await getCurrentUserOrders();
-    const orderDate = user?.map(user=>user.createdAt.toDateString());
+    const formattedOrderDates = user?.map(order => new Date(order.createdAt).toLocaleDateString());
+    
 
 
 
@@ -19,10 +20,10 @@ const Page = async () => {
         <div className=''>
             {/* <Breadcrumbs active="Payment Method" /> */}
             <div className='grid grid-cols-1 gap-4 p-4'>
-                <h1 className='text-black text-3xl font-bold'>Payment Method</h1>
-                {orderDate ? (
+                <h1 className='text-black text-2xl font-bold'>Orders</h1>
+                {formattedOrderDates ? (
                     <div className='w-full text-[#555] font-semibold p-4'>
-                        <p>{orderDate}</p>
+                        <p>{formattedOrderDates}</p>
                     </div>
                 ) : (
                     <div className='w-full bg-stone-200 text-[#555] font-semibold p-4'>

@@ -1,17 +1,15 @@
 
 import Breadcrumbs from "@/components/Breadcrumbs";
-import Button from "@/components/Button";
+import { PaymentMethod } from "@/components/checkout/PaymentMethod"
 import clsx from "clsx";
-import { PaystackButton } from "react-paystack";
-import { toast } from "react-toastify";
-import { prisma } from "@/lib/prisma";
+import Paystack from "@/components/checkout/Paystack";
+
 import { getCurrentUser } from "@/lib/prismaHelpers";
 import { getCurrentUserCartItems } from "@/helpers/cart";
+import CheckoutForm from "@/components/checkout/CheckoutForm";
+import { formatCurrency } from "@/lib/utils";
 
 const orderStyle = clsx("p-2 flex justify-between");
-
-const publicKey = "pk_test_ef5e04574fd9f51d757806866fce40f5ebfd6b26";
-
 export default async function CheckoutPage() {
   const cartItems = await getCurrentUserCartItems()
   const user = await getCurrentUser();
@@ -19,66 +17,12 @@ export default async function CheckoutPage() {
   const cartTotal = cartItems?.reduce(
     (prev, curr) => prev + curr?.price * curr?.quantity,
     0
-  );
+  ) ?? 0;
 
   const handlePaymentMethod = (x: string) => {
     document?.getElementById("update-billing")?.click();
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get("email") as string;
-    const name = formData.get("name") as string;
-    const country = formData.get("country") as string;
-    const city = formData.get("city") as string;
-    const address = formData.get("address") as string;
-    const message = formData.get("message") as string;
-
-    try {
-      await prisma.user.update({
-        where: { email },
-        data: {
-          name,
-          email,
-          country,
-          city,
-          address,
-        },
-      });
-      toast.success("Billing details updated successfully");
-    } catch (error) {
-      if (error instanceof Error) {
-        toast.error(error.message);
-      } else {
-        toast.error("Something went wrong!");
-      }
-    }
-  };
-
-  const componentProps = {
-    email: user?.email || "",
-    amount: cartTotal ?? 0 * 100, // Paystack expects amount in kobo
-    metadata: {
-      custom_fields: [
-        {
-          display_name: "Name",
-          variable_name: "name",
-          value: user?.name || "Lorem Name",
-        },
-        {
-          display_name: "Phone",
-          variable_name: "phone",
-          value: "",
-        },
-      ],
-    },
-    publicKey,
-    text: "Pay Now",
-    onSuccess: () =>
-      toast.success("Thanks for doing business with us! Come back soon!!"),
-    onClose: () => toast.info("User cancelled payment action"),
-  };
 
   return (
     <main className="flex flex-col gap-4">
@@ -87,73 +31,7 @@ export default async function CheckoutPage() {
       <section className="p-4 md:w-10/12 w-11/112 flex max-md:flex-col max-md:items-center justify-center gap-4 md:gap-10 mx-auto">
         <section className="w-full max-md:max-w-md">
           <h3 className="mb-4 text-2xl">Billing Details</h3>
-          <form onSubmit={handleSubmit}>
-            <Input
-              label="Full name"
-              name="name"
-              id="name"
-              placeholder="Full name"
-              defaultValue={user?.name ?? ""}
-              required
-            />
-            <Input
-              label="Country"
-              name="country"
-              defaultValue={user?.country ?? ""}
-              placeholder="Country"
-              required
-            />
-            <Input
-              label="Town/City"
-              name="city"
-              placeholder="Town/City"
-              defaultValue={user?.city ?? ""}
-              required
-            />
-            <Input
-              label="Address"
-              placeholder="Address"
-              name="address"
-              defaultValue={user?.address ?? ""}
-              required
-            />
-            <Input
-              label="Email"
-              type="email"
-              id="email"
-              name="email"
-              defaultValue={user?.email ?? ""}
-              placeholder="Email"
-              required
-            />
-            <Input
-              label="Phone number"
-              type="number"
-              name="phone"
-              id="phone"
-              defaultValue={user?.phone ?? ""}
-              placeholder="Phone number"
-              required
-            />
-            <Input
-              label="Apply coupon"
-              placeholder="Enter coupon code"
-              name="coupon"
-            />
-
-            <textarea
-              placeholder="Additional note about your order, e.g special note for delivery."
-              className="w-full min-h-40 max-h-60 border-2 rounded-md p-2"
-              name="message"
-            />
-
-            <Button
-              className="w-full !text-white text-sm my-2 !bg-primary hover:!bg-black"
-              id="update-billing"
-            >
-              Submit
-            </Button>
-          </form>
+          <CheckoutForm user={user} />
         </section>
 
         <section className="w-full max-md:max-w-md h-fit p-4 border rounded-md divide-y font-light">
@@ -177,13 +55,13 @@ export default async function CheckoutPage() {
 
             <div className={orderStyle}>
               <strong className="">Cart subtotal</strong>
-              <span>${cartTotal}</span>
+              <span>{formatCurrency(cartTotal * 100)}</span>
             </div>
 
             <div className={orderStyle}>
               <b className="text-primary">Order Total</b>
               <big>
-                <b>${cartTotal}</b>
+                <b>{formatCurrency(cartTotal * 100)}</b>
               </big>
             </div>
           </aside>
@@ -196,7 +74,6 @@ export default async function CheckoutPage() {
                     name="payment method"
                     value={""}
                     label="Direct Bank Transfer"
-                    onChange={(e) => handlePaymentMethod("bank")}
                   />
                   <div
                     className={clsx(
@@ -212,7 +89,7 @@ export default async function CheckoutPage() {
                       Corrupti odio atque dicta cumque et beatae, repellat iusto
                       non
                     </p>
-                    <h5>Send ${cartTotal} to:</h5>
+                    <h5>Send {formatCurrency(cartTotal * 100)} to:</h5>
                     <ul>
                       <li>
                         <b>Account name:</b> Bambi Stores
@@ -232,11 +109,8 @@ export default async function CheckoutPage() {
                     label="Continue with Paystack"
                     name="payment method"
                     value={"paystack"}
-                    onChange={() => {
-                      handlePaymentMethod("paystack");
-                    }}
                   />
-                  <PaystackButton {...componentProps} />
+                  <Paystack amount={cartTotal} display_name={user?.name ?? ""} email={user?.email ?? ""} value="" variable_name="" />
                 </div>
               </div>
             </aside>
@@ -246,28 +120,6 @@ export default async function CheckoutPage() {
     </main>
   );
 }
-
-interface InputProps extends React.ComponentProps<"input"> {
-  label?: string;
-}
-
-const Input = ({ label, id, required, ...rest }: InputProps) => {
-  return (
-    <div className="flex flex-col gap-1 mb-5 last:mb-0">
-      {label && (
-        <label htmlFor={id} className="text-gray-500">
-          {label} {required && <span className="text-red-500">*</span>}
-        </label>
-      )}
-      <input
-        id={id}
-        required={required}
-        className="p-2 w-full border border-gray-400 rounded-md"
-        {...rest}
-      />
-    </div>
-  );
-};
 
 interface OrderTileProps {
   title: string;
@@ -280,28 +132,7 @@ const OrderTile = ({ title, price, quantity }: OrderTileProps) => (
     <p className="m-0">
       {title} x {quantity}
     </p>
-    <b>${price * quantity}</b>
+    <b>{formatCurrency((price * quantity) * 100)}</b>
   </li>
 );
 
-interface PaymentMethodProps extends React.ComponentProps<"input"> {
-  label?: string;
-}
-
-const PaymentMethod = ({
-  label,
-  id,
-  required,
-  ...rest
-}: PaymentMethodProps) => {
-  return (
-    <div className="flex items-center gap-3 mt-6">
-      <input id={id} type="radio" required={required} {...rest} />
-      {label && (
-        <label htmlFor={id} className="text-gray-500">
-          {label}
-        </label>
-      )}
-    </div>
-  );
-};

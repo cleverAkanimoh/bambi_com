@@ -1,6 +1,5 @@
 
 import React from 'react';
-import Breadcrumbs from '@/components/Breadcrumbs';
 import { getUserAddress } from '@/helpers/account';
 
 
@@ -9,9 +8,9 @@ const userAddress = await getUserAddress()
 
     return (
         <div className=''>
-            <Breadcrumbs active="Billing Address" />
+            
             <div className='grid grid-cols-1 gap-4 p-4'>
-                <h1 className='text-black text-3xl font-bold'>Billing Address</h1>
+                <h1 className='text-black text-2xl font-bold'>Billing Address</h1>
                 {userAddress ? (
                     <div>
                         <h6>{userAddress.name}</h6>

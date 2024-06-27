@@ -19,7 +19,7 @@ const Page = async () => {
         <div className=''>
             {/* <Breadcrumbs active="Payment Method" /> */}
             <div className='grid grid-cols-1 gap-4 p-4'>
-                <h1 className='text-black text-3xl font-bold'>Payment Method</h1>
+                <h1 className='text-black text-2xl font-bold'>Payment Method</h1>
                 {paymentMethod ? (
                     <div className='w-full text-[#555] font-semibold p-4'>
                         <p>{paymentMethod}</p>

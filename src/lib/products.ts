@@ -1,4 +1,7 @@
 import { ProductsType } from "@/types";
+import { prisma } from "./prisma";
+
+
 
 export const products = [
   {
@@ -34,7 +37,7 @@ export const shopProducts: ProductsType = [
     sales_category: "popular",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-    id: "1",
+    storeId: "bb9b1900-d41d-4947-86b3-0774fa9dfb9e"
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -46,7 +49,7 @@ export const shopProducts: ProductsType = [
     sales_category: "latest",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-    id: "2",
+    storeId: "bb9b1900-d41d-4947-86b3-0774fa9dfb9e"
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -58,7 +61,7 @@ export const shopProducts: ProductsType = [
     sales_category: "best_offers",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-    id: "3",
+    storeId: "bb9b1900-d41d-4947-86b3-0774fa9dfb9e"
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -70,7 +73,7 @@ export const shopProducts: ProductsType = [
     sales_category: "latest",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-    id: "4",
+    storeId: "bb9b1900-d41d-4947-86b3-0774fa9dfb9e"
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -82,7 +85,7 @@ export const shopProducts: ProductsType = [
     sales_category: "latest",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-    id: "5",
+    storeId: "bb9b1900-d41d-4947-86b3-0774fa9dfb9e"
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -94,7 +97,7 @@ export const shopProducts: ProductsType = [
     sales_category: "popular",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-    id: "6",
+    storeId: "bb9b1900-d41d-4947-86b3-0774fa9dfb9e"
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -106,7 +109,7 @@ export const shopProducts: ProductsType = [
     sales_category: "rated",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-    id: "7",
+    storeId: "bb9b1900-d41d-4947-86b3-0774fa9dfb9e"
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -118,7 +121,7 @@ export const shopProducts: ProductsType = [
     sales_category: "rated",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-    id: "8",
+    storeId: "bb9b1900-d41d-4947-86b3-0774fa9dfb9e"
   },
 
   {
@@ -131,7 +134,7 @@ export const shopProducts: ProductsType = [
     sales_category: "latest",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-    id: "9",
+    storeId: "bb9b1900-d41d-4947-86b3-0774fa9dfb9e"
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -143,7 +146,7 @@ export const shopProducts: ProductsType = [
     sales_category: "latest",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-    id: "10",
+    storeId: "bb9b1900-d41d-4947-86b3-0774fa9dfb9e"
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -155,7 +158,7 @@ export const shopProducts: ProductsType = [
     sales_category: "popular",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-    id: "11",
+    storeId: "bb9b1900-d41d-4947-86b3-0774fa9dfb9e"
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -167,7 +170,7 @@ export const shopProducts: ProductsType = [
     sales_category: "popular",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-    id: "12",
+    storeId: "bb9b1900-d41d-4947-86b3-0774fa9dfb9e"
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -179,7 +182,7 @@ export const shopProducts: ProductsType = [
     sales_category: "popular",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-    id: "13",
+    storeId: "bb9b1900-d41d-4947-86b3-0774fa9dfb9e"
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -191,7 +194,7 @@ export const shopProducts: ProductsType = [
     sales_category: "popular",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-    id: "14",
+    storeId: "bb9b1900-d41d-4947-86b3-0774fa9dfb9e"
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -203,7 +206,7 @@ export const shopProducts: ProductsType = [
     sales_category: "popular",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-    id: "15",
+    storeId: "bb9b1900-d41d-4947-86b3-0774fa9dfb9e"
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -215,7 +218,7 @@ export const shopProducts: ProductsType = [
     sales_category: "popular",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-    id: "16",
+    storeId: "bb9b1900-d41d-4947-86b3-0774fa9dfb9e"
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -227,7 +230,7 @@ export const shopProducts: ProductsType = [
     sales_category: "popular",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-    id: "17",
+    storeId: "bb9b1900-d41d-4947-86b3-0774fa9dfb9e"
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -239,7 +242,7 @@ export const shopProducts: ProductsType = [
     sales_category: "popular",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-    id: "18",
+    storeId: "bb9b1900-d41d-4947-86b3-0774fa9dfb9e"
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -251,7 +254,7 @@ export const shopProducts: ProductsType = [
     sales_category: "popular",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-    id: "19",
+    storeId: "bb9b1900-d41d-4947-86b3-0774fa9dfb9e"
   },
   {
     src1: "/assets/images/products/medium-product/2.jpg",
@@ -263,6 +266,6 @@ export const shopProducts: ProductsType = [
     sales_category: "latest",
     description:
       "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.",
-    id: "20",
+    storeId: "bb9b1900-d41d-4947-86b3-0774fa9dfb9e"
   },
 ];

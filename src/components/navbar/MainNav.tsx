@@ -8,9 +8,14 @@ import MainNavClient from "./MainNavClient";
 import OffCartButton from "./OffCartButton";
 import MenuButton from "./MenuButton";
 import { getCurrentUserCartItems } from "@/helpers/cart";
+import { getCurrentUser } from "@/lib/prismaHelpers";
 
 export default async function MainNav() {
-  const totalItems = await getCurrentUserCartItems();
+  const cartItems = await getCurrentUserCartItems();
+  const user = await getCurrentUser()
+
+  const totalItems = cartItems?.reduce((prev, curr) => prev + curr?.quantity, 0) ??
+    0;
 
   return (
     <MainNavClient>
@@ -19,16 +24,17 @@ export default async function MainNav() {
           <Search />
         </React.Suspense>
 
-        <BamLink href="/dashboard" className="" variant="ghost">
-          <BamIcon Icon={UserCircleIcon} size="med" />
+        <BamLink href={user ? "/dashboard" : "/auth/login"} className="flex items-center gap-1" variant="ghost">
+          <BamIcon className={`${!user && "hidden"}`} Icon={UserCircleIcon} size="med" />
+          <span className={`${user && "max-lg:sr-only"}`}>{user ? "Dashboard" : "Login / Register"}</span>
         </BamLink>
 
-        <BamLink href="/wishlist" variant="ghost" className="" title="Wishlist">
+        <BamLink href="/wishlist" variant="ghost" className="flex items-center gap-1" title="Wishlist">
           <BamIcon Icon={HeartIcon} size="med" />
           <span className="max-lg:sr-only">Wishlist</span>
         </BamLink>
 
-        <OffCartButton totalItems={totalItems?.length ?? 0} />
+        <OffCartButton totalItems={totalItems} />
 
         <MenuButton />
       </div>

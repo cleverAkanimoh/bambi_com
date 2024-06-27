@@ -34,6 +34,29 @@ model User {
   Transactions       Transactions[]
 }
 
+model Store{
+  id       String @id @default(uuid()) @map("_id")
+  products Products[]
+}
+
+
+model Products{
+  id       String @id @default(uuid()) @map("_id")
+  src1  String
+    src2 String?
+    href  String
+    old_price Int?
+    new_price Int
+    heading String
+    sales_category  String?
+    description String?
+    availability Int @default(0)
+     store   Store   @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  storeId String
+    sku  Int?
+  ratings Int?
+
+}
 model CartItems {
   id       String @id @default(uuid()) @map("_id")
   src      String
