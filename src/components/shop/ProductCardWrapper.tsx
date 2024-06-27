@@ -6,7 +6,7 @@ import { shopProducts } from "@/lib/products";
 import Header from "./Header";
 import { BiShoppingBag } from "react-icons/bi";
 import ShopProductCard from "../ProductCard";
-import { generateUniqueString } from "@/lib/utils";
+
 import { getAllProductsInStore } from "@/helpers/products";
 
 export default async function ProductCardWrapper({
@@ -20,7 +20,8 @@ export default async function ProductCardWrapper({
   search: string;
   currentPage: number;
 }) {
-  const shopProducts = await getAllProductsInStore()
+  const shopProducts = await getAllProductsInStore();
+
   const searchValue = search.toLowerCase();
   const filteredProducts = search
     ? shopProducts?.filter(
@@ -32,7 +33,9 @@ export default async function ProductCardWrapper({
     : shopProducts;
 
   const sortedFilteredProduct =
-    sortBy === "price" ? filteredProducts?.sort() : filteredProducts;
+    sortBy === "price"
+      ? filteredProducts?.sort((a, b) => a.new_price - b.new_price)
+      : filteredProducts;
 
   const totalPages = sortedFilteredProduct?.length;
   const POST_PER_PAGE = 10;
