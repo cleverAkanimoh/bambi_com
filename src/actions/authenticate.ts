@@ -18,7 +18,7 @@ export const registerUserAction = async ({
   const userAlreadyExist = await prisma.user.findUnique({ where: { email } });
 
   if (userAlreadyExist)
-    throw new Error("User with this credentials already exist");
+    return { message: "User with this credentials already exist" };
 
   const hashedPassword = await bcrypt.hash(password, 20);
 
