@@ -34,6 +34,7 @@ export const { auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
+  secret: "wpWcpZBQs0nOON6wL9V3YSjLmsMgeQWXXfjZSThj7Lg=",
   callbacks: {
     session: ({ session, token }) => ({
       ...session,
