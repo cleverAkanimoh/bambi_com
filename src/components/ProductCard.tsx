@@ -5,9 +5,8 @@ import Link from "next/link";
 import { AddToCartButton, AddToWishlistButton } from "./CartButtons";
 import { motion } from "framer-motion";
 import { fadeUp } from "@/lib/framer";
-import { CiSearch } from "react-icons/ci";
+
 import { SlRefresh } from "react-icons/sl";
-import { useState } from "react";
 import { formatCurrency } from "@/lib/utils";
 
 const ShopProductCard = ({
@@ -29,24 +28,6 @@ const ShopProductCard = ({
   category?: string;
   id: string;
 }) => {
-  const [isLiked, setIsLiked] = useState(false);
-  const quickViewClicked = () => {
-    localStorage.setItem(
-      "productInfo",
-      JSON.stringify({
-        src1,
-        old_price,
-        new_price,
-        description,
-        heading,
-        href,
-        category,
-        id,
-      })
-    );
-  };
-
-
   return (
     <motion.div
       initial={fadeUp.initial}
@@ -78,7 +59,7 @@ const ShopProductCard = ({
                 price: new_price,
                 quantity: 1,
                 productId: id,
-                availability: 1
+                availability: 1,
               }}
             />
             <Link
@@ -87,14 +68,13 @@ const ShopProductCard = ({
             >
               <SlRefresh />
             </Link>
-            <button
+            {/* <button
               className="bg-white p-2 hover:bg-primary hover:text-white transition-all ease-linear duration-150 rounded"
               data-bs-toggle="modal"
-              data-bs-target="#quick-view"
-              onClick={() => quickViewClicked()}
+              data-bs-target=""
             >
               <CiSearch />
-            </button>
+            </button> */}
           </div>
           <div className="absolute -translate-y-[0rem] invisible !opacity-0 group-hover:!opacity-100 group-hover:-translate-y-[4.5rem] md: md:group-hover:-translate-y-[5rem] group-hover:visible left-1/2 -translate-x-1/2 w-1/2 lg:w-3/4 mx-auto text-center rounded p-3 transition-all ease-linear duration-[400ms]">
             <AddToCartButton

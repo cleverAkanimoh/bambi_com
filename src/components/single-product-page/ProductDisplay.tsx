@@ -32,6 +32,9 @@ export default function ProductDisplay({
   singleProduct: Products;
 }) {
   const [quantity, setQuantity] = useState(1);
+  if (!singleProduct) {
+    return null;
+  }
   return (
     <section className="p-4 flex max-lg:flex-col gap-4">
       <ThumbsSlider images={Images} />

@@ -1,18 +1,6 @@
-export type Products = {
-  id?: string;
-  src1: string;
-  src2?: string;
-  href: string;
-  old_price?: number;
-  new_price: number;
-  description?: string;
-  heading: string;
-  sales_category?: "popular" | "latest" | "best_offers" | "rated";
-  availability?: number;
-  sku?: number;
-  ratings?: number;
-  storeId: string
-};
+import { getSingleProduct } from "./helpers/products";
+
+export type Products = typeof getSingleProduct;
 export type ProductsType = Products[];
 
 export type CartType = {
@@ -22,7 +10,7 @@ export type CartType = {
   title: string;
   price: number;
   quantity: number;
-  productId: string
+  productId: string;
 };
 
 export type SignUp = {
@@ -43,7 +31,7 @@ export type WishListType = {
   title: string;
   price: number;
   quantity: number;
-  productId: string
+  productId: string;
   availability: number;
 };
 
@@ -59,4 +47,4 @@ export type UserType = {
   address: string | null;
 
   updatedAt: Date;
-} | null 
+} | null;

@@ -27,7 +27,7 @@ export const addToCart = async ({
     await prisma.cartItems.update({
       where: { productId: cartItemAlreadyExist.productId },
       data: {
-        quantity: cartItemAlreadyExist.quantity + 1,
+        quantity: cartItemAlreadyExist.quantity + (quantity || 1),
       },
     });
     revalidatePath("");
