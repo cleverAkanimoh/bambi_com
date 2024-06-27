@@ -14,7 +14,7 @@ export default async function MainNav() {
   const cartItems = await getCurrentUserCartItems();
   const user = await getCurrentUser()
 
-  const totalItems = cartItems?.reduce((prev, curr) => prev + curr?.quantity, 0) ??
+const totalItems = cartItems?.reduce((prev, curr) => prev + curr?.quantity, 0) ??
     0;
 
   return (

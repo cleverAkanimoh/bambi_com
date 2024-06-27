@@ -19,6 +19,9 @@ export default async function CartOffCanvas() {
     cartItems?.reduce((prev, curr) => prev + curr?.price * curr?.quantity, 0) ??
     0;
 
+    const totalItems = cartItems?.reduce((prev, curr) => prev + curr?.quantity, 0) ??
+    0;
+
   return (
     <CartOffCanvasClient>
       {(await getCurrentUser()) ? (
@@ -58,7 +61,7 @@ export default async function CartOffCanvas() {
                 >
                   <BamIcon Icon={ShoppingCartIcon} size="med" /> View cart{" "}
                   <small className="text-white bg-primary rounded-full size-5 grid place-items-center">
-                    {cartItems.length}
+                  {totalItems < 10 ? totalItems : "9+"}
                   </small>
                 </BamLink>
                 <BamLink

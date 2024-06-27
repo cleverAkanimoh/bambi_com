@@ -1,7 +1,12 @@
 import { ProductsType } from "@/types";
 import { prisma } from "./prisma";
 
-
+// export const createStore = async ()=>{
+//   await prisma.store.create({data: {}})
+// }
+export const createProducts = async ()=>{
+  await prisma.products.createMany({data: shopProducts})
+}
 
 export const products = [
   {

@@ -10,6 +10,7 @@ import { Providers } from "../context/Providers";
 import { ToastContainer } from "react-toastify";
 import "swiper/swiper-bundle.css";
 import "swiper/css";
+// import { createProducts } from "@/lib/products";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
+//  await createProducts()
   return (
     <html lang="en" className="scroll-smooth">
       <body className={inter.className}>
