@@ -11,8 +11,8 @@ const Page = ({
   searchParams: { callbackUrl: string };
 }) => {
   // const router = useRouter();
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false);
 
   const signIn = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,14 +24,13 @@ const Page = ({
     try {
       console.log("Started registration");
       setIsSubmitted(true);
-      const user = await registerUserAction({ email, firstName, lastName, password });
+      await registerUserAction({ email, firstName, lastName, password });
       toast.success("Registration successful");
-      toast.info(`${user}`)
       setIsSubmitted(false);
-      // setIsLoggingIn(true);
-      // await loginUserAction({ email, password, callbackUrl });
+      setIsLoggingIn(true);
+      await loginUserAction({ email, password, callbackUrl });
     } catch (error) {
-      toast.error(`${error}`); // Display the correct error message from NextAuth
+      toast.error(`${error}`); // Display the correct error message from Firestore
     } finally {
       setIsSubmitted(false);
       setIsLoggingIn(false);
