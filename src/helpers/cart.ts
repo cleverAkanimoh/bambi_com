@@ -63,7 +63,7 @@ export const removeSingleCartItem = async (id: string) => {
     where: { productId: id },
   });
 
-  if (thisCartItem?.quantity ?? 1 < 1) {
+  if ((thisCartItem?.quantity ?? 1) < 1) {
     await prisma.cartItems.delete({
       where: { productId: thisCartItem?.productId },
     });

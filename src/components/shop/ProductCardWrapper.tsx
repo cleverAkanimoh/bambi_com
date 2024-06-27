@@ -33,7 +33,9 @@ export default async function ProductCardWrapper({
     : shopProducts;
 
   const sortedFilteredProduct =
-    sortBy === "price" ? filteredProducts?.sort() : filteredProducts;
+    sortBy === "price"
+      ? filteredProducts?.sort((a, b) => a.new_price - b.new_price)
+      : filteredProducts;
 
   const totalPages = sortedFilteredProduct?.length;
   const POST_PER_PAGE = 10;
