@@ -9,16 +9,20 @@ import { SignUp } from "@/types";
 import { generateUniqueString } from "@/lib/utils";
 import { signIn, signOut } from "../../auth";
 
-export const registerUserAction = async ({
-  email,
-  firstName,
-  lastName,
-  password,
-}: SignUp) => {
+export const registerUserAction = async (data: FormData) => {
+  const email = data.get("email") as string;
+  const firstName = data.get("firstName") as string;
+  const lastName = data.get("lastName") as string;
+  const password = data.get("password") as string;
+
+  if (firstName === "" || lastName === "" || email === "" || password === "") {
+    return { error: "Please ensure all field are filled" };
+  }
+
   const userAlreadyExist = await prisma.user.findUnique({ where: { email } });
 
   if (userAlreadyExist)
-    throw new Error("User with this credentials already exist");
+    return { error: "User with this credentials already exist" };
 
   const hashedPassword = await bcrypt.hash(password, 20);
 
@@ -70,7 +74,22 @@ export const loginUserAction = async ({
   redirect(callbackUrl);
 };
 
+// try {
+//   const user = await signIn("credentials", formData);
+//   return user;
+// } catch (error) {
+//   if (error instanceof AuthError) {
+//     switch (error?.type) {
+//       case "CallbackRouteError":
+//         return "Invalid credentials.";
+//       default:
+//         return "Something went wrong.";
+//     }
+//   }
+
+//   throw error;
+// }
+
 export const logOutUserAction = async () => {
-  await signOut();
-  redirect("/");
+  await signOut({ redirectTo: "/" });
 };

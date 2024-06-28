@@ -1,50 +1,23 @@
 "use client";
 
 import React, { FormEvent, useState } from "react";
-import { useRouter } from "next/navigation";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { loginUserAction, registerUserAction } from "@/actions/authenticate";
 import { toast } from "react-toastify";
+import { useFormStatus } from "react-dom";
 
 const Page = ({
   searchParams: { callbackUrl = "/" },
 }: {
   searchParams: { callbackUrl: string };
 }) => {
-  // const router = useRouter();
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-  const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false);
-
-  const signIn = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get("email") as string;
-    const firstName = formData.get("firstName") as string;
-    const lastName = formData.get("lastName") as string;
-    const password = formData.get("password") as string;
-    try {
-      console.log("Started registration");
-      setIsSubmitted(true);
-      await registerUserAction({ email, firstName, lastName, password });
-      toast.success("Registration successful");
-      setIsSubmitted(false);
-      setIsLoggingIn(true);
-      await loginUserAction({ email, password, callbackUrl });
-    } catch (error) {
-      toast.error(`${error}`); // Display the correct error message from Firestore
-    } finally {
-      setIsSubmitted(false);
-      setIsLoggingIn(false);
-    }
-  };
-
+  const { pending } = useFormStatus();
   return (
     <div className="flex flex-col gap-6">
       <Breadcrumbs active="Register" />
       <div className="min-h-screen flex items-center justify-center py-10">
         <form
-          onSubmit={signIn}
-          action=""
+          action={registerUserAction}
           className="bg-[#efefef] text-center w-[90%] mx-auto md:w-1/2 lg:w-2/5 flex flex-col gap-8 items-center px-6 py-12"
         >
           <div>
@@ -90,15 +63,11 @@ const Page = ({
             Subscribe to our newsletter
           </label>
           <button
-            disabled={isSubmitted}
+            disabled={pending}
             type="submit"
             className={`self-start text-white w-full md:w-[40%] lg:w-[30%] text-center font-bold bg-black p-4 hover:bg-primary hover:text-white transition-all ease-in-out duration-200 disabled:opacity-70 disabled:pointer-events-none`}
           >
-            {isSubmitted
-              ? "Registering..."
-              : isLoggingIn
-              ? "Logging you in now"
-              : "Register"}
+            {pending ? "Registering..." : "Register"}
           </button>
         </form>
       </div>
