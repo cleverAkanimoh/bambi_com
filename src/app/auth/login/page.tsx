@@ -5,39 +5,18 @@ import { toast } from "react-toastify";
 
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { loginUserAction } from "@/actions/authenticate";
+import { SubmitButton } from "@/components/SubmitButton";
+import { useFormState } from "react-dom";
 
-const Page = ({
-  searchParams: { callbackUrl = "/" },
-}: {
-  searchParams: { callbackUrl: string };
-}) => {
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-
-  const login = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-
-    try {
-      setIsSubmitted(true);
-      await loginUserAction({ email, password, callbackUrl });
-      toast.success("Login successful");
-    } catch (error) {
-      console.error(error);
-      toast.error(`${error}`);
-    } finally {
-      setIsSubmitted(false);
-    }
-  };
+const Page = () => {
+  const [errorMessage, dispatch] = useFormState(loginUserAction, undefined);
 
   return (
     <div className="flex flex-col gap-6">
       <Breadcrumbs active="Login" />
       <div className="flex items-center justify-center p-4 md:p-10 mb-4">
         <form
-          onSubmit={login}
-          action=""
+          action={dispatch}
           className="bg-[#efefef] text-center w-full mx-auto md:w-3/4 lg:w-1/2 flex flex-col gap-8 items-center px-4 py-10 md:px-6 md:py-12"
         >
           <div>
@@ -80,13 +59,8 @@ const Page = ({
               Forgot password?
             </Link>
           </div>
-          <button
-            type="submit"
-            className={`self-start text-white w-full md:w-[40%] lg:w-[30%] text-center font-bold bg-black p-3 hover:bg-primary hover:text-white transition-all ease-in-out duration-200 disabled:opacity-70 disabled:pointer-events-none`}
-            disabled={isSubmitted}
-          >
-            {isSubmitted ? "Logging in..." : "Login"}
-          </button>
+          <p className="text-sm text-red-500">{errorMessage}</p>
+          <SubmitButton text="Log in" submitText="Logging in..." />
           <Link
             href="/auth/register"
             className="self-start text-[#585858] hover:text-primary transition-all ease-in-out duration-200 hover:underline"

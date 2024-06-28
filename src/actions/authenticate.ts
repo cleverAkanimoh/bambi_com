@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import { getDbUser } from "@/lib/prismaHelpers";
 import { generateUniqueString } from "@/lib/utils";
 import { signIn, signOut } from "../../auth";
+import { AuthError } from "next-auth";
 
 export const registerUserAction = async (
   prevState: string | undefined,
@@ -42,40 +43,43 @@ export const registerUserAction = async (
         emailToken,
       },
     });
-    revalidatePath("/auth/login", "layout");
+    // revalidatePath("/auth/login", "layout");
     redirect("/auth/login?success=account has been created");
   } catch (error) {
     return `${error}`;
   }
 };
 
-export const loginUserAction = async ({
-  email,
-  password,
-  callbackUrl,
-}: {
-  email: string;
-  password: string;
-  callbackUrl: string;
-}) => {
-  const credentials = {
-    email,
-    password,
-    redirect: false,
-    redirectTo: callbackUrl,
-  };
+export const loginUserAction = async (
+  prevState: string | undefined,
+  data: FormData
+) => {
+  const email = data.get("email") as string;
+  const password = data.get("password") as string;
 
   const userFound = await getDbUser({ email });
 
-  if (!userFound) throw new Error("No user with these credentials was found");
+  if (!userFound) return "No user with these credentials was found";
 
   const passwordMatch = await bcrypt.compare(password, userFound?.password);
 
-  if (!passwordMatch) throw new Error("Invalid Credentials");
+  if (!passwordMatch) return "Invalid Credentials";
 
-  await signIn("credentials", credentials);
-  revalidatePath(callbackUrl);
-  redirect(callbackUrl);
+  try {
+    const user = await signIn("credentials", data);
+    redirect("/");
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error?.type) {
+        case "CallbackRouteError":
+          return "Invalid credentials.";
+        default:
+          return "Something went wrong.";
+      }
+    }
+
+    throw error;
+  }
 };
 
 // try {

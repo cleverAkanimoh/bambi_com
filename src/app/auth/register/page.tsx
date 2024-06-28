@@ -6,6 +6,7 @@ import { registerUserAction } from "@/actions/authenticate";
 
 import { useFormState } from "react-dom";
 import { SubmitButton } from "@/components/SubmitButton";
+import BamLink from "@/components/BamLink";
 
 const Page = ({
   searchParams: { success = "" },
@@ -69,7 +70,15 @@ const Page = ({
             Subscribe to our newsletter
           </label>
 
-          <SubmitButton text="Register" submitText="Registering.." />
+          <SubmitButton text="Register" submitText="Registering..." />
+
+          <BamLink
+            href="/auth/login"
+            variant="ghost"
+            className="self-start text-[#585858] hover:text-primary transition-all ease-in-out duration-200 hover:underline"
+          >
+            Login
+          </BamLink>
         </form>
       </div>
     </div>
