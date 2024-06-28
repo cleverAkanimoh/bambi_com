@@ -32,7 +32,8 @@ export const registerUserAction = async (
   }
 
   const lowerEmail = lower(email);
-  const emailToken = generateUniqueString();
+  const emailToken = "";
+  // generateUniqueString();
 
   await prisma.user.create({
     data: {
