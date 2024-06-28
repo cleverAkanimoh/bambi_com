@@ -42,7 +42,7 @@ const Page: React.FC<PageProps> = ({ searchParams: { callbackUrl = "/" } }) => {
       if (response.ok) {
         const data = await response.json();
         toast.success("Registration successful! Please login with your details");
-        router.push('/auth/login');
+        router.push('/auth/sign-in');
       } else {
         // If the response status is not 2xx, parse and throw the error message
         const errorData = await response.json();
@@ -123,15 +123,15 @@ const Page: React.FC<PageProps> = ({ searchParams: { callbackUrl = "/" } }) => {
             {isSubmitted ? "Registering..." : "Register"}
           </button>
 
-        <div className="flex flex-col gap-4 md:gap-0 md:flex-row md:items-center w-[98%] mx-auto justify-between">
-          <p>Already have an account?</p>
-          <Link
-            href="/auth/login"
-            className="self-start text-[#585858] hover:text-primary transition-all ease-in-out duration-200 underline"
-          >
-            Login
-          </Link>
-        </div>
+          <div className="flex flex-col gap-4 md:gap-0 md:flex-row md:items-center w-[98%] mx-auto justify-between">
+            <p>Already have an account?</p>
+            <Link
+              href="/auth/sign-in"
+              className="self-start text-[#585858] hover:text-primary transition-all ease-in-out duration-200 underline"
+            >
+              Login
+            </Link>
+          </div>
         </form>
       </div>
     </div>

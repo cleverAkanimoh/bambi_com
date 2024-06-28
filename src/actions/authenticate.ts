@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 import { getDbUser } from "@/lib/prismaHelpers";
 import { SignUp } from "@/types";
 import { generateUniqueString } from "@/lib/utils";
-import { signIn, signOut } from "../../auth";
+// import { signIn, signOut } from "../../auth";
 
 export const registerUserAction = async ({
   email,
@@ -43,33 +43,18 @@ export const registerUserAction = async ({
 export const loginUserAction = async ({
   email,
   password,
-  callbackUrl,
 }: {
   email: string;
   password: string;
-  callbackUrl: string;
 }) => {
-  const credentials = {
-    email,
-    password,
-    redirect: false,
-    redirectTo: callbackUrl,
-  };
-
   const userFound = await getDbUser({ email });
 
   if (!userFound) throw new Error("No user with these credentials was found");
 
-  const passwordMatch = await bcrypt.compare(password, userFound?.password);
+  const passwordMatch = await bcrypt.compare(password, userFound.password);
 
   if (!passwordMatch) throw new Error("Invalid Credentials");
 
-  await signIn("credentials", credentials);
-  revalidatePath(callbackUrl);
-  redirect(callbackUrl);
+  return userFound;
 };
 
-export const logOutUserAction = async () => {
-  await signOut();
-  redirect("/");
-};

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { BiRefresh } from "react-icons/bi";
 import { TbLogout } from "react-icons/tb";
 import { toast } from "react-toastify";
+import { signOut } from "next-auth/react";
 
 export default function LogoutButton() {
   const [pending, setPending] = useState(false);
@@ -11,19 +12,8 @@ export default function LogoutButton() {
   const handleLogOut = async () => {
     try {
       setPending(true);
-      const response = await fetch(`/api/logout`, {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json",
-        }
-      });
-
-      if (response.ok) {
-        toast.info("You are successfully logged out");
-      } else {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Logout failed");
-      }
+      await signOut({ callbackUrl: '/' }); // Optionally redirect to the homepage after logout
+      toast.info("You are successfully logged out");
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message);

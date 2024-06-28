@@ -19,7 +19,7 @@ export default async function CartOffCanvas() {
     cartItems?.reduce((prev, curr) => prev + curr?.price * curr?.quantity, 0) ??
     0;
 
-    const totalItems = cartItems?.reduce((prev, curr) => prev + curr?.quantity, 0) ??
+  const totalItems = cartItems?.reduce((prev, curr) => prev + curr?.quantity, 0) ??
     0;
 
   return (
@@ -61,7 +61,7 @@ export default async function CartOffCanvas() {
                 >
                   <BamIcon Icon={ShoppingCartIcon} size="med" /> View cart{" "}
                   <small className="text-white bg-primary rounded-full size-5 grid place-items-center">
-                  {totalItems < 10 ? totalItems : "9+"}
+                    {totalItems < 10 ? totalItems : "9+"}
                   </small>
                 </BamLink>
                 <BamLink
@@ -85,7 +85,7 @@ export default async function CartOffCanvas() {
         <section className="h-full flex flex-col gap-6 items-center justify-center">
           <strong>{"You're currently not logged in"}</strong>
           <small>You have to login to view your cart</small>
-          <BamLink href="/auth/login">Take me to login</BamLink>
+          <BamLink href="/auth/sign-in">Take me to login</BamLink>
         </section>
       )}
     </CartOffCanvasClient>

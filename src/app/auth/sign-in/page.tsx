@@ -4,6 +4,7 @@ import React, { FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const Page = ({
   searchParams: { callbackUrl = "/" },
@@ -22,35 +23,26 @@ const Page = ({
 
     try {
       console.log("Started Login");
-      const response = await fetch(`/api/login`, {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-          callbackUrl
-        })
+      const result = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
       });
 
-      // Check if the response status indicates success
-      if (response.ok) {
-        const data = await response.json();
+      if (result?.error) {
+        throw new Error(result.error);
+      }
+
+      if (result?.ok) {
         toast.success("Login Successful");
-        // Redirect to the callback URL or the default page
         router.push(callbackUrl);
       } else {
-        // If the response status is not 2xx, parse and throw the error message
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Login failed");
+        throw new Error("Login failed");
       }
     } catch (error) {
       if (error instanceof Error) {
-        console.error("Login Error:", error.message);
         toast.error(error.message);
       } else {
-        console.error("Unexpected Error:", error);
         toast.error("An unexpected error occurred");
       }
     } finally {
