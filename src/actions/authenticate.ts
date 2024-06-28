@@ -34,20 +34,16 @@ export const registerUserAction = async (
   const lowerEmail = lower(email);
   const emailToken = generateUniqueString();
 
-  try {
-    await prisma.user.create({
-      data: {
-        name: lower(firstName + " " + lastName),
-        email: lowerEmail,
-        password: hashedPassword,
-        emailToken,
-      },
-    });
-    // revalidatePath("/auth/login", "layout");
-    redirect("/auth/login?success=account has been created");
-  } catch (error) {
-    return `${error}`;
-  }
+  await prisma.user.create({
+    data: {
+      name: lower(firstName + " " + lastName),
+      email: lowerEmail,
+      password: hashedPassword,
+      emailToken,
+    },
+  });
+  // revalidatePath("/auth/login", "layout");
+  redirect("/auth/login?success=account has been created");
 };
 
 export const loginUserAction = async (
