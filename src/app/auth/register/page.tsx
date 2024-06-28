@@ -62,7 +62,7 @@ const Page: React.FC<PageProps> = ({ searchParams: { callbackUrl = "/" } }) => {
   return (
     <div className="flex flex-col gap-6">
       <Breadcrumbs active="Register" />
-      <div className="min-h-screen flex items-center justify-center py-10 gap-4">
+      <div className="min-h-screen flex flex-col items-center justify-center py-10 gap-4">
         <form
           method="POST"
           onSubmit={signIn}
@@ -122,8 +122,8 @@ const Page: React.FC<PageProps> = ({ searchParams: { callbackUrl = "/" } }) => {
           >
             {isSubmitted ? "Registering..." : "Register"}
           </button>
-        <div className="flex flex-col gap-4 md:gap-0 md:flex-row md:items-center w-[98%] mx-auto justify-between">
 
+        <div className="flex flex-col gap-4 md:gap-0 md:flex-row md:items-center w-[98%] mx-auto justify-between">
           <p>Already have an account?</p>
           <Link
             href="/auth/login"
