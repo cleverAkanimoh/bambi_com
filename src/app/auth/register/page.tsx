@@ -1,10 +1,11 @@
 "use client";
 
-import React, { FormEvent, useState } from "react";
+import React from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { loginUserAction, registerUserAction } from "@/actions/authenticate";
+import { registerUserAction } from "@/actions/authenticate";
 import { toast } from "react-toastify";
-import { useFormStatus } from "react-dom";
+
+import { useFormState, useFormStatus } from "react-dom";
 
 const Page = ({
   searchParams: { callbackUrl = "/" },
@@ -12,12 +13,18 @@ const Page = ({
   searchParams: { callbackUrl: string };
 }) => {
   const { pending } = useFormStatus();
+  const [errorMessage, dispatch] = useFormState(registerUserAction, undefined);
+
+  if (errorMessage) {
+    toast.error(errorMessage);
+  }
+
   return (
     <div className="flex flex-col gap-6">
       <Breadcrumbs active="Register" />
       <div className="min-h-screen flex items-center justify-center py-10">
         <form
-          action={registerUserAction}
+          action={dispatch}
           className="bg-[#efefef] text-center w-[90%] mx-auto md:w-1/2 lg:w-2/5 flex flex-col gap-8 items-center px-6 py-12"
         >
           <div>
@@ -69,6 +76,7 @@ const Page = ({
           >
             {pending ? "Registering..." : "Register"}
           </button>
+          <p>{errorMessage}</p>
         </form>
       </div>
     </div>

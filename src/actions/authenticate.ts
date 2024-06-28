@@ -5,24 +5,25 @@ import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getDbUser } from "@/lib/prismaHelpers";
-import { SignUp } from "@/types";
 import { generateUniqueString } from "@/lib/utils";
 import { signIn, signOut } from "../../auth";
 
-export const registerUserAction = async (data: FormData) => {
+export const registerUserAction = async (
+  prevState: string | undefined,
+  data: FormData
+) => {
   const email = data.get("email") as string;
   const firstName = data.get("firstName") as string;
   const lastName = data.get("lastName") as string;
   const password = data.get("password") as string;
 
-  if (firstName === "" || lastName === "" || email === "" || password === "") {
-    return { error: "Please ensure all field are filled" };
-  }
+  if (firstName === "" || lastName === "" || email === "" || password === "")
+    throw new Error("Please ensure all field are filled");
 
   const userAlreadyExist = await prisma.user.findUnique({ where: { email } });
 
   if (userAlreadyExist)
-    return { error: "User with this credentials already exist" };
+    throw new Error("User with this credentials already exist");
 
   const hashedPassword = await bcrypt.hash(password, 20);
 
@@ -33,16 +34,19 @@ export const registerUserAction = async (data: FormData) => {
   const lowerEmail = lower(email);
   const emailToken = generateUniqueString();
 
-  const user = await prisma.user.create({
-    data: {
-      name: lower(firstName + " " + lastName),
-      email: lowerEmail,
-      password: hashedPassword,
-      emailToken,
-    },
-  });
-
-  return { user };
+  try {
+    const user = await prisma.user.create({
+      data: {
+        name: lower(firstName + " " + lastName),
+        email: lowerEmail,
+        password: hashedPassword,
+        emailToken,
+      },
+    });
+    return "Your account has been created successfully";
+  } catch (error) {
+    return `${error}`;
+  }
 };
 
 export const loginUserAction = async ({
