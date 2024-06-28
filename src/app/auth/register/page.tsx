@@ -3,26 +3,22 @@
 import React from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { registerUserAction } from "@/actions/authenticate";
-import { toast } from "react-toastify";
 
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormState } from "react-dom";
+import { SubmitButton } from "@/components/SubmitButton";
 
 const Page = ({
-  searchParams: { callbackUrl = "/" },
+  searchParams: { success = "" },
 }: {
-  searchParams: { callbackUrl: string };
+  searchParams: { success: string };
 }) => {
-  const { pending } = useFormStatus();
   const [errorMessage, dispatch] = useFormState(registerUserAction, undefined);
-
-  if (errorMessage) {
-    toast.error(errorMessage);
-  }
 
   return (
     <div className="flex flex-col gap-6">
       <Breadcrumbs active="Register" />
       <div className="min-h-screen flex items-center justify-center py-10">
+        <h1>{success}</h1>
         <form
           action={dispatch}
           className="bg-[#efefef] text-center w-[90%] mx-auto md:w-1/2 lg:w-2/5 flex flex-col gap-8 items-center px-6 py-12"
@@ -33,6 +29,9 @@ const Page = ({
               Please register using account details below
             </p>
           </div>
+          {success === "" && (
+            <p className="text-sm text-red-500">{errorMessage}</p>
+          )}
           <input
             className="w-full text-[#555] p-4 outline-none ring-0 bg-white focus:bg-white border focus:border-primary"
             type="text"
@@ -69,14 +68,8 @@ const Page = ({
             />
             Subscribe to our newsletter
           </label>
-          <button
-            disabled={pending}
-            type="submit"
-            className={`self-start text-white w-full md:w-[40%] lg:w-[30%] text-center font-bold bg-black p-4 hover:bg-primary hover:text-white transition-all ease-in-out duration-200 disabled:opacity-70 disabled:pointer-events-none`}
-          >
-            {pending ? "Registering..." : "Register"}
-          </button>
-          <p>{errorMessage}</p>
+
+          <SubmitButton text="Register" submitText="Registering.." />
         </form>
       </div>
     </div>

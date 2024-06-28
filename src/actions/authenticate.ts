@@ -18,12 +18,11 @@ export const registerUserAction = async (
   const password = data.get("password") as string;
 
   if (firstName === "" || lastName === "" || email === "" || password === "")
-    throw new Error("Please ensure all field are filled");
+    return "Please ensure all field are filled";
 
   const userAlreadyExist = await prisma.user.findUnique({ where: { email } });
 
-  if (userAlreadyExist)
-    throw new Error("User with this credentials already exist");
+  if (userAlreadyExist) return "User with this credentials already exist";
 
   const hashedPassword = await bcrypt.hash(password, 20);
 
@@ -35,7 +34,7 @@ export const registerUserAction = async (
   const emailToken = generateUniqueString();
 
   try {
-    const user = await prisma.user.create({
+    await prisma.user.create({
       data: {
         name: lower(firstName + " " + lastName),
         email: lowerEmail,
@@ -43,7 +42,8 @@ export const registerUserAction = async (
         emailToken,
       },
     });
-    return "Your account has been created successfully";
+    revalidatePath("/auth/login", "layout");
+    redirect("/auth/login?success=account has been created");
   } catch (error) {
     return `${error}`;
   }
