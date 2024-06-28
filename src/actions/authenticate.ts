@@ -65,8 +65,8 @@ export const loginUserAction = async ({
   if (!passwordMatch) throw new Error("Invalid Credentials");
 
   await signIn("credentials", credentials);
-  // revalidatePath(callbackUrl);
-  // redirect(callbackUrl);
+  revalidatePath(callbackUrl);
+  redirect(callbackUrl);
 };
 
 export const logOutUserAction = async () => {

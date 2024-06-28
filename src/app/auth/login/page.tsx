@@ -38,7 +38,7 @@ const Page = ({
       if (response.ok) {
         const data = await response.json();
         toast.success("Login Successful");
-        router.push('/');
+        // router.push('/');
       } else {
         // If the response status is not 2xx, parse and throw the error message
         const errorData = await response.json();
