@@ -83,7 +83,7 @@ const Page = ({
             placeholder="Enter your password"
             name="password"
           />
-          <div className="flex flex-col gap-4 md:gap-0 md:flex-row w-full items-center justify-between">
+          <div className="self-start flex flex-col gap-4 md:gap-0 md:flex-row w-full items-center justify-between">
             <label
               htmlFor="rememberMe"
               className="flex items-center gap-2 text-[#555]"
