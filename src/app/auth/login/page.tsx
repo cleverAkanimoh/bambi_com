@@ -10,7 +10,7 @@ const Page = ({
 }: {
   searchParams: { callbackUrl: string };
 }) => {
-  const router = useRouter()
+  const router = useRouter();
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
   const login = async (e: FormEvent<HTMLFormElement>) => {
@@ -38,7 +38,8 @@ const Page = ({
       if (response.ok) {
         const data = await response.json();
         toast.success("Login Successful");
-        // router.push('/');
+        // Redirect to the callback URL or the default page
+        router.push(callbackUrl);
       } else {
         // If the response status is not 2xx, parse and throw the error message
         const errorData = await response.json();
@@ -46,8 +47,10 @@ const Page = ({
       }
     } catch (error) {
       if (error instanceof Error) {
+        console.error("Login Error:", error.message);
         toast.error(error.message);
       } else {
+        console.error("Unexpected Error:", error);
         toast.error("An unexpected error occurred");
       }
     } finally {
@@ -61,7 +64,6 @@ const Page = ({
       <div className="flex items-center justify-center p-4 md:p-10 mb-4">
         <form
           onSubmit={login}
-
           className="bg-[#efefef] text-center w-full mx-auto md:w-3/4 lg:w-1/2 flex flex-col gap-8 items-center px-4 py-10 md:px-6 md:py-12"
         >
           <div>
@@ -76,7 +78,6 @@ const Page = ({
             placeholder="Email"
             name="email"
           />
-
           <input
             className="w-full text-[#555] p-3 outline-none ring-0 bg-white focus:bg-white border focus:border-primary"
             type="password"
@@ -96,7 +97,6 @@ const Page = ({
               />
               Remember me
             </label>
-
             <Link
               href="#"
               className="text-[#555] hover:text-primary transition-all ease-in-out duration-200"
@@ -111,7 +111,7 @@ const Page = ({
           >
             {isSubmitted ? "Logging in..." : "Login"}
           </button>
-          <div className="flex flex-col gap-4 md:gap-0 md:flex-row md:items-center w-full justify-between">
+          <div className="self-start flex flex-col gap-4 md:gap-0 md:flex-row md:items-center w-full justify-between">
             <p>Don&apos;t have an account?</p>
             <Link
               href="/auth/register"
