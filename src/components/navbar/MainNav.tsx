@@ -15,7 +15,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 export default async function MainNav() {
   const cartItems = await getCurrentUserCartItems();
   const session = await getServerSession(authOptions);
-  const user = session?.user
+  const user = session?.user?.email
 
   const totalItems = cartItems?.reduce((prev, curr) => prev + curr?.quantity, 0) ??
     0;
