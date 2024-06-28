@@ -10,7 +10,7 @@ import MenuButton from "./MenuButton";
 import { getCurrentUserCartItems } from "@/helpers/cart";
 import { getCurrentUser } from "@/lib/prismaHelpers";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "../../../auth";
 
 export default async function MainNav() {
   const cartItems = await getCurrentUserCartItems();
