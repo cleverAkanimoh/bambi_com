@@ -122,7 +122,6 @@ const Page: React.FC<PageProps> = ({ searchParams: { callbackUrl = "/" } }) => {
           >
             {isSubmitted ? "Registering..." : "Register"}
           </button>
-        </form>
         <div className="flex flex-col gap-4 md:gap-0 md:flex-row md:items-center w-[98%] mx-auto justify-between">
 
           <p>Already have an account?</p>
@@ -133,6 +132,7 @@ const Page: React.FC<PageProps> = ({ searchParams: { callbackUrl = "/" } }) => {
             Login
           </Link>
         </div>
+        </form>
       </div>
     </div>
   );
