@@ -1,41 +1,36 @@
-"use client"
-
-import { prisma } from '@/lib/prisma';
-import React from 'react'
+"use client";
+import React, { useState } from 'react';
 import Button from '../Button';
+import { toast } from 'react-toastify';
+import { updateBillingDetails } from '@/helpers/account';
 
 export default function CheckoutForm({ user }: { user: any }) {
+    const [submit, setSubmit] = useState(false);
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setSubmit(true);
         const formData = new FormData(e.currentTarget);
         const email = formData.get("email") as string;
         const name = formData.get("name") as string;
         const country = formData.get("country") as string;
         const city = formData.get("city") as string;
         const address = formData.get("address") as string;
-        const message = formData.get("message") as string;
 
         try {
-            await prisma.user.update({
-                where: { email },
-                data: {
-                    name,
-                    email,
-                    country,
-                    city,
-                    address,
-                },
-            });
-            // toast.success("Billing details updated successfully");
-            alert("Billing details updated successfully");
+            await updateBillingDetails({ name, email, country, city, address });
+            toast.success("Billing details updated successfully");
         } catch (error) {
             if (error instanceof Error) {
-                console.error(error.message);
+                toast.error(error.message);
             } else {
-                console.error("Something went wrong!");
+                toast.error("Something went wrong!");
             }
+        } finally {
+            setSubmit(false);
         }
     };
+
     return (
         <form onSubmit={handleSubmit}>
             <Input
@@ -98,13 +93,15 @@ export default function CheckoutForm({ user }: { user: any }) {
             />
 
             <Button
-                className="w-full !text-white text-sm my-2 !bg-primary hover:!bg-black"
+                className="w-full text-white text-sm my-2 !bg-primary hover:!bg-black disabled:opacity-75"
                 id="update-billing"
+                disabled={submit}
+                type='submit'
             >
                 Submit
             </Button>
         </form>
-    )
+    );
 }
 
 interface InputProps extends React.ComponentProps<"input"> {

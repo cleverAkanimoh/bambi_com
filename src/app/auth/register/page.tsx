@@ -96,7 +96,7 @@ const Page = ({
             {isSubmitted
               ? "Registering..."
               : isLoggingIn
-                ? "Logging you in now"
+                ? "Signing in"
                 : "Register"}
           </button>
         </form>
