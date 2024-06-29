@@ -1,50 +1,53 @@
-import Credentials from "next-auth/providers/credentials";
+import { loginUserAction } from "@/actions/authenticate";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { NextAuthOptions } from "next-auth";
 
-import NextAuth from "next-auth";
-import { authConfig } from "./auth.config";
 
-import GoogleProvider from "next-auth/providers/google";
-
-import { getDbUser } from "@/lib/prismaHelpers";
-import { prisma } from "@/lib/prisma";
-
-export const { auth, signIn, signOut } = NextAuth({
-  ...authConfig,
-  providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-    }),
-    Credentials({
-      async authorize(credentials) {
-        const { email } = credentials as {
-          email: string;
-        };
-
-        const userFound = await getDbUser({ email });
-
-        await prisma.user.update({
-          where: { email },
-          data: {
-            last_signed_in: new Date(),
-          },
-        });
-
-        return userFound;
+interface User {
+    id: string;
+    name: string;
+    email: string;
+    image?: string | null;
+  }
+  
+  export const authOptions: NextAuthOptions = {
+    session: {
+      strategy: "jwt",
+    },
+    providers: [
+      CredentialsProvider({
+        type: "credentials",
+        credentials: {},
+        async authorize(credentials, req) {
+          const { email, password } = credentials as { email: string; password: string };
+          try {
+            const user = await loginUserAction({ email, password });
+  
+            if (user) {
+              return user;  // Return user object if authentication is successful
+            } else {
+              return null;  // Return null if authentication fails
+            }
+          } catch (error) {
+            console.error("Login error:", error);
+            return null;
+          }
+        },
+      }),
+    ],
+    pages: {
+      signIn: "/auth/sign-in",
+    },
+    callbacks: {
+      async jwt({ token, user }) {
+        if (user) {
+          token.user = user;
+        }
+        return token;
       },
-    }),
-  ],
-  jwt: {
-    // secret: process.env.NEXTAUTH_JWT_SECRET,
-  },
-  secret: process.env.NEXTAUTH_SECRET,
-  callbacks: {
-    session: ({ session, token }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: token.sub,
+      async session({ session, token }) {
+        session.user = token.user as User;  // Ensure the user object is correctly typed
+        return session;
       },
-    }),
-  },
-});
+    },
+  };

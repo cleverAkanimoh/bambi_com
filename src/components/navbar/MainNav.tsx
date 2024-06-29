@@ -9,10 +9,13 @@ import OffCartButton from "./OffCartButton";
 import MenuButton from "./MenuButton";
 import { getCurrentUserCartItems } from "@/helpers/cart";
 import { getCurrentUser } from "@/lib/prismaHelpers";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../../auth";
 
 export default async function MainNav() {
   const cartItems = await getCurrentUserCartItems();
-  const user = await getCurrentUser()
+  const session = await getServerSession(authOptions);
+  const user = session?.user?.email
 
   const totalItems = cartItems?.reduce((prev, curr) => prev + curr?.quantity, 0) ??
     0;
@@ -24,7 +27,7 @@ export default async function MainNav() {
           <Search />
         </React.Suspense>
 
-        <BamLink href={user ? "/dashboard" : "/auth/login"} className="flex items-center gap-1" variant="ghost">
+        <BamLink href={user ? "/dashboard" : "/auth/sign-in"} className="flex items-center gap-1" variant="ghost">
           <BamIcon className={`${!user && "hidden"}`} Icon={UserCircleIcon} size="med" />
           <span className={`${user && "max-lg:sr-only"}`}>{user ? "Dashboard" : "Login / Register"}</span>
         </BamLink>

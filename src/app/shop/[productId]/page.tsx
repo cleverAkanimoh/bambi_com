@@ -1,16 +1,18 @@
+"use client";
+
 import Breadcrumbs from "@/components/Breadcrumbs";
 import ProductDisplay from "@/components/single-product-page/ProductDisplay";
-import { getSingleProduct } from "@/helpers/products";
+import { shopProducts } from "@/lib/products";
 
 import { notFound } from "next/navigation";
 import React, { Suspense } from "react";
 
-export default async function SingleProductPage({
+export default function SingleProductPage({
   params: { productId },
 }: {
   params: { productId: string };
 }) {
-  const singleProduct = await getSingleProduct({ productId });
+  const singleProduct = shopProducts[Number(productId) - 1];
 
   if (!singleProduct) return notFound();
 

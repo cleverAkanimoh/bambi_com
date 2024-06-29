@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import { ProductsType } from "@/types";
 import Link from "next/link";
 import Pagination from "../Pagination";
-
+import { shopProducts } from "@/lib/products";
 import Header from "./Header";
 import { BiShoppingBag } from "react-icons/bi";
 import ShopProductCard from "../ProductCard";
@@ -49,19 +49,19 @@ export default async function ProductCardWrapper({
       </Suspense>
       <section className="">
         {sortedFilteredProduct?.length ? (
-          <section className="grid xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-12 p-6 md:p-12 items-center">
+          <section className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-12 p-6 md:p-12 items-center place-tems-center">
             {sortedFilteredProduct
               .slice(firstPostIndex, lastPostIndex)
               .map((x, i) => (
                 <ShopProductCard
                   key={i}
-                  id={x.id}
+                  id={`${x.id}`}
                   src1="/assets/images/products/medium-product/2.jpg"
                   new_price={x.new_price}
                   old_price={x.old_price || 0}
                   heading={x.heading}
                   description={`It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here, content here, making it look like readable English.`}
-                  href={`/shop/${x.id}`}
+                  href={`/shop/${i + 1}`}
                 />
               ))}
           </section>

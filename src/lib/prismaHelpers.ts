@@ -1,5 +1,6 @@
-import { auth } from "../../auth";
 import { prisma } from "./prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../auth";
 
 export const getDbUser = async ({ email }: { email: string }) => {
   const dbUser = await prisma.user.findUnique({
@@ -10,11 +11,11 @@ export const getDbUser = async ({ email }: { email: string }) => {
 };
 
 export const getCurrentUser = async () => {
-  const session = await auth();
+  const session = await getServerSession(authOptions);
 
-  if (!session?.user) return null;
+  if (!session?.user?.email) return null;
 
-  const email = session.user.email ?? "";
+  const email = session.user.email;
 
   const currentUser = await prisma.user.findUnique({
     where: { email },
@@ -23,18 +24,16 @@ export const getCurrentUser = async () => {
 };
 
 export const getCompleteUserMetadata = async () => {
-  //returns the entire information about the user
+  // Returns the entire information about the user
   const currentUser = await getCurrentUser();
   if (!currentUser) return null;
-  
-  const currentUserId = currentUser.id;
 
   const completeUserMetadata = await prisma.user.findFirst({
-    where: { id: currentUserId },
+    where: { id: currentUser.id },
     include: {
-      CartItems: {},
-      Wishlist: {},
-      Transactions: {},
+      CartItems: true,
+      Wishlist: true,
+      Transactions: true,
     },
   });
 

@@ -2,20 +2,17 @@
 
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.css";
 
 import { useMediaQuery } from "react-responsive";
 import { Controller, Pagination } from "swiper/modules";
 import { HomeProductCard } from "@/components/shop/HomeProductCard";
-import { ProductsType } from "@/types";
+import { shopProducts } from "@/lib/products";
 
-export default function Products({ products }: { products: ProductsType }) {
+export default function Products() {
   const IsBigMobile = useMediaQuery({ query: "(min-width: 500px)" });
   const IsTabletView = useMediaQuery({ query: "(min-width: 760px)" });
   const IsLaptopView = useMediaQuery({ query: "(min-width: 900px)" });
-
-  if (!products) {
-    return <p>No product was found</p>;
-  }
   return (
     <section className="p-4 py-10 flex flex-col w-11/12 md:w-10/12 mx-auto">
       <h1 className="text-xl font-medium mb-3">Featured</h1>
@@ -31,12 +28,12 @@ export default function Products({ products }: { products: ProductsType }) {
           spaceBetween={10}
           className="size-full overflow-hidden"
         >
-          {products
+          {shopProducts
             .splice(0, 8)
-            .map(({ id, src1, heading, new_price }, index) => (
+            .map(({ src1, heading, new_price }, index) => (
               <SwiperSlide key={index}>
                 <HomeProductCard
-                  id={id}
+                  id={`${index + 1}`}
                   src={src1}
                   href={`/shop/${index + 1}`}
                   heading={heading}

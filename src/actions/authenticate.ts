@@ -5,25 +5,19 @@ import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getDbUser } from "@/lib/prismaHelpers";
+import { SignUp } from "@/types";
 import { generateUniqueString } from "@/lib/utils";
-import { signIn, signOut } from "../../auth";
-import { AuthError } from "next-auth";
+// import { signIn, signOut } from "../../auth";
 
-export const registerUserAction = async (
-  prevState: string | undefined,
-  data: FormData
-) => {
-  const email = data.get("email") as string;
-  const firstName = data.get("firstName") as string;
-  const lastName = data.get("lastName") as string;
-  const password = data.get("password") as string;
-
-  if (firstName === "" || lastName === "" || email === "" || password === "")
-    return "Please ensure all field are filled";
-
+export const registerUserAction = async ({
+  email,
+  firstName,
+  lastName,
+  password,
+}: SignUp) => {
   const userAlreadyExist = await prisma.user.findUnique({ where: { email } });
 
-  if (userAlreadyExist) return "User with this credentials already exist";
+  if (userAlreadyExist) throw new Error("User with email already exist");
 
   const hashedPassword = await bcrypt.hash(password, 20);
 
@@ -32,10 +26,9 @@ export const registerUserAction = async (
   }
 
   const lowerEmail = lower(email);
-  const emailToken = "";
-  // generateUniqueString();
+  const emailToken = generateUniqueString();
 
-  await prisma.user.create({
+  const user = await prisma.user.create({
     data: {
       name: lower(firstName + " " + lastName),
       email: lowerEmail,
@@ -43,58 +36,25 @@ export const registerUserAction = async (
       emailToken,
     },
   });
-  // revalidatePath("/auth/login", "layout");
-  redirect("/auth/login?success=account has been created");
+
+  return { user };
 };
 
-export const loginUserAction = async (
-  prevState: string | undefined,
-  data: FormData
-) => {
-  const email = data.get("email") as string;
-  const password = data.get("password") as string;
-
+export const loginUserAction = async ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) => {
   const userFound = await getDbUser({ email });
 
-  if (!userFound) return "No user with these credentials was found";
+  if (!userFound) throw new Error("No user with these credentials was found");
 
-  const passwordMatch = await bcrypt.compare(password, userFound?.password);
+  const passwordMatch = await bcrypt.compare(password, userFound.password);
 
-  if (!passwordMatch) return "Invalid Credentials";
+  if (!passwordMatch) throw new Error("Invalid Credentials");
 
-  try {
-    const user = await signIn("credentials", data);
-    redirect("/");
-  } catch (error) {
-    if (error instanceof AuthError) {
-      switch (error?.type) {
-        case "CallbackRouteError":
-          return "Invalid credentials.";
-        default:
-          return "Something went wrong.";
-      }
-    }
-
-    throw error;
-  }
+  return userFound;
 };
 
-// try {
-//   const user = await signIn("credentials", formData);
-//   return user;
-// } catch (error) {
-//   if (error instanceof AuthError) {
-//     switch (error?.type) {
-//       case "CallbackRouteError":
-//         return "Invalid credentials.";
-//       default:
-//         return "Something went wrong.";
-//     }
-//   }
-
-//   throw error;
-// }
-
-export const logOutUserAction = async () => {
-  await signOut({ redirectTo: "/" });
-};

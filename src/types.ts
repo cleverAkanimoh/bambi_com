@@ -1,20 +1,19 @@
 export type Products = {
-  id: string;
+  id?: string;
   src1: string;
-  src2: string | null;
+  src2?: string;
   href: string;
-  old_price: number | null;
+  old_price?: number;
   new_price: number;
+  description?: string;
   heading: string;
-  sales_category: string | null;
-  description: string | null;
-  availability: number;
-  storeId: string;
-  sku: number | null;
-  ratings: number | null;
+  sales_category?: "popular" | "latest" | "best_offers" | "rated";
+  availability?: number;
+  sku?: number;
+  ratings?: number;
+  storeId: string
 };
-
-export type ProductsType = Products[] | null;
+export type ProductsType = Products[];
 
 export type CartType = {
   id?: string;
@@ -23,7 +22,7 @@ export type CartType = {
   title: string;
   price: number;
   quantity: number;
-  productId: string;
+  productId: string
 };
 
 export type SignUp = {
@@ -44,7 +43,7 @@ export type WishListType = {
   title: string;
   price: number;
   quantity: number;
-  productId: string;
+  productId: string
   availability: number;
 };
 
@@ -60,4 +59,4 @@ export type UserType = {
   address: string | null;
 
   updatedAt: Date;
-} | null;
+} | null 
