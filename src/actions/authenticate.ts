@@ -2,12 +2,9 @@
 
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { getDbUser } from "@/lib/prismaHelpers";
 import { SignUp } from "@/types";
 import { generateUniqueString } from "@/lib/utils";
-// import { signIn, signOut } from "../../auth";
 
 export const registerUserAction = async ({
   email,
@@ -57,4 +54,3 @@ export const loginUserAction = async ({
 
   return userFound;
 };
-
