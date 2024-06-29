@@ -12,7 +12,10 @@ export const registerUserAction = async ({
   lastName,
   password,
 }: SignUp) => {
-  const userAlreadyExist = await prisma.user.findUnique({ where: { email } });
+  const userAlreadyExist = await prisma.user.findUnique({
+    where: { email },
+    cacheStrategy: { ttl: 60 },
+  });
 
   if (userAlreadyExist) throw new Error("User with email already exist");
 
