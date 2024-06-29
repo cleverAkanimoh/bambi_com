@@ -3,9 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider     = "mongodb"
-  url          = env("DATABASE_URL")
-  relationMode = "prisma"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -20,76 +19,75 @@ model User {
   address       String?   @default("")
   state         String?   @default("")
   city          String?
-  zipCode       String?    
+  zipCode       String?
   country       String?   @default("")
   phone         String?   @default("")
   role          String?   @default("user")
   paymentMethod String?
 
-  last_signed_in DateTime    @default(now()) @map(name: "last_signed_in")
-  createdAt      DateTime    @default(now()) @map(name: "created_at")
-  updatedAt      DateTime    @updatedAt @map(name: "updated_at")
+  last_signed_in DateTime       @default(now()) @map(name: "last_signed_in")
+  createdAt      DateTime       @default(now()) @map(name: "created_at")
+  updatedAt      DateTime       @updatedAt @map(name: "updated_at")
   CartItems      CartItems[]
   Wishlist       Wishlist[]
-  Transactions       Transactions[]
+  Transactions   Transactions[]
 }
 
-model Store{
-  id       String @id @default(uuid()) @map("_id")
+model Store {
+  id       String     @id @default(uuid()) @map("_id")
   products Products[]
 }
 
-
-model Products{
-  id       String @id @default(uuid()) @map("_id")
-  src1  String
-    src2 String?
-    href  String
-    old_price Int?
-    new_price Int
-    heading String
-    sales_category  String?
-    description String?
-    availability Int @default(0)
-     store   Store   @relation(fields: [storeId], references: [id], onDelete: Cascade)
-  storeId String
-    sku  Int?
-  ratings Int?
-
+model Products {
+  id             String  @id @default(uuid()) @map("_id")
+  src1           String
+  src2           String?
+  href           String
+  old_price      Int?
+  new_price      Int
+  heading        String
+  sales_category String?
+  description    String?
+  availability   Int     @default(0)
+  store          Store   @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  storeId        String
+  sku            Int?
+  ratings        Int?
 }
+
 model CartItems {
-  id       String @id @default(uuid()) @map("_id")
-  src      String
-  href     String
-  title    String
-  price    Int
-  quantity Int
-productId String @unique()
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
+  id        String @id @default(uuid()) @map("_id")
+  src       String
+  href      String
+  title     String
+  price     Int
+  quantity  Int
+  productId String @unique()
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
 }
 
 model Wishlist {
-  id String @id @default(uuid()) @map("_id")
-productId String @unique()
-  src   String
-  href  String
-  title String
-  price Int
-quantity Int
-availability Int @default(0)
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
+  id           String @id @default(uuid()) @map("_id")
+  productId    String @unique()
+  src          String
+  href         String
+  title        String
+  price        Int
+  quantity     Int
+  availability Int    @default(0)
+  user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String
 }
 
-model Transactions{ 
-  id String @id @default(uuid()) @map("_id")
-  productId String @unique()
+model Transactions {
+  id            String @id @default(uuid()) @map("_id")
+  productId     String @unique()
   paymentMethod String
-  price String
-  
+  price         String
+
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
-  createdAt      DateTime    @default(now()) @map(name: "created_at")
+  createdAt DateTime @default(now()) @map(name: "created_at")
 }
