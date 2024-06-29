@@ -5,6 +5,7 @@ import { authOptions } from "../../auth";
 export const getDbUser = async ({ email }: { email: string }) => {
   const dbUser = await prisma.user.findUnique({
     where: { email },
+    cacheStrategy: { ttl: 60 },
   });
   if (!dbUser) return null;
   return dbUser;
@@ -19,6 +20,7 @@ export const getCurrentUser = async () => {
 
   const currentUser = await prisma.user.findUnique({
     where: { email },
+    cacheStrategy: { ttl: 60 },
   });
   return currentUser;
 };

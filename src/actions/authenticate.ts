@@ -47,7 +47,7 @@ export const loginUserAction = async ({
   email: string;
   password: string;
 }) => {
-  const userFound = await getDbUser({ email });
+  const userFound = await getDbUser({ email },);
 
   if (!userFound) throw new Error("No user with these credentials was found");
 
